@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "736534812806",
+    "project_id": "jp-ads-526d7",
+    "storage_bucket": "jp-ads-526d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736534812806:android:e896f3d2c747cd593b1907",
+        "android_client_info": {
+          "package_name": "com.example.jp_ads"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoq_P0OJcMsflMzifcTJAqdQJdYooZhX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
