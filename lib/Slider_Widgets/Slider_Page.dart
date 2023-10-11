@@ -64,7 +64,10 @@ class _BannerSliderState extends State<BannerSlider> {
                       Map? getImage = sliderImage.data() as Map? ;
                       return
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding:  EdgeInsets.symmetric(
+                            vertical: height/94.5,
+                            horizontal: width/45
+                          ),
                           child: Container(
                             height: height / 4.5,
                             width: width / 1.07,

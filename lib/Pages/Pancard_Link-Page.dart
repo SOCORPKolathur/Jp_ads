@@ -2,9 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jp_ads/const_file.dart';
+import 'package:lottie/lottie.dart';
 
 class Pancard_Link_Page extends StatefulWidget {
-  const Pancard_Link_Page({super.key});
+  String ?Userdocid;
+  String ?UserType;
+  Pancard_Link_Page({this.Userdocid,this.UserType});
 
   @override
   State<Pancard_Link_Page> createState() => _Pancard_Link_PageState();
@@ -23,7 +27,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
       appBar: AppBar(
         backgroundColor: Color(0xffF2F6FF),
         elevation: 0,
-        toolbarHeight: 70,
+        toolbarHeight: height/10.8,
         title: Text("PAN Card Link",
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -46,203 +50,342 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
           ),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 30,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height:180,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Check Your Pan Link Status",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                          fontSize:width/22,
-                          color: Colors.black),),
-                    SizedBox(height: 10,),
-                    Container(
-                      height: 50,
-                      width: 320,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                              color: Color(0xff353535)
-                          )
-                      ),
-                      child: TextFormField(
+      body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: height/25.2,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height:height/4.2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Check Your Pan Link Status",
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                             fontSize:width/22,
-                            color: Colors.black),
-                        controller: Pannumbercontroller,
-                        maxLength: 10,
-                        maxLines: 1,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-
-                        ],
-                        decoration: InputDecoration(
-                          counterText: "",
-                          contentPadding: EdgeInsets.only(left: 20),
-                          border: InputBorder.none,
-                            hintText: "Type pan number",
-                            hintStyle: GoogleFonts.poppins()
+                            color: Colors.black),),
+                      SizedBox(height: height/75.6,),
+                      Container(
+                        height: height/15.12,
+                        width: width/1.125,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                                color: Color(0xff353535)
+                            )
                         ),
-                        validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(width: 235,),
-                        GestureDetector(
-                          onTap: (){
+                        child: TextFormField(
+                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                              fontSize:width/22,
+                              color: Colors.black),
+                          controller: Pannumbercontroller,
+                          maxLength: 10,
+                          maxLines: 1,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
 
-                          },
-                          child: Center(
-                            child:
-                            Container(
-                              height: 35,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Color(0xff245BCA),
-                                        Color(0xff245BCA),
-                                      ]
-                                  )
-                              ),
-                              child: Center(
-                                child:  Text("Check",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                      fontSize:width/25,
-                                      color: Colors.white),),
+                          ],
+                          decoration: InputDecoration(
+                            counterText: "",
+                            contentPadding: EdgeInsets.only(left: width/18),
+                            border: InputBorder.none,
+                              hintText: "Type pan number",
+                              hintStyle: GoogleFonts.poppins()
+                          ),
+                          validator: (value) => value!.isEmpty ? 'Field is required' : null,
+                        ),
+                      ),
+                      SizedBox(height: height/37.8,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(width: width/1.531,),
+                          GestureDetector(
+                            onTap: (){
+                              pancardstatuscheckfunction();
+                            },
+                            child: Center(
+                              child:
+                              Container(
+                               height: height/21.6,
+                                width: width/4.5,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          Color(0xff245BCA),
+                                          Color(0xff245BCA),
+                                        ]
+                                    )
+                                ),
+                                child: Center(
+                                  child:  Text("Check",
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                        fontSize:width/25,
+                                        color: Colors.white),),
+                                ),
                               ),
                             ),
                           ),
-                        ),
 
+                        ],
+                      )
+
+
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            Container(
+              height:height/3.436,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Color(0xffffe09f)
+              ),
+              margin: EdgeInsets.only(left: width/18,right: width/18),
+              child: Padding(
+                padding:  EdgeInsets.symmetric(
+                  horizontal: width/24,
+                  vertical: height/50.4,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Pan Card Link Status",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                              fontSize:width/22,
+                              color: Colors.black),),
                       ],
-                    )
+                    ),
+                    SizedBox(height: height/50.4,),
+
+                    GestureDetector(
+                      onTap: (){},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("Pan generated by",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                fontSize:width/28,
+                                color: Color(0xffA0A0A0)),),
+                        ],
+                      ),
+                    ),
+                    Divider(),
+
+                    GestureDetector(
+                      onTap: (){},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("Aadhaar Number",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                fontSize:width/28,
+                                color: Color(0xffA0A0A0)),),
+                        ],
+                      ),
+                    ),
+                    Divider(),
+
+                    GestureDetector(
+                      onTap: (){},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("Your PAN Number",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                fontSize:width/28,
+                                color: Color(0xffA0A0A0)),),
+                        ],
+                      ),
+                    ),
+                    Divider(),
+
+                    GestureDetector(
+                      onTap: (){},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("PAN Current Status",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                fontSize:width/28,
+                                color: Color(0xffA0A0A0)),),
+                        ],
+                      ),
+                    ),
+                    Divider(),
+
 
 
                   ],
                 ),
               ),
-            ],
-          ),
-
-          Container(
-            height:220,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Color(0xffffe09f)
             ),
-            margin: EdgeInsets.only(left: 20,right: 20),
-            child: Padding(
-              padding:  EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Pan Card Link Status",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                            fontSize:width/22,
-                            color: Colors.black),),
-                    ],
-                  ),
-                  SizedBox(height: 15,),
 
-                  GestureDetector(
-                    onTap: (){},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Pan generated by",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                              fontSize:width/28,
-                              color: Color(0xffA0A0A0)),),
-                      ],
-                    ),
-                  ),
-                  Divider(),
-
-                  GestureDetector(
-                    onTap: (){},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Aadhaar Number",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                              fontSize:width/28,
-                              color: Color(0xffA0A0A0)),),
-                      ],
-                    ),
-                  ),
-                  Divider(),
-
-                  GestureDetector(
-                    onTap: (){},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Your PAN Number",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                              fontSize:width/28,
-                              color: Color(0xffA0A0A0)),),
-                      ],
-                    ),
-                  ),
-                  Divider(),
-
-                  GestureDetector(
-                    onTap: (){},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("PAN Current Status",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                              fontSize:width/28,
-                              color: Color(0xffA0A0A0)),),
-                      ],
-                    ),
-                  ),
-                  Divider(),
-
-
-
-                ],
-              ),
-            ),
-          ),
-
-        ],
+          ],
+        ),
       ),
     );
   }
 
   pancardstatuscheckfunction() async {
-    var data=await FirebaseFirestore.instance.collection("New_applied").get();
+
+    FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
+    if(value['usertype']=="Individual"){
+      if(value['usageccount']<3){
+        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+          "usageccount":FieldValue.increment(1)
+        });
+      }
+      else{
+        planExitpopup();
+      }
+    }
+
+    else{
+      FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+        "usageccount":FieldValue.increment(1)
+      });
+    }
+
+    });
+
+
 
 
   }
 
+  planExitpopup() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
+    showDialog(
+      context: context,
+      builder: (context) {
+        return
+          Padding(
+            padding: EdgeInsets.only(
+                left: width / 8.268,
+                right: width / 8.845,
+                top: height / 3.5,
+                bottom: height / 3.5),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xff245BCA),
+                          Color(0xff245BCA),
+                        ]
+                    )
+                ),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: height/25.2,),
+
+                      SizedBox(
+                        // height: 150,
+                        // width: 150,
+                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
+                      ),
+                      SizedBox(height: height/75.6,),
+
+                      Text(
+                        "Exist Your  Free Apply....",
+                        style: GoogleFonts.poppins(
+                            fontSize: width / 25.613,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
+                      ),
+                      SizedBox(height: height/12.6,),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          //cancel button
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                             height: height/21.6,
+                              width: width/4.5,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Center(
+                                  child: Text(
+                                    "Cancel",
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: width / 25.718),
+                                  )),
+                            ),
+                          ),
+                          SizedBox(
+                            width: width / 34.15,
+                          ),
+
+                          //okay button
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                             height: height/21.6,
+                              width: width/4.5,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Center(
+                                  child: Text(
+                                    "Okay",
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: width / 25.718),
+                                  )),
+                            ),
+                          ),
+                          SizedBox(
+                            width: width / 34.15,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+      },
+    );
+  }
 
 }

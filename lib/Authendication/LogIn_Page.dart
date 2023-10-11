@@ -16,6 +16,8 @@ class _LogIn_PageState extends State<LogIn_Page> {
   TextEditingController Userphonenumbercontrolller=TextEditingController();
 
   int radiovalue=1;
+
+  String  UserType=Indiviaultxt;
   @override
   Widget build(BuildContext context) {
     double height=MediaQuery.of(context).size.height;
@@ -46,8 +48,8 @@ class _LogIn_PageState extends State<LogIn_Page> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    height: 60,
-                    width: 60,
+                    height: height/12.6,
+                    width: width/6,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             fit: BoxFit.cover,
@@ -83,14 +85,15 @@ class _LogIn_PageState extends State<LogIn_Page> {
                    onChanged: (val){
                  setState(() {
                    radiovalue=val!;
+                   UserType=Indiviaultxt;
                  });
-
+                 print(UserType);
                    }),
                   Text(Indiviaultxt,style: GoogleFonts.poppins(
                       fontSize: width/26.5,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),),
-               SizedBox(width: 30,),
+               SizedBox(width: width/12,),
 
                Radio(
                    value: 2,
@@ -101,7 +104,9 @@ class _LogIn_PageState extends State<LogIn_Page> {
                    onChanged: (val){
                      setState(() {
                        radiovalue=val!;
+                       UserType=Distributetxt;
                      });
+                     print(UserType);
                    }),
                   Text(Distributetxt,style: GoogleFonts.poppins(
                       fontSize: width/26.5,
@@ -116,7 +121,7 @@ class _LogIn_PageState extends State<LogIn_Page> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8)
                 ),
-                padding: EdgeInsets.only(left: 5,right: 3,top: 5),
+                padding: EdgeInsets.only(left: width/72,right: width/120,top: height/151.2),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -150,7 +155,7 @@ class _LogIn_PageState extends State<LogIn_Page> {
                    color: Colors.white,
                   borderRadius: BorderRadius.circular(8)
                 ),
-                padding: EdgeInsets.only(left: 5,right: 3,top: 5),
+                padding: EdgeInsets.only(left: width/72,right: width/120,top: height/151.2),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -185,6 +190,8 @@ class _LogIn_PageState extends State<LogIn_Page> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Otp_Page(
                     phonenumber: Userphonenumbercontrolller.text,
                     Username: Usernamecontrolller.text,
+                    UserType:UserType,
+
                   ),));
                 },
                 child: Material(

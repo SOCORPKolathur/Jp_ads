@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:jp_ads/Authendication/LogIn_Page.dart';
+import 'package:jp_ads/Authendication/Payment_Page.dart';
 import 'package:jp_ads/Landing_Screen/Landing_Screen.dart';
 import 'package:jp_ads/Splash_screen/Splah_Screen.dart';
 import 'package:jp_ads/firebase_options.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Splash_screen()
     );

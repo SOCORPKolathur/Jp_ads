@@ -1,56 +1,82 @@
+import 'package:cupertino_stepper/cupertino_stepper.dart';
+import 'package:flutter/cupertino.dart';
 
-import 'package:flutter/material.dart';
-
-class HorizontalStepper extends StatefulWidget {
+class StepperPage extends StatefulWidget {
   @override
-  _HorizontalStepperState createState() => _HorizontalStepperState();
+  _StepperPageState createState() => _StepperPageState();
 }
 
-class _HorizontalStepperState extends State<HorizontalStepper> {
-  int _currentStep = 0;
-  List<String> _stepTitles = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-  ];
+class _StepperPageState extends State<StepperPage> {
+  int currentStep = 0;
 
   @override
   Widget build(BuildContext context) {
-    return
-      Scaffold(
-        body:
-        Stepper(
-
-          type: StepperType.horizontal,
-          currentStep: _currentStep,
-          onStepContinue: () {
-            setState(() {
-              if (_currentStep < _stepTitles.length - 1) {
-                _currentStep += 1;
-              }
-            });
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text('CupertinoStepper for Flutter'),
+      ),
+      child: SafeArea(
+        child: OrientationBuilder(
+          builder: (BuildContext context, Orientation orientation) {
+            switch (orientation) {
+              case Orientation.portrait:
+                return _buildStepper(StepperType.vertical);
+              case Orientation.portrait:
+                return _buildStepper(StepperType.horizontal);
+              default:
+                throw UnimplementedError(orientation.toString());
+            }
           },
-          onStepCancel: () {
-            setState(() {
-              if (_currentStep > 0) {
-                _currentStep -= 1;
-              }
-            });
-          },
-          steps: _stepTitles.map((title) {
-            int stepIndex = _stepTitles.indexOf(title);
-            return Step(
-              title: Text(title),
-              content: Container(
-                alignment: Alignment.centerLeft,
-                child: Text('This is content for $title.'),
-              ),
-              isActive: _currentStep == stepIndex,
-            );
-          }).toList(),
         ),
-      );
+      ),
+    );
   }
-}
+
+  CupertinoStepper _buildStepper(StepperType type) {
+    final canCancel = currentStep > 0;
+    final canContinue = currentStep < 3;
+    return CupertinoStepper(
+      type: type,
+      currentStep: currentStep,
+      onStepTapped: (step) => setState(() => currentStep = step),
+      onStepCancel: canCancel ? () => setState(() => --currentStep) : null,
+      onStepContinue: canContinue ? () => setState(() => ++currentStep) : null,
+      steps: [
+        for (var i = 0; i < 3; ++i)
+          _buildStep(
+            title: Text('Step ${i + 1}'),
+            isActive: i == currentStep,
+            state: i == currentStep
+                ? StepState.editing
+                : i < currentStep ? StepState.complete : StepState.indexed,
+          ),
+        _buildStep(
+          title: Text('Error'),
+          state: StepState.error,
+        ),
+        _buildStep(
+          title: Text('Disabled'),
+          state: StepState.disabled,
+        )
+      ],
+    );
+  }
+
+  Step _buildStep({
+    required Widget title,
+    StepState state = StepState.indexed,
+    bool isActive = false,
+  }) {
+    return Step(
+      title: title,
+      subtitle: Text('Subtitle'),
+      state: state,
+      isActive: isActive,
+      label: Text("fgfg"),
+      content: LimitedBox(
+        maxWidth: 360,
+        maxHeight: 360,
+        child: Container(color: CupertinoColors.systemGrey),
+      ),
+    );
+  }}

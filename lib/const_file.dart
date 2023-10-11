@@ -30,3 +30,7 @@ String Distributetxt="Distributor";
 
 ///pan card correction update varibales and name
 String Fathercondtiontxt="(Husband name not accept for pan card .Father or mother name\nis mandatory)";
+
+
+///lottie file Variables
+String Errrorlottie="assets/Error animation (2).json";

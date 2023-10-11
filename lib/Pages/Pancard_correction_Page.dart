@@ -10,7 +10,9 @@ import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';
 
 class Pancard_correction_Page extends StatefulWidget {
-  const Pancard_correction_Page({super.key});
+  String ?Userdocid;
+  String ?UserType;
+  Pancard_correction_Page({this.Userdocid,this.UserType});
 
   @override
   State<Pancard_correction_Page> createState() => _Pancard_correction_PageState();
@@ -64,7 +66,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
       appBar: AppBar(
         backgroundColor: Color(0xffF2F6FF),
         elevation: 0,
-        toolbarHeight: 70,
+        toolbarHeight: height/10.8,
         title: Text("PAN Card-Correction",
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -90,12 +92,13 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
       body:
      Form(
        key:_formKey ,
-       child: Container(
+       child:
+       Container(
          decoration: BoxDecoration(
              borderRadius: BorderRadius.circular(8),
              color: Color(0xffffe09f)
          ),
-         padding: EdgeInsets.only(left: 10,right: 10,top: 20,bottom: 20),
+         padding: EdgeInsets.only(left: width/36,right: width/36,top: height/37.8,bottom: height/37.8),
          child: SingleChildScrollView(
            physics: const BouncingScrollPhysics(),
            child: Column(
@@ -104,7 +107,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///pan number
                  SizedBox(
-                   height:100,
+                   height:height/7.56,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -113,10 +116,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -136,7 +139,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            ],
                            decoration: InputDecoration(
                              counterText: "",
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type pan number",
                                hintStyle: GoogleFonts.poppins()
@@ -154,15 +157,18 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///correction container
                  Container(
-                   height: 350,
+                   height: height/2.16,
                    color: Colors.white,
-                   margin: EdgeInsets.only(left: 20,right: 20,bottom: 20),
+                   margin: EdgeInsets.only(left:width/18,right: width/18,bottom: height/37.8),
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      mainAxisAlignment: MainAxisAlignment.start,
                      children: [
                        Padding(
-                         padding: const EdgeInsets.all(8.0),
+                         padding:  EdgeInsets.symmetric(
+                           vertical: height/94.5,
+                           horizontal: width/45
+                         ),
                          child: Row(
                            children: [
                              Text("Correction /Updates For  *",
@@ -170,7 +176,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                    fontSize:width/22,
                                    color: Colors.black),),
-                             SizedBox(width: 10,),
+                             SizedBox(width: width/36.0,),
                              GestureDetector(
                                onTap: (){
                                  setState(() {
@@ -184,7 +190,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                  });
                                },
                                child: Container(
-                                 height: 25,width: 50,
+                                 height: height/30.24,width: width/7.2,
                                  decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                    color: Color(0xff245BCA)
@@ -202,7 +208,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            ],
                          ),
                        ),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
 
                        ///name
                        Row(
@@ -235,8 +241,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                                }),
                            Container(
-                             height: 40,
-                             width: 250,
+                             height:height/18.9,
+                             width:width/1.44,
                              decoration: BoxDecoration(
                                  border: Border(
                                      bottom: BorderSide(
@@ -245,7 +251,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                  )
                              ),
                              child: Padding(
-                               padding:  EdgeInsets.only(top: 12.0),
+                               padding:  EdgeInsets.only(top:height/63),
                                child: Text("Name",
                                  textAlign: TextAlign.start,
                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -288,8 +294,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                                }),
                            Container(
-                             height: 40,
-                             width: 250,
+                             height:height/18.9,
+                             width:width/1.44,
                              decoration: BoxDecoration(
                                  border: Border(
                                      bottom: BorderSide(
@@ -298,7 +304,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                  )
                              ),
                              child: Padding(
-                               padding:  EdgeInsets.only(top: 12.0),
+                               padding:  EdgeInsets.only(top:height/63),
                                child: Text("Father Name",
                                  textAlign: TextAlign.start,
                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -340,8 +346,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                                }),
                            Container(
-                             height: 40,
-                             width: 250,
+                             height:height/18.9,
+                             width:width/1.44,
                              decoration: BoxDecoration(
                                  border: Border(
                                      bottom: BorderSide(
@@ -350,7 +356,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                  )
                              ),
                              child: Padding(
-                               padding:  EdgeInsets.only(top: 12.0),
+                               padding:  EdgeInsets.only(top:height/63),
                                child: Text("Date Of Birth",
                                  textAlign: TextAlign.start,
                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -392,8 +398,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                                }),
                            Container(
-                             height: 40,
-                             width: 250,
+                             height:height/18.9,
+                             width:width/1.44,
                              decoration: BoxDecoration(
                                  border: Border(
                                      bottom: BorderSide(
@@ -402,7 +408,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                  )
                              ),
                              child: Padding(
-                               padding:  EdgeInsets.only(top: 12.0),
+                               padding:  EdgeInsets.only(top:height/63),
                                child: Text("Address",
                                  textAlign: TextAlign.start,
                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -445,8 +451,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                                }),
                            Container(
-                             height: 40,
-                             width: 250,
+                             height:height/18.9,
+                             width:width/1.44,
                              decoration: BoxDecoration(
                                  border: Border(
                                      bottom: BorderSide(
@@ -455,7 +461,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                  )
                              ),
                              child: Padding(
-                               padding:  EdgeInsets.only(top: 12.0),
+                               padding:  EdgeInsets.only(top:height/63),
                                child: Text("Photo",
                                  textAlign: TextAlign.start,
                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -497,8 +503,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                                }),
                            Container(
-                             height: 40,
-                             width: 250,
+                             height:height/18.9,
+                             width:width/1.44,
                              decoration: BoxDecoration(
                                  border: Border(
                                      bottom: BorderSide(
@@ -507,7 +513,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                  )
                              ),
                              child: Padding(
-                               padding:  EdgeInsets.only(top: 12.0),
+                               padding:  EdgeInsets.only(top:height/63),
                                child: Text("Signature",
                                  textAlign: TextAlign.start,
                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -533,7 +539,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///Name
                  SizedBox(
-                   height:100,
+                   height:height/7.56,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -542,10 +548,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -559,7 +565,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            ],
                            controller: corerctnamecontroller,
                            decoration: InputDecoration(
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type full name",
                                hintStyle: GoogleFonts.poppins()
@@ -577,7 +583,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///Father name
                  SizedBox(
-                   height:125,
+                   height:height/6.048,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -586,16 +592,16 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 5,),
+                       SizedBox(height: height/151.2,),
                        Text(Fathercondtiontxt,
                          textAlign: TextAlign.start,
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/40,
                              color: Colors.black),),
-                       SizedBox(height: 5,),
+                       SizedBox(height: height/151.2,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -609,7 +615,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            ],
                            controller: corerctfathernamecontroller,
                            decoration: InputDecoration(
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type father name",
                                hintStyle: GoogleFonts.poppins()
@@ -626,7 +632,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///Date of birth
                  SizedBox(
-                   height:100,
+                   height:height/7.56,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -635,10 +641,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -653,7 +659,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                              Datepickerfunction(context);
                            },
                            decoration: InputDecoration(
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type date of birth",
                                hintStyle: GoogleFonts.poppins()
@@ -670,7 +676,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///Gender
                  SizedBox(
-                   height:100,
+                   height:height/7.56,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -679,10 +685,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -697,7 +703,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                              hint: Text(
                                'Select Gender',
                                style: GoogleFonts.poppins(
-                                 fontSize: 14,
+                                 fontSize:width/25.714,
                                  color: Theme.of(context).hintColor,
                                ),
                              ),
@@ -707,7 +713,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                child: Text(
                                  item,
                                  style:  GoogleFonts.poppins(
-                                   fontSize: 14,
+                                   fontSize:width/25.714,
                                  ),
                                ),
                              ))
@@ -720,13 +726,13 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                });
                                  _formKey.currentState!.validate();
                              },
-                             buttonStyleData: const ButtonStyleData(
+                             buttonStyleData:  ButtonStyleData(
                                padding: EdgeInsets.symmetric(horizontal: 16),
-                               height: 40,
-                               width: 140,
+                               height:height/18.9,
+                               width: width/2.571,
                              ),
-                             menuItemStyleData: const MenuItemStyleData(
-                               height: 40,
+                             menuItemStyleData:  MenuItemStyleData(
+                               height:height/18.9,
                              ),
                            ),
                          ),
@@ -738,7 +744,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///Name of Promise
                  SizedBox(
-                   height:125,
+                   height:height/6.048,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -747,10 +753,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -762,7 +768,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            maxLines: null,
                            controller: corerctnameandvillagecontroller,
                            decoration: InputDecoration(
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type Village and more",
                                hintStyle: GoogleFonts.poppins()
@@ -779,7 +785,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///Road and more
                  SizedBox(
-                   height:100,
+                   height:height/7.56,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -788,10 +794,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -803,7 +809,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            maxLines: null,
                            controller: corerctaddresscontroller,
                            decoration: InputDecoration(
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type road and more",
                                hintStyle: GoogleFonts.poppins()
@@ -821,7 +827,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///District
                  SizedBox(
-                   height:100,
+                   height:height/7.56,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -830,10 +836,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -849,7 +855,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            controller: corerctdistrictcontroller,
                            keyboardType: TextInputType.name,
                            decoration: InputDecoration(
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type District",
                                hintStyle: GoogleFonts.poppins()
@@ -867,7 +873,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///State
                  SizedBox(
-                   height:100,
+                   height:height/7.56,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -876,10 +882,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -894,7 +900,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                           ],
                            controller: corerctstatecontroller,
                            decoration: InputDecoration(
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type State name",
                                hintStyle: GoogleFonts.poppins()
@@ -912,7 +918,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                  ///Pin code
                  SizedBox(
-                   height:100,
+                   height:height/7.56,
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -921,10 +927,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -942,7 +948,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            controller: corerctpincodecontroller,
                            decoration: InputDecoration(
                                counterText: "",
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type pin code",
                                hintStyle: GoogleFonts.poppins()
@@ -968,10 +974,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                              fontSize:width/22,
                              color: Colors.black),),
-                       SizedBox(height: 10,),
+                       SizedBox(height:height/75.6,),
                        Container(
-                         height: 50,
-                         width: 300,
+                         height:height/15.12,
+                         width:width/1.2,
                          decoration: BoxDecoration(
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(8),
@@ -989,7 +995,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            controller: corerctphonenumbercontroller,
                            decoration: InputDecoration(
                              counterText: "",
-                               contentPadding: EdgeInsets.only(left: 20),
+                               contentPadding: EdgeInsets.only(left:width/18),
                                border: InputBorder.none,
                                hintText: "Type phone number",
                                hintStyle: GoogleFonts.poppins()
@@ -1024,8 +1030,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                    child: Center(
                      child:
                      Container(
-                       height: 50,
-                       width: 180,
+                       height:height/15.12,
+                       width: width/2,
                        decoration: BoxDecoration(
                            borderRadius: BorderRadius.circular(8),
                            gradient: LinearGradient(
@@ -1094,26 +1100,107 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
 
 
-  correctionpancardfunction(){
-    FirebaseFirestore.instance.collection("Correction_cards").doc().set({
-      "pancardno":Pannumbercontroller.text,
-      "correctionupdate":Selectedradiovalue,
-      "Crtname":corerctnamecontroller.text,
-      "crtfathername":corerctfathernamecontroller.text,
-      "crtdate_of_birth":corerctdobcontroller.text,
-      "crgender":selectedValuegender,
-      "crtnameandbuildsno":corerctnameandvillagecontroller.text,
-      "crtnadddress":corerctaddresscontroller.text,
-      "crtdistrict":corerctdistrictcontroller.text,
-      "crtstate":corerctstatecontroller.text,
-      "crtpincode":corerctpincodecontroller.text,
-      "crtphonenumber":corerctphonenumbercontroller.text,
-      "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-      "time":DateFormat('hh:mm a').format(DateTime.now()),
-      "timestamp":DateTime.now().millisecondsSinceEpoch
+  correctionpancardfunction() async {
+
+
+
+    FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
+      if(value['usertype']=="Individual"){
+        if(value['usageccount']<3){
+          FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+            "usageccount":FieldValue.increment(1)
+          });
+          FirebaseFirestore.instance.collection("Correction_cards").doc().set({
+            "pancardno":Pannumbercontroller.text,
+            "correctionupdate":Selectedradiovalue,
+            "Crtname":corerctnamecontroller.text,
+            "crtfathername":corerctfathernamecontroller.text,
+            "crtdate_of_birth":corerctdobcontroller.text,
+            "crgender":selectedValuegender,
+            "crtnameandbuildsno":corerctnameandvillagecontroller.text,
+            "crtnadddress":corerctaddresscontroller.text,
+            "crtdistrict":corerctdistrictcontroller.text,
+            "crtstate":corerctstatecontroller.text,
+            "crtpincode":corerctpincodecontroller.text,
+            "crtphonenumber":corerctphonenumbercontroller.text,
+            "usertype":widget.UserType,
+            "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+            "time":DateFormat('hh:mm a').format(DateTime.now()),
+            "timestamp":DateTime.now().millisecondsSinceEpoch
+          });
+          FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Correction_cards").doc().set({
+            "pancardno":Pannumbercontroller.text,
+            "correctionupdate":Selectedradiovalue,
+            "Crtname":corerctnamecontroller.text,
+            "crtfathername":corerctfathernamecontroller.text,
+            "crtdate_of_birth":corerctdobcontroller.text,
+            "crgender":selectedValuegender,
+            "crtnameandbuildsno":corerctnameandvillagecontroller.text,
+            "crtnadddress":corerctaddresscontroller.text,
+            "crtdistrict":corerctdistrictcontroller.text,
+            "crtstate":corerctstatecontroller.text,
+            "crtpincode":corerctpincodecontroller.text,
+            "crtphonenumber":corerctphonenumbercontroller.text,
+            "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+            "time":DateFormat('hh:mm a').format(DateTime.now()),
+            "timestamp":DateTime.now().millisecondsSinceEpoch
+          });
+
+          clearcontrollers();
+          Succespopup();
+        }
+        else{
+          planExitpopup();
+        }
+      }
+
+      else{
+        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+          "usageccount":FieldValue.increment(1)
+        });
+        FirebaseFirestore.instance.collection("Correction_cards").doc().set({
+          "pancardno":Pannumbercontroller.text,
+          "correctionupdate":Selectedradiovalue,
+          "Crtname":corerctnamecontroller.text,
+          "crtfathername":corerctfathernamecontroller.text,
+          "crtdate_of_birth":corerctdobcontroller.text,
+          "crgender":selectedValuegender,
+          "crtnameandbuildsno":corerctnameandvillagecontroller.text,
+          "crtnadddress":corerctaddresscontroller.text,
+          "crtdistrict":corerctdistrictcontroller.text,
+          "crtstate":corerctstatecontroller.text,
+          "crtpincode":corerctpincodecontroller.text,
+          "usertype":widget.UserType,
+          "crtphonenumber":corerctphonenumbercontroller.text,
+          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+          "time":DateFormat('hh:mm a').format(DateTime.now()),
+          "timestamp":DateTime.now().millisecondsSinceEpoch
+        });
+        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Correction_cards").doc().set({
+          "pancardno":Pannumbercontroller.text,
+          "correctionupdate":Selectedradiovalue,
+          "Crtname":corerctnamecontroller.text,
+          "crtfathername":corerctfathernamecontroller.text,
+          "crtdate_of_birth":corerctdobcontroller.text,
+          "crgender":selectedValuegender,
+          "crtnameandbuildsno":corerctnameandvillagecontroller.text,
+          "crtnadddress":corerctaddresscontroller.text,
+          "crtdistrict":corerctdistrictcontroller.text,
+          "crtstate":corerctstatecontroller.text,
+          "crtpincode":corerctpincodecontroller.text,
+          "crtphonenumber":corerctphonenumbercontroller.text,
+          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+          "time":DateFormat('hh:mm a').format(DateTime.now()),
+          "timestamp":DateTime.now().millisecondsSinceEpoch
+        });
+
+        clearcontrollers();
+        Succespopup();
+      }
+
     });
-    clearcontrollers();
-    Succespopup();
+
+
 
   }
 
@@ -1172,15 +1259,15 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: 30,),
+                      SizedBox(height: height/25.2,),
 
                       SizedBox(
-                        height: 100,
-                        width: 100,
+                        height: height/7.56,
+                        width: width/3.60,
                         child: Lottie.network(
                             "https://assets8.lottiefiles.com/private_files/lf30_nsqfzxxx.json"),
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(height:height/75.6,),
 
                       Text(
                         "Submit Successfully....",
@@ -1189,7 +1276,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                             fontWeight: FontWeight.w700,
                             color: Colors.white),
                       ),
-                      SizedBox(height: 60,),
+                      SizedBox(height: height/12.6,),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -1200,8 +1287,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                               Navigator.pop(context);
                             },
                             child: Container(
-                              height: 35,
-                              width: 80,
+                              height: height/21.6,
+                              width: width/4.5,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(8)),
@@ -1225,8 +1312,122 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                               Navigator.pop(context);
                             },
                             child: Container(
-                              height: 35,
-                              width: 80,
+                              height: height/21.6,
+                              width: width/4.5,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Center(
+                                  child: Text(
+                                    "Okay",
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: width / 25.718),
+                                  )),
+                            ),
+                          ),
+                          SizedBox(
+                            width: width / 34.15,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+      },
+    );
+  }
+
+  planExitpopup() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return
+          Padding(
+            padding: EdgeInsets.only(
+                left: width / 8.268,
+                right: width / 8.845,
+                top: height / 3.5,
+                bottom: height / 3.5),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xff245BCA),
+                          Color(0xff245BCA),
+                        ]
+                    )
+                ),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: height/25.2,),
+
+                      SizedBox(
+                        // height: 150,
+                        // width: 150,
+                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: 120,width: 120),
+                      ),
+                      SizedBox(height:height/75.6,),
+
+                      Text(
+                        "Exist Your  Free Apply....",
+                        style: GoogleFonts.poppins(
+                            fontSize: width / 25.613,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
+                      ),
+                      SizedBox(height: height/12.6,),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          //cancel button
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: height/21.6,
+                              width: width/4.5,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Center(
+                                  child: Text(
+                                    "Cancel",
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: width / 25.718),
+                                  )),
+                            ),
+                          ),
+                          SizedBox(
+                            width: width / 34.15,
+                          ),
+
+                          //okay button
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: height/21.6,
+                              width: width/4.5,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(8)),

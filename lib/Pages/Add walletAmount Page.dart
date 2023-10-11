@@ -47,7 +47,7 @@ class _addwallet_Amount_PageState extends State<addwallet_Amount_Page> {
       body: Column(
         children: [
           SizedBox(
-            height:100,
+            height:height/7.56,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -56,10 +56,10 @@ class _addwallet_Amount_PageState extends State<addwallet_Amount_Page> {
                   style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                       fontSize:width/22,
                       color: Colors.black),),
-                SizedBox(height: 10,),
+                SizedBox(height: height/75.6,),
                 Container(
-                  height: 50,
-                  width: 300,
+                  height: height/15.12,
+                  width: width/1.2,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
@@ -70,7 +70,7 @@ class _addwallet_Amount_PageState extends State<addwallet_Amount_Page> {
                   child: TextField(
                     controller: Walletamountcontroller,
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 20),
+                        contentPadding: EdgeInsets.only(left: width/18),
                         border: InputBorder.none
                     ),
                   ),

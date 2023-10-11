@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:jp_ads/Authendication/Payment_Page.dart';
 import 'package:jp_ads/Landing_Screen/Landing_Screen.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
@@ -13,7 +14,8 @@ import 'package:otp_text_field/style.dart';
 class Otp_Page extends StatefulWidget {
   String ?Username;
   String ?phonenumber;
-   Otp_Page({this.Username,this.phonenumber});
+  String ?UserType;
+   Otp_Page({this.Username,this.phonenumber,this.UserType});
 
   @override
   State<Otp_Page> createState() => _Otp_PageState();
@@ -69,8 +71,8 @@ class _Otp_PageState extends State<Otp_Page> {
                           Navigator.pop(context);
                         },
                         child: SizedBox(
-                            height: 40,
-                            width: 40,
+                            height: height/18.9,
+                            width: width/9,
                             child: Icon(Icons.clear,color: Colors.white,)),
                       )
                     ],
@@ -112,7 +114,7 @@ class _Otp_PageState extends State<Otp_Page> {
 
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w600,
-                          fontSize: 17),
+                          fontSize: width/21.176),
                       onChanged: (pin) {
                       },
                       onCompleted: (pin) {
@@ -222,11 +224,23 @@ class _Otp_PageState extends State<Otp_Page> {
       "userid":FirebaseAuth.instance.currentUser!.uid,
       "picture":"",
       "fcmtoken":token,
+      "usertype":widget.UserType,
+      "payment":false,
+      "usageccount":0,
       "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
       "time":DateFormat.yMMMd().format(DateTime.now()),
       "timestamp":DateTime.now().millisecondsSinceEpoch
     });
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Landing_Screen(),));
+
+    if(widget.UserType=="Individual"){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Landing_Screen(),));
+    }
+    if(widget.UserType=="Distributor"){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Payment_Page(Type:widget.UserType),));
+
+    }
+
+
   }
 
 }

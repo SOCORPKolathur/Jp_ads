@@ -58,7 +58,7 @@ class _Splash_screenState extends State<Splash_screen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding:  EdgeInsets.only(top: 100.0),
+              padding:  EdgeInsets.only(top: height/7.56),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -67,8 +67,8 @@ class _Splash_screenState extends State<Splash_screen> {
                     alignment: Alignment.bottomCenter,
                     children: [
                       Container(
-                        height: 100,
-                        width: 320,
+                        height: height/7.56,
+                        width: width/1.125,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.contain,
@@ -77,7 +77,7 @@ class _Splash_screenState extends State<Splash_screen> {
                         ),
                       ),
                      Padding(
-                       padding:  EdgeInsets.only(bottom: 18,left: 10),
+                       padding:  EdgeInsets.only(bottom: height/42,left: width/36.0),
                        child: Text(Quotes,
                 style: GoogleFonts.poppins(
                    fontSize: width/30.4,
@@ -106,9 +106,9 @@ class _Splash_screenState extends State<Splash_screen> {
             ),
 
             Padding(
-              padding:  EdgeInsets.only(top: 20),
+              padding:  EdgeInsets.only(top: height/37.8),
               child: SizedBox(
-                width: 200,
+                width: width/1.8,
                 child: Text(Quotes2,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(fontWeight: FontWeight.w700,
