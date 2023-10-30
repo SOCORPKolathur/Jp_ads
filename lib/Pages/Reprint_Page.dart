@@ -35,6 +35,24 @@ class _Reprint_PageState extends State<Reprint_Page> {
   List<String>Gender=['Select Gender',"Male","Female","Transgender"];
 
   @override
+  void initState() {
+    checkusagecount();
+    // TODO: implement initState
+    super.initState();
+  }
+  checkusagecount()async{
+
+    var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
+    if(document['usertype']=="Individual"){
+      if(document['usageccount']==3){
+        print(document["usageccount"]);
+        planExitpopup();
+      }
+    }
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double  width = MediaQuery.of(context).size.width;
@@ -121,9 +139,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                                _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -164,9 +180,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                              _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -209,9 +223,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                              _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -253,9 +265,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                              _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -312,7 +322,6 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 setState(() {
                                   selectedValuegender = value!;
                                 });
-                                _formKey.currentState!.validate();
                               },
                               buttonStyleData:  ButtonStyleData(
                                 padding: EdgeInsets.symmetric(horizontal: width/22.5),
@@ -362,9 +371,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                              _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -403,9 +410,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                              _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -449,9 +454,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                              _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -494,9 +497,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                              _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -542,9 +543,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                              _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -589,9 +588,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 hintStyle: GoogleFonts.poppins()
                             ),
                             validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                            onChanged: (_){
-                              _formKey.currentState!.validate();
-                            },
+
                           ),
                         )
                       ],
@@ -601,10 +598,9 @@ class _Reprint_PageState extends State<Reprint_Page> {
 
                   GestureDetector(
                     onTap: (){
-                      reprintpancardfunction();
-                      // if (_formKey.currentState!.validate()&&printpincodecontroller.text.length==6&&printphonenumbercontroller.text.length==10) {
-                      //   reprintpancardfunction();
-                      // }
+                      if (_formKey.currentState!.validate()&&printpincodecontroller.text.length==6&&printphonenumbercontroller.text.length==10) {
+                        reprintpancardfunction();
+                      }
                     },
                     child: Center(
                       child:
@@ -681,17 +677,52 @@ class _Reprint_PageState extends State<Reprint_Page> {
 
 
   reprintpancardfunction() async {
-    // FirebaseFirestore.instance.collection("Correction_cards").doc().set({
-    //   "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-    //   "time":DateFormat('hh:mm a').format(DateTime.now()),
-    //   "timestamp":DateTime.now().millisecondsSinceEpoch
-    // });
    FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
       if(value['usertype']=="Individual"){
         if(value['usageccount']<3){
           FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
             "usageccount":FieldValue.increment(1)
           });
+
+          FirebaseFirestore.instance.collection("Reprint_document").doc().set({
+            "name":printnamecontroller.text,
+            "fathername":printfathernamecontroller.text,
+            "dob":printdobcontroller.text,
+            "gender":selectedValuegender,
+            "village/town":printnameandvillagecontroller.text,
+            "postoffice":printpostofficecontroller.text,
+            "district":printdistrictcontroller.text,
+            "state":printstatecontroller.text,
+            "pincode":printpincodecontroller.text,
+            "phoneno":printphonenumbercontroller.text,
+            "Type":"Reprint",
+            "usertype":widget.UserType,
+            "panno":printPannumbercontroller.text,
+            "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+            "time":DateFormat('hh:mm a').format(DateTime.now()),
+            "timestamp":DateTime.now().millisecondsSinceEpoch
+          });
+          FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Reprint_document").doc().set({
+            "name":printnamecontroller.text,
+            "fathername":printfathernamecontroller.text,
+            "dob":printdobcontroller.text,
+            "gender":selectedValuegender,
+            "village/town":printnameandvillagecontroller.text,
+            "postoffice":printpostofficecontroller.text,
+            "district":printdistrictcontroller.text,
+            "state":printstatecontroller.text,
+            "pincode":printpincodecontroller.text,
+            "phoneno":printphonenumbercontroller.text,
+            "Type":"Reprint",
+            "usertype":widget.UserType,
+            "panno":printPannumbercontroller.text,
+            "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+            "time":DateFormat('hh:mm a').format(DateTime.now()),
+            "timestamp":DateTime.now().millisecondsSinceEpoch
+          });
+
+          Succespopup();
+          clearcontrollers();
         }
         else{
           planExitpopup();
@@ -702,11 +733,50 @@ class _Reprint_PageState extends State<Reprint_Page> {
         FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
           "usageccount":FieldValue.increment(1)
         });
+
+        FirebaseFirestore.instance.collection("Reprint_document").doc().set({
+          "name":printnamecontroller.text,
+          "fathername":printfathernamecontroller.text,
+          "dob":printdobcontroller.text,
+          "gender":selectedValuegender,
+          "village/town":printnameandvillagecontroller.text,
+          "postoffice":printpostofficecontroller.text,
+          "district":printdistrictcontroller.text,
+          "state":printstatecontroller.text,
+          "pincode":printpincodecontroller.text,
+          "phoneno":printphonenumbercontroller.text,
+          "Type":"Reprint",
+          "usertype":widget.UserType,
+          "panno":printPannumbercontroller.text,
+          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+          "time":DateFormat('hh:mm a').format(DateTime.now()),
+          "timestamp":DateTime.now().millisecondsSinceEpoch
+        });
+        FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Reprint_document").doc().set({
+          "name":printnamecontroller.text,
+          "fathername":printfathernamecontroller.text,
+          "dob":printdobcontroller.text,
+          "gender":selectedValuegender,
+          "village/town":printnameandvillagecontroller.text,
+          "postoffice":printpostofficecontroller.text,
+          "district":printdistrictcontroller.text,
+          "state":printstatecontroller.text,
+          "pincode":printpincodecontroller.text,
+          "phoneno":printphonenumbercontroller.text,
+          "Type":"Reprint",
+          "usertype":widget.UserType,
+          "panno":printPannumbercontroller.text,
+          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+          "time":DateFormat('hh:mm a').format(DateTime.now()),
+          "timestamp":DateTime.now().millisecondsSinceEpoch
+        });
+
+        Succespopup();
+        clearcontrollers();
       }
 
     });
-    clearcontrollers();
-    Succespopup();
+
   }
 
   clearcontrollers(){
@@ -745,14 +815,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
               body: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xff245BCA),
-                          Color(0xff245BCA),
-                        ]
-                    )
+                    color: Colors.white
                 ),
                 child: Center(
                   child: Column(
@@ -766,14 +829,14 @@ class _Reprint_PageState extends State<Reprint_Page> {
                         child: Lottie.network(
                             "https://assets8.lottiefiles.com/private_files/lf30_nsqfzxxx.json"),
                       ),
-                      SizedBox(height:height/75.6,),
+                      SizedBox(height: height/75.6,),
 
                       Text(
                         "Submit Successfully....",
                         style: GoogleFonts.poppins(
                             fontSize: width / 25.613,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white),
+                            color: Colors.black),
                       ),
                       SizedBox(height: height/12.6,),
 
@@ -784,19 +847,20 @@ class _Reprint_PageState extends State<Reprint_Page> {
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
                               height: height/21.6,
                               width: width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff245BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Cancel",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),
@@ -809,19 +873,20 @@ class _Reprint_PageState extends State<Reprint_Page> {
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
                               height: height/21.6,
                               width: width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff245BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Okay",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),
@@ -860,24 +925,18 @@ class _Reprint_PageState extends State<Reprint_Page> {
               body: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xff245BCA),
-                          Color(0xff245BCA),
-                        ]
-                    )
+                    color: Colors.white
+
                 ),
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: height/25.2,),
+                      SizedBox(height:height/25.2,),
 
                       SizedBox(
                         // height: 150,
-                        // width: 150,
+                        // width:width/2.4,
                         child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
                       ),
                       SizedBox(height: height/75.6,),
@@ -887,7 +946,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                         style: GoogleFonts.poppins(
                             fontSize: width / 25.613,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white),
+                            color: Colors.black),
                       ),
                       SizedBox(height: height/12.6,),
 
@@ -898,19 +957,20 @@ class _Reprint_PageState extends State<Reprint_Page> {
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
+                              height:height/21.6,
+                              width:width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff255BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Cancel",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),
@@ -923,19 +983,20 @@ class _Reprint_PageState extends State<Reprint_Page> {
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
+                              height:height/21.6,
+                              width:width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff255BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Okay",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),

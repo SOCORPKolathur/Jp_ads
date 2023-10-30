@@ -18,6 +18,29 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
 
   TextEditingController Pannumbercontroller=TextEditingController();
 
+
+
+
+
+
+  @override
+  void initState() {
+    checkusagecount();
+    // TODO: implement initState
+    super.initState();
+  }
+  checkusagecount()async{
+
+    var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
+    if(document['usertype']=="Individual"){
+      if(document['usageccount']==3){
+        print(document["usageccount"]);
+        planExitpopup();
+      }
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -293,24 +316,18 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
               body: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xff245BCA),
-                          Color(0xff245BCA),
-                        ]
-                    )
+                    color: Colors.white
+
                 ),
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: height/25.2,),
+                      SizedBox(height:height/25.2,),
 
                       SizedBox(
                         // height: 150,
-                        // width: 150,
+                        // width:width/2.4,
                         child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
                       ),
                       SizedBox(height: height/75.6,),
@@ -320,7 +337,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                         style: GoogleFonts.poppins(
                             fontSize: width / 25.613,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white),
+                            color: Colors.black),
                       ),
                       SizedBox(height: height/12.6,),
 
@@ -331,19 +348,20 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
-                             height: height/21.6,
-                              width: width/4.5,
+                              height:height/21.6,
+                              width:width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff255BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Cancel",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),
@@ -356,19 +374,20 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
-                             height: height/21.6,
-                              width: width/4.5,
+                              height:height/21.6,
+                              width:width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff255BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Okay",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),

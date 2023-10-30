@@ -16,7 +16,7 @@ class _Notification_PageState extends State<Notification_Page> {
     double height = MediaQuery.of(context).size.height;
     double  width = MediaQuery.of(context).size.width;
     return Scaffold(
-
+      backgroundColor:  Color(0xffF2F6FF),
       appBar: AppBar(
         backgroundColor: const Color(0xffF2F6FF),
         elevation: 0,
@@ -43,7 +43,8 @@ class _Notification_PageState extends State<Notification_Page> {
           ),
         ),
       ),
-      body: StreamBuilder(
+      body:
+      StreamBuilder(
        stream: FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Notification").snapshots(),
        builder: (context, snapshot) {
          if(snapshot.hasData==null){
@@ -66,8 +67,8 @@ class _Notification_PageState extends State<Notification_Page> {
                horizontal: width/45
              ),
              child: Material(
-                 color: Colors.grey.shade300,
-                 borderRadius: BorderRadius.circular(8),
+               borderRadius: BorderRadius.circular(8),
+               color: Colors.white54.withOpacity(0.9),
                elevation: 10,
                shadowColor: Colors.black12,
                child: Container(
@@ -76,21 +77,20 @@ class _Notification_PageState extends State<Notification_Page> {
                    vertical: height/189
                  ),
                decoration: BoxDecoration(
-                   color: Colors.grey.shade300,
-                 borderRadius: BorderRadius.circular(8)
+                 borderRadius: BorderRadius.circular(8),
+                 color: Colors.white54.withOpacity(0.9),
                ),
                  child: ListTile(
                    onTap: (){
-
                      Updatethestatusfunc(Notification.id);
-
                    },
                    style: ListTileStyle.drawer,
                    title: Row(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        SizedBox(
-                         width:width/1.531,
+                         width:width/1.58,
+
                          child: Text(Notification['title'].toString(),style: GoogleFonts.poppins(fontWeight: FontWeight.w600,
                              fontSize: width/30,
                              color: const Color(0xff8C8994)),),
@@ -108,7 +108,17 @@ class _Notification_PageState extends State<Notification_Page> {
                              ],
                              crossAxisAlignment: CrossAxisAlignment.start,
                            ),
-                           Notification['isviewed']==false? Icon(Icons.circle,color: Colors.red,size: width/24,):const SizedBox()
+                           Notification['isviewed']==false? Container(
+                             decoration: BoxDecoration(
+                               borderRadius: BorderRadius.circular(width/3.60),
+                               color: Colors.indigo
+
+                             ),
+                             child: Padding(
+                               padding:  EdgeInsets.only(left: 4,right: 4),
+                               child: Center(child: Text("New",style: GoogleFonts.poppins(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w700),)),
+                             ),
+                           ):const SizedBox()
                          ],
                        ),
                      ],

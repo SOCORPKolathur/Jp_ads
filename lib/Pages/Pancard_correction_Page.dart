@@ -50,11 +50,27 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
+    checkusagecount();
   setState(() {
     Selectedradiovalue.clear();
   });
     // TODO: implement initState
     super.initState();
+  }
+
+
+
+
+  checkusagecount()async{
+
+    var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
+    if(document['usertype']=="Individual"){
+      if(document['usageccount']==3){
+        print(document["usageccount"]);
+        planExitpopup();
+      }
+    }
+
   }
 
   @override
@@ -145,9 +161,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -571,9 +585,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -621,9 +633,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -665,9 +675,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -724,7 +732,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                setState(() {
                                  selectedValuegender = value!;
                                });
-                                 _formKey.currentState!.validate();
+
                              },
                              buttonStyleData:  ButtonStyleData(
                                padding: EdgeInsets.symmetric(horizontal: 16),
@@ -774,9 +782,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -815,9 +821,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -861,9 +865,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -906,9 +908,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -954,9 +954,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -1001,9 +999,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                hintStyle: GoogleFonts.poppins()
                            ),
                            validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                           onChanged: (_){
-                             _formKey.currentState!.validate();
-                           },
+
                          ),
                        )
                      ],
@@ -1128,7 +1124,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
             "time":DateFormat('hh:mm a').format(DateTime.now()),
             "timestamp":DateTime.now().millisecondsSinceEpoch
           });
-          FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Correction_cards").doc().set({
+
+          FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
             "pancardno":Pannumbercontroller.text,
             "correctionupdate":Selectedradiovalue,
             "Crtname":corerctnamecontroller.text,
@@ -1141,13 +1138,16 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
             "crtstate":corerctstatecontroller.text,
             "crtpincode":corerctpincodecontroller.text,
             "crtphonenumber":corerctphonenumbercontroller.text,
+            "updatestatus":"",
+            "Type":"Correction",
             "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
             "time":DateFormat('hh:mm a').format(DateTime.now()),
             "timestamp":DateTime.now().millisecondsSinceEpoch
           });
 
-          clearcontrollers();
+
           Succespopup();
+          clearcontrollers();
         }
         else{
           planExitpopup();
@@ -1176,7 +1176,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
           "time":DateFormat('hh:mm a').format(DateTime.now()),
           "timestamp":DateTime.now().millisecondsSinceEpoch
         });
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Correction_cards").doc().set({
+        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
           "pancardno":Pannumbercontroller.text,
           "correctionupdate":Selectedradiovalue,
           "Crtname":corerctnamecontroller.text,
@@ -1188,14 +1188,17 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
           "crtdistrict":corerctdistrictcontroller.text,
           "crtstate":corerctstatecontroller.text,
           "crtpincode":corerctpincodecontroller.text,
+          "updatestatus":"",
+          "Type":"Correction",
           "crtphonenumber":corerctphonenumbercontroller.text,
           "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
           "time":DateFormat('hh:mm a').format(DateTime.now()),
           "timestamp":DateTime.now().millisecondsSinceEpoch
         });
 
-        clearcontrollers();
+
         Succespopup();
+        clearcontrollers();
       }
 
     });
@@ -1246,14 +1249,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
               body: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xff245BCA),
-                          Color(0xff245BCA),
-                        ]
-                    )
+                    color: Colors.white
                 ),
                 child: Center(
                   child: Column(
@@ -1267,14 +1263,14 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                         child: Lottie.network(
                             "https://assets8.lottiefiles.com/private_files/lf30_nsqfzxxx.json"),
                       ),
-                      SizedBox(height:height/75.6,),
+                      SizedBox(height: height/75.6,),
 
                       Text(
                         "Submit Successfully....",
                         style: GoogleFonts.poppins(
                             fontSize: width / 25.613,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white),
+                            color: Colors.black),
                       ),
                       SizedBox(height: height/12.6,),
 
@@ -1285,19 +1281,20 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
                               height: height/21.6,
                               width: width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff245BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Cancel",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),
@@ -1310,19 +1307,20 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
                               height: height/21.6,
                               width: width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff245BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Okay",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),
@@ -1361,34 +1359,28 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
               body: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xff245BCA),
-                          Color(0xff245BCA),
-                        ]
-                    )
+                    color: Colors.white
+
                 ),
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: height/25.2,),
+                      SizedBox(height:height/25.2,),
 
                       SizedBox(
                         // height: 150,
-                        // width: 150,
-                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: 120,width: 120),
+                        // width:width/2.4,
+                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
                       ),
-                      SizedBox(height:height/75.6,),
+                      SizedBox(height: height/75.6,),
 
                       Text(
                         "Exist Your  Free Apply....",
                         style: GoogleFonts.poppins(
                             fontSize: width / 25.613,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white),
+                            color: Colors.black),
                       ),
                       SizedBox(height: height/12.6,),
 
@@ -1399,19 +1391,20 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
+                              height:height/21.6,
+                              width:width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff255BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Cancel",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),
@@ -1424,19 +1417,20 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             },
                             child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
+                              height:height/21.6,
+                              width:width/4.5,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xff255BCA),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Okay",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),

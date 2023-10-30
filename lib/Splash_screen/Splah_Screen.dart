@@ -66,18 +66,21 @@ class _Splash_screenState extends State<Splash_screen> {
                   Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      Container(
-                        height: height/7.56,
-                        width: width/1.125,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.contain,
-                            image: AssetImage("assets/final logo (2).png")
-                          )
+                      Padding(
+                        padding:  EdgeInsets.only(left: width/9),
+                        child: Container(
+                          height: height/7.56,
+                          width: width/1.125,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage("assets/final logo (2).png")
+                            )
+                          ),
                         ),
                       ),
                      Padding(
-                       padding:  EdgeInsets.only(bottom: height/42,left: width/36.0),
+                       padding:  EdgeInsets.only(bottom: height/42,left: width/8.0),
                        child: Text(Quotes,
                 style: GoogleFonts.poppins(
                    fontSize: width/30.4,

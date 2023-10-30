@@ -34,3 +34,4 @@ String Fathercondtiontxt="(Husband name not accept for pan card .Father or mothe
 
 ///lottie file Variables
 String Errrorlottie="assets/Error animation (2).json";
+String Loading="assets/Loading animation.json";
