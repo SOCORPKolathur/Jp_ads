@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:jp_ads/Authendication/LogIn_Page.dart';
 import 'package:jp_ads/Authendication/Payment_Page.dart';
 import 'package:jp_ads/Landing_Screen/Landing_Screen.dart';
@@ -21,6 +22,10 @@ Future<void> main()  async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
   runApp(const MyApp());
 }
 

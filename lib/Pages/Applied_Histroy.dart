@@ -91,13 +91,13 @@ class _Applied_HistroyState extends State<Applied_Histroy> with SingleTickerProv
               },
               tabs: [
                 Tab(
-                  child:  const Text("Applied"),
+                  child:  const Text("Applied",),
                 ),
                 Tab(
-                  child: const Text("Correction"),
+                  child: const Text("Correction",),
                 ),
                 Tab(
-                  child: const Text("Wallet"),
+                  child: const Text("Wallet",),
                 ),
               ],
             ),
@@ -110,7 +110,7 @@ class _Applied_HistroyState extends State<Applied_Histroy> with SingleTickerProv
 
                   FutureBuilder(
                     future: FirebaseFirestore.instance.collection("Users").
-                    doc(FirebaseAuth.instance.currentUser!.uid).collection("Histroy").where("Type",isEqualTo:"Applied").get(),
+                    doc(FirebaseAuth.instance.currentUser!.uid).collection("Histroy").orderBy("timestamp",descending: true).get(),
                     builder: (context, snapshot) {
 
 
@@ -124,138 +124,142 @@ class _Applied_HistroyState extends State<Applied_Histroy> with SingleTickerProv
                             return ListView.builder(
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
-                              itemCount: 1,
+                              itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
                                 var applieddata = snapshot.data!.docs[index];
+                                
+                                if(applieddata['Type']=="Applied"){
 
-                                return GestureDetector(
-                                  onTap: () {
-                                    //name,fathername,gender,dob,pantype,updatestatus,date,time,type,aadharpicture,signpicture,photo)
-                                    Applieddetailspopup(
-                                      applieddata['name'].toString(),
-                                      applieddata['father name'].toString(),
-                                      applieddata['gender'].toString(),
-                                      applieddata['dob'].toString(),
-                                      applieddata['pantype'].toString(),
-                                      applieddata['updatestatus'].toString(),
-                                      applieddata['date'].toString(),
-                                      applieddata['time'].toString(),
-                                      applieddata['Type'].toString(),
-                                      applieddata['aadharpicture'].toString(),
-                                      applieddata['signpicture'].toString(),
-                                      applieddata['photo'].toString(),
+                                  return GestureDetector(
+                                    onTap: () {
+                                      //name,fathername,gender,dob,pantype,updatestatus,date,time,type,aadharpicture,signpicture,photo)
+                                      Applieddetailspopup(
+                                        applieddata['name'].toString(),
+                                        applieddata['father name'].toString(),
+                                        applieddata['gender'].toString(),
+                                        applieddata['dob'].toString(),
+                                        applieddata['pantype'].toString(),
+                                        applieddata['updatestatus'].toString(),
+                                        applieddata['date'].toString(),
+                                        applieddata['time'].toString(),
+                                        applieddata['Type'].toString(),
+                                        applieddata['aadharpicture'].toString(),
+                                        applieddata['signpicture'].toString(),
+                                        applieddata['photo'].toString(),
 
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.only(bottom: 8.0),
-                                    child: Material(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Colors.white54.withOpacity(0.9),
-                                      elevation: 10,
-                                      child: Container(
-                                        height:height/7.56,
-                                        width:width/1.125,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
-                                          color: Colors.white54.withOpacity(0.9),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text("Name : ${applieddata['name']
-                                                        .toString()}",
-                                                        style: GoogleFonts.poppins(
-                                                            fontWeight: FontWeight.w500,
-                                                            textStyle: TextStyle(
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                            color: Colors.black))),
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text(
-                                                        "Farther Name: ${applieddata['father name']
-                                                            .toString()}",
-                                                        style: GoogleFonts.poppins(
-                                                            fontWeight: FontWeight.w500,
-                                                            textStyle: TextStyle(
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                            color: Colors.black))),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 8.0),
+                                      child: Material(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.white54.withOpacity(0.9),
+                                        elevation: 10,
+                                        child: Container(
+                                          height:height/7.56,
+                                          width:width/1.125,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            color: Colors.white54.withOpacity(0.9),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text("Name : ${applieddata['name']
+                                                          .toString()}",
+                                                          style: GoogleFonts.poppins(
+                                                              fontWeight: FontWeight.w500,
+                                                              textStyle: TextStyle(
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                              color: Colors.black))),
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text(
+                                                          "Farther Name: ${applieddata['father name']
+                                                              .toString()}",
+                                                          style: GoogleFonts.poppins(
+                                                              fontWeight: FontWeight.w500,
+                                                              textStyle: TextStyle(
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                              color: Colors.black))),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
 
-                                                    child: Text("Date : ${applieddata['date']
-                                                        .toString()}",
-                                                        style: GoogleFonts.poppins(
-                                                            fontWeight: FontWeight.w500,
-                                                            textStyle: TextStyle(
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                            color: Colors.black))),
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text("Time : ${applieddata['time']
-                                                        .toString()}",
-                                                        style: GoogleFonts.poppins(
-                                                            fontWeight: FontWeight.w500,
-                                                            textStyle: TextStyle(
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                            color: Colors.black))),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text(
-                                                        "Status : ${applieddata['updatestatus']
-                                                            .toString()}",
-                                                        style: GoogleFonts.poppins(
-                                                            fontWeight: FontWeight.w500,
-                                                            textStyle: TextStyle(
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                            color: Colors.black))),
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text("Type : ${applieddata['Type']
-                                                        .toString()}",
-                                                        style: GoogleFonts.poppins(
-                                                            fontWeight: FontWeight.w500,
-                                                            textStyle: TextStyle(
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                            color: applieddata['Type']
-                                                                .toString() == "Applied"
-                                                                ? Colors.green
-                                                                : Colors.indigo))),
-                                              ],
-                                            ),
-                                          ],
+                                                      child: Text("Date : ${applieddata['date']
+                                                          .toString()}",
+                                                          style: GoogleFonts.poppins(
+                                                              fontWeight: FontWeight.w500,
+                                                              textStyle: TextStyle(
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                              color: Colors.black))),
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text("Time : ${applieddata['time']
+                                                          .toString()}",
+                                                          style: GoogleFonts.poppins(
+                                                              fontWeight: FontWeight.w500,
+                                                              textStyle: TextStyle(
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                              color: Colors.black))),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text(
+                                                          "Status : ${applieddata['updatestatus']
+                                                              .toString()}",
+                                                          style: GoogleFonts.poppins(
+                                                              fontWeight: FontWeight.w500,
+                                                              textStyle: TextStyle(
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                              color: Colors.black))),
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text("Type : ${applieddata['Type']
+                                                          .toString()}",
+                                                          style: GoogleFonts.poppins(
+                                                              fontWeight: FontWeight.w500,
+                                                              textStyle: TextStyle(
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                              color: applieddata['Type']
+                                                                  .toString() == "Applied"
+                                                                  ? Colors.green
+                                                                  : Colors.indigo))),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
+                                return const SizedBox();
                               },);
                         }
                       }
@@ -266,7 +270,7 @@ class _Applied_HistroyState extends State<Applied_Histroy> with SingleTickerProv
 
                   FutureBuilder(
                     future: FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).
-                    collection("Histroy").where("Type",isEqualTo:"Correction").get(),
+                    collection("Histroy").orderBy("timestamp",descending: true).get(),
                     builder: (context, snapshot) {
 
                       if(snapshot.hasData==null){
@@ -289,122 +293,126 @@ class _Applied_HistroyState extends State<Applied_Histroy> with SingleTickerProv
                               itemBuilder: (context, index) {
 
                                 var applieddata=snapshot.data!.docs[index];
-                                return GestureDetector(
-                                  onTap: (){
-                                    detailspopup(
-                                      applieddata['Crtname'].toString(),
-                                      applieddata['crtfathername'].toString(),
-                                      applieddata['crtphonenumber'].toString(),
-                                      applieddata['crgender'].toString(),
-                                      applieddata['crtdate_of_birth'].toString(),
-                                      applieddata['pancardno'].toString(),
-                                      applieddata['crtnameandbuildsno'].toString(),
-                                      applieddata['crtnadddress'].toString(),
-                                      applieddata['crtdistrict'].toString(),
-                                      applieddata['crtstate'].toString(),
-                                      applieddata['date'].toString(),
-                                      applieddata['time'].toString(),
-                                      applieddata['updatestatus'].toString(),
-                                      applieddata['correctionupdate'].toString(),
-                                      applieddata['Type'].toString(),
-                                      applieddata['crtpincode'].toString(),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding:  EdgeInsets.only(bottom:8.0),
-                                    child: Material(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Colors.white54.withOpacity(0.9),
-                                      elevation: 10,
-                                      child: Container(
-                                        height:height/7.56,
-                                        width:width/1.125,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
-                                          color: Colors.white54.withOpacity(0.9),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text("Name : ${applieddata['Crtname'].toString()}",
-                                                        style: GoogleFonts.poppins(
-                                                            fontWeight: FontWeight.w500,
-                                                            textStyle: TextStyle(
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                            color: Colors.black))),
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text("Phone no: ${applieddata['crtphonenumber'].toString()}",style: GoogleFonts.poppins(
-                                                        fontWeight: FontWeight.w500,
-                                                        textStyle: TextStyle(
-                                                            overflow: TextOverflow.ellipsis
-                                                        ),
-                                                        color: Colors.black))),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
+                                
+                                if(applieddata['Type']=="Correction"){
+                                  return GestureDetector(
+                                    onTap: (){
+                                      detailspopup(
+                                        applieddata['Crtname'].toString(),
+                                        applieddata['crtfathername'].toString(),
+                                        applieddata['crtphonenumber'].toString(),
+                                        applieddata['crgender'].toString(),
+                                        applieddata['crtdate_of_birth'].toString(),
+                                        applieddata['pancardno'].toString(),
+                                        applieddata['crtnameandbuildsno'].toString(),
+                                        applieddata['crtnadddress'].toString(),
+                                        applieddata['crtdistrict'].toString(),
+                                        applieddata['crtstate'].toString(),
+                                        applieddata['date'].toString(),
+                                        applieddata['time'].toString(),
+                                        applieddata['updatestatus'].toString(),
+                                        applieddata['correctionupdate'].toString(),
+                                        applieddata['Type'].toString(),
+                                        applieddata['crtpincode'].toString(),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding:  EdgeInsets.only(bottom:8.0),
+                                      child: Material(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.white54.withOpacity(0.9),
+                                        elevation: 10,
+                                        child: Container(
+                                          height:height/7.56,
+                                          width:width/1.125,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            color: Colors.white54.withOpacity(0.9),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text("Name : ${applieddata['Crtname'].toString()}",
+                                                          style: GoogleFonts.poppins(
+                                                              fontWeight: FontWeight.w500,
+                                                              textStyle: TextStyle(
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                              color: Colors.black))),
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text("Phone no: ${applieddata['crtphonenumber'].toString()}",style: GoogleFonts.poppins(
+                                                          fontWeight: FontWeight.w500,
+                                                          textStyle: TextStyle(
+                                                              overflow: TextOverflow.ellipsis
+                                                          ),
+                                                          color: Colors.black))),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
 
-                                                    child: Text("Date : ${applieddata['date'].toString()}",
-                                                        style: GoogleFonts.poppins(
-                                                            fontWeight: FontWeight.w500,
-                                                            textStyle: TextStyle(
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                            color: Colors.black))),
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text("Time : ${applieddata['time'].toString()}",style: GoogleFonts.poppins(
-                                                        fontWeight: FontWeight.w500,
-                                                        textStyle: TextStyle(
-                                                            overflow: TextOverflow.ellipsis
-                                                        ),
-                                                        color: Colors.black))),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text("Status : ${applieddata['updatestatus'].toString()}",
-                                                        style: GoogleFonts.poppins(
-                                                            fontWeight: FontWeight.w500,
-                                                            textStyle: TextStyle(
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                            color: Colors.black))),
-                                                Container(
-                                                    height:height/25.2,
-                                                    width:width/2.4,
-                                                    child: Text("Type : ${applieddata['Type'].toString()}",style: GoogleFonts.poppins(
-                                                        fontWeight: FontWeight.w500,
-                                                        textStyle: TextStyle(
-                                                            overflow: TextOverflow.ellipsis
-                                                        ),
-                                                        color:applieddata['Type'].toString()=="Applied"?Colors.green:Colors.indigo))),
-                                              ],
-                                            ),
-                                          ],
+                                                      child: Text("Date : ${applieddata['date'].toString()}",
+                                                          style: GoogleFonts.poppins(
+                                                              fontWeight: FontWeight.w500,
+                                                              textStyle: TextStyle(
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                              color: Colors.black))),
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text("Time : ${applieddata['time'].toString()}",style: GoogleFonts.poppins(
+                                                          fontWeight: FontWeight.w500,
+                                                          textStyle: TextStyle(
+                                                              overflow: TextOverflow.ellipsis
+                                                          ),
+                                                          color: Colors.black))),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text("Status : ${applieddata['updatestatus'].toString()}",
+                                                          style: GoogleFonts.poppins(
+                                                              fontWeight: FontWeight.w500,
+                                                              textStyle: TextStyle(
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                              color: Colors.black))),
+                                                  Container(
+                                                      height:height/25.2,
+                                                      width:width/2.4,
+                                                      child: Text("Type : ${applieddata['Type'].toString()}",style: GoogleFonts.poppins(
+                                                          fontWeight: FontWeight.w500,
+                                                          textStyle: TextStyle(
+                                                              overflow: TextOverflow.ellipsis
+                                                          ),
+                                                          color:applieddata['Type'].toString()=="Applied"?Colors.green:Colors.indigo))),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
+                              return const SizedBox();
                               },);
                         }
                       }
@@ -415,7 +423,7 @@ class _Applied_HistroyState extends State<Applied_Histroy> with SingleTickerProv
 
                   FutureBuilder(
                     future: FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).
-                    collection("Wallet_Histroy").get(),
+                    collection("Wallet_Histroy").orderBy("timestamp",descending: true).get(),
                     builder: (context, snapshot) {
 
                       if(snapshot.hasData==null){
@@ -438,6 +446,7 @@ class _Applied_HistroyState extends State<Applied_Histroy> with SingleTickerProv
                               itemBuilder: (context, index) {
 
                                 var applieddata=snapshot.data!.docs[index];
+                                
                                 return Padding(
                                   padding:  EdgeInsets.only(bottom:8.0),
                                   child: Material(

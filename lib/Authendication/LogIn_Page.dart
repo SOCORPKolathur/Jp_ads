@@ -169,6 +169,7 @@ class _LogIn_PageState extends State<LogIn_Page> {
                       ],
                     ),
                     TextField(
+                      keyboardType: TextInputType.phone,
                       style: GoogleFonts.poppins(
                           fontSize:width/28.714,
                           fontWeight: FontWeight.w500,

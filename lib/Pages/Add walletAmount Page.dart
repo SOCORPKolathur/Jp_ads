@@ -100,10 +100,12 @@ class _addwallet_Amount_PageState extends State<addwallet_Amount_Page> {
                                         )
                                     ),
                                     child: TextFormField(
+
                                       style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                           fontSize:width/22,
                                           color: Colors.black),
                                       controller: Usernamecontroller,
+                                      textCapitalization: TextCapitalization.characters,
                                       maxLength: 10,
                                       maxLines: 1,
                                       inputFormatters: [

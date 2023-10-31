@@ -104,6 +104,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                             )
                         ),
                         child: TextFormField(
+                          textCapitalization: TextCapitalization.characters,
                           style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                               fontSize:width/22,
                               color: Colors.black),
@@ -111,7 +112,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                           maxLength: 10,
                           maxLines: 1,
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
 
                           ],
                           decoration: InputDecoration(

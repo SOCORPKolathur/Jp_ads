@@ -28,6 +28,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
 
   TextEditingController namecontroller=TextEditingController();
   TextEditingController fathernamecontroller=TextEditingController();
+  TextEditingController aadhaarontroller=TextEditingController();
   TextEditingController dobcontroller=TextEditingController();
   String selectedValuepantype='Select Pan Type';
   List<String>pantype=['Select Pan Type',"Individual","Distributor"];
@@ -37,9 +38,11 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
   File ?_photo1;
    File ?_photo2;
    File ?_photo3;
+   File ?_photo4;
   String imageUrl="";
   String  imageUrl2="";
   String  imageUrl3="";
+  String  imageUrl4="";
 
 
   final _formKey = GlobalKey<FormState>();
@@ -81,6 +84,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
 
   }
 
+  final RegExp _inputPattern = RegExp(r'^\d{4}\s\d{4}\s\d{4}$');
 
   @override
   Widget build(BuildContext context) {
@@ -418,288 +422,365 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                     height: height/1.426,
                     child:
                     steppervalue==0?
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                    SingleChildScrollView(
+                      physics: const ScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
 
-                        SizedBox(height: height/75.6,),
+                          SizedBox(height: height/75.6,),
 
-                        Text("New PAN Application  - 49 A",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                              fontSize:width/22,
-                              color: Colors.black),),
-                        SizedBox(height: height/75.6,),
+                          Text("New PAN Application  - 49 A",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                fontSize:width/22,
+                                color: Colors.black),),
+                          SizedBox(height: height/75.6,),
 
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Color(0xffffe09f)
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Color(0xffffe09f)
+                            ),
+                            padding: EdgeInsets.only(left: width/36.0,right: width/36.0,
+                                top: height/75.6,bottom: height/75.6),
+                            child: SingleChildScrollView(
+                               physics: const ScrollPhysics(),
+                              child: Column(
+                                  children: [
+
+                                    ///name
+                                    SizedBox(
+                                      height: height/8.4,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Name",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                                fontSize:width/22,
+                                                color: Colors.black),),
+                                          SizedBox(height: height/75.6,),
+                                          Container(
+                                            height: height/15.12,
+                                            width: width/1.2,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Color(0xff353535)
+                                                )
+                                            ),
+                                            child: TextFormField(
+                                              controller: namecontroller,
+                                              textCapitalization: TextCapitalization.characters,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                                              ],
+                                              decoration: InputDecoration(
+                                                  contentPadding: EdgeInsets.only(left: width/18),
+                                                  border: InputBorder.none,
+                                                  hintText: "Type full name",
+                                                  hintStyle: GoogleFonts.poppins()
+                                              ),
+                                              validator: (value) => value!.isEmpty ? 'Field is required' : null,
+
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+                                    ///pantype
+                                    SizedBox(
+                                      height: height/8.4,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Pan Type",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                                fontSize:width/22,
+                                                color: Colors.black),),
+                                          SizedBox(height: height/75.6,),
+                                          Container(
+                                            height: height/15.12,
+                                            width: width/1.2,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Color(0xff353535)
+                                                )
+                                            ),
+                                            child:
+                                            DropdownButtonHideUnderline(
+                                              child: DropdownButtonFormField2<String>(
+                                                isExpanded: true,
+                                                hint: Text(
+                                                  'Select Pan Type',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: width/25.714,
+                                                    color: Theme.of(context).hintColor,
+                                                  ),
+                                                ),
+                                                items: pantype
+                                                    .map((String item) => DropdownMenuItem<String>(
+                                                  value: item,
+                                                  child: Text(
+                                                    item,
+                                                    style:  GoogleFonts.poppins(
+                                                      fontSize: width/25.714,
+                                                    ),
+                                                  ),
+                                                ))
+                                                    .toList(),
+                                                value: selectedValuepantype,
+                                                onChanged: (String? value) {
+                                                  setState(() {
+                                                    selectedValuepantype = value!;
+                                                  });
+                                                },
+                                                buttonStyleData:  ButtonStyleData(
+                                                  padding: EdgeInsets.symmetric(horizontal: width/22.5),
+                                                  height: height/18.9,
+                                                  width: width/2.571,
+                                                ),
+                                                menuItemStyleData:  MenuItemStyleData(
+                                                  height: height/18.9,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+
+                                    ///Father name
+                                    SizedBox(
+                                      height: height/8.4,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Father Name",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                                fontSize:width/22,
+                                                color: Colors.black),),
+                                          SizedBox(height: height/75.6,),
+                                          Container(
+                                            height: height/15.12,
+                                            width: width/1.2,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Color(0xff353535)
+                                                )
+                                            ),
+                                            child: TextFormField(
+                                              controller: fathernamecontroller,
+                                              textCapitalization: TextCapitalization.characters,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                                              ],
+                                              decoration: InputDecoration(
+                                                  contentPadding: EdgeInsets.only(left: width/18),
+                                                  border: InputBorder.none,
+                                                  hintText: "Type father name",
+                                                  hintStyle: GoogleFonts.poppins()
+                                              ),
+                                              validator: (value) => value!.isEmpty ? 'Field is required' : null,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+                                    ///Date of birth
+                                    SizedBox(
+                                      height: height/8.4,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Date of Birth",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                                fontSize:width/22,
+                                                color: Colors.black),),
+                                          SizedBox(height: height/75.6,),
+                                          Container(
+                                            height: height/15.12,
+                                            width: width/1.2,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Color(0xff353535)
+                                                )
+                                            ),
+                                            child: TextFormField(
+                                              controller: dobcontroller,
+                                              textCapitalization: TextCapitalization.characters,
+                                              readOnly: true,
+                                              decoration: InputDecoration(
+                                                  contentPadding: EdgeInsets.only(left: width/18),
+                                                  border: InputBorder.none,
+                                                  hintText: "Type date of birth",
+                                                  hintStyle: GoogleFonts.poppins()
+                                              ),
+                                              validator: (value) => value!.isEmpty ? 'Field is required' : null,
+                                              onTap: (){
+                                                Datepickerfunction(context);
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+
+                                    ///Gender
+                                    SizedBox(
+                                      height: height/8.4,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Gender",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                                fontSize:width/22,
+                                                color: Colors.black),),
+                                          SizedBox(height: height/75.6,),
+                                          Container(
+                                            height: height/15.12,
+                                            width: width/1.2,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Color(0xff353535)
+                                                )
+                                            ),
+                                            child:  DropdownButtonHideUnderline(
+                                              child: DropdownButtonFormField2<String>(
+                                                isExpanded: true,
+                                                hint: Text(
+                                                  'Select Gender',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: width/25.714,
+                                                    color: Theme.of(context).hintColor,
+                                                  ),
+                                                ),
+                                                items: Gender
+                                                    .map((String item) => DropdownMenuItem<String>(
+                                                  value: item,
+                                                  child: Text(
+                                                    item,
+                                                    style:  GoogleFonts.poppins(
+                                                      fontSize: width/25.714,
+                                                    ),
+                                                  ),
+                                                ))
+                                                    .toList(),
+                                                value: selectedValuegender,
+
+                                                onChanged: (String? value) {
+                                                  setState(() {
+                                                    selectedValuegender = value!;
+
+                                                  });
+                                                },
+                                                buttonStyleData:  ButtonStyleData(
+                                                  padding: EdgeInsets.symmetric(horizontal: width/22.5),
+                                                  height: height/18.9,
+                                                  width: width/2.571,
+                                                ),
+                                                menuItemStyleData:  MenuItemStyleData(
+                                                  height: height/18.9,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+
+                                    ///Aadhaar number
+                                    SizedBox(
+                                      height: height/8.4,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Aadhaar Number",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                                fontSize:width/22,
+                                                color: Colors.black),),
+                                          SizedBox(height: height/75.6,),
+                                          Container(
+                                            height: height/15.12,
+                                            width: width/1.2,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Color(0xff353535)
+                                                )
+                                            ),
+                                            child: TextFormField(
+                                              controller: aadhaarontroller,
+                                              maxLength: 14,
+                                              keyboardType: TextInputType.phone,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter.digitsOnly,
+                                                TextInputFormatter.withFunction((oldValue, newValue) {
+                                                  final newString = newValue.text;
+
+                                                  if (_inputPattern.hasMatch(newString)) {
+                                                    return oldValue;
+                                                  }
+
+                                                  var formattedValue =
+                                                  newString.replaceAllMapped(RegExp(r'\d{4}'), (match) {
+                                                    return '${match.group(0)} ';
+                                                  });
+
+                                                  // Remove any trailing space
+                                                  if (formattedValue.endsWith(' ')) {
+                                                     formattedValue = formattedValue.substring(0, formattedValue.length - 1);
+                                                  }
+
+                                                  return TextEditingValue(
+                                                    text: formattedValue,
+                                                    selection: TextSelection.collapsed(offset: formattedValue.length),
+                                                  );
+                                                }),
+                                              ],
+                                              decoration: InputDecoration(
+                                                counterText: "",
+                                                  contentPadding: EdgeInsets.only(left: width/18),
+                                                  border: InputBorder.none,
+                                                  hintText: "Type Aadhaar Number",
+                                                  hintStyle: GoogleFonts.poppins()
+                                              ),
+                                              validator: (value) => value!.isEmpty ? 'Field is required' : null,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height:height/35),
+                                  ]),
+                            ),
                           ),
-                          padding: EdgeInsets.only(left: width/36.0,right: width/36.0,
-                              top: height/75.6,bottom: height/75.6),
-                          child: Column(
-                              children: [
-
-                                ///name
-                                SizedBox(
-                                  height: height/8.4,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Name",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                            fontSize:width/22,
-                                            color: Colors.black),),
-                                      SizedBox(height: height/75.6,),
-                                      Container(
-                                        height: height/15.12,
-                                        width: width/1.2,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(
-                                                color: Color(0xff353535)
-                                            )
-                                        ),
-                                        child: TextFormField(
-                                          controller: namecontroller,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
-                                          ],
-                                          decoration: InputDecoration(
-                                              contentPadding: EdgeInsets.only(left: width/18),
-                                              border: InputBorder.none,
-                                              hintText: "Type full name",
-                                              hintStyle: GoogleFonts.poppins()
-                                          ),
-                                          validator: (value) => value!.isEmpty ? 'Field is required' : null,
-
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                ///pantype
-                                SizedBox(
-                                  height: height/8.4,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Pan Type",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                            fontSize:width/22,
-                                            color: Colors.black),),
-                                      SizedBox(height: height/75.6,),
-                                      Container(
-                                        height: height/15.12,
-                                        width: width/1.2,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(
-                                                color: Color(0xff353535)
-                                            )
-                                        ),
-                                        child:
-                                        DropdownButtonHideUnderline(
-                                          child: DropdownButtonFormField2<String>(
-                                            isExpanded: true,
-                                            hint: Text(
-                                              'Select Pan Type',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: width/25.714,
-                                                color: Theme.of(context).hintColor,
-                                              ),
-                                            ),
-                                            items: pantype
-                                                .map((String item) => DropdownMenuItem<String>(
-                                              value: item,
-                                              child: Text(
-                                                item,
-                                                style:  GoogleFonts.poppins(
-                                                  fontSize: width/25.714,
-                                                ),
-                                              ),
-                                            ))
-                                                .toList(),
-                                            value: selectedValuepantype,
-                                            onChanged: (String? value) {
-                                              setState(() {
-                                                selectedValuepantype = value!;
-                                              });
-                                            },
-                                            buttonStyleData:  ButtonStyleData(
-                                              padding: EdgeInsets.symmetric(horizontal: width/22.5),
-                                              height: height/18.9,
-                                              width: width/2.571,
-                                            ),
-                                            menuItemStyleData:  MenuItemStyleData(
-                                              height: height/18.9,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                          SizedBox(height: height/75.6,),
 
 
-                                ///Father name
-                                SizedBox(
-                                  height: height/8.4,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Father Name",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                            fontSize:width/22,
-                                            color: Colors.black),),
-                                      SizedBox(height: height/75.6,),
-                                      Container(
-                                        height: height/15.12,
-                                        width: width/1.2,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(
-                                                color: Color(0xff353535)
-                                            )
-                                        ),
-                                        child: TextFormField(
-                                          controller: fathernamecontroller,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
-                                          ],
-                                          decoration: InputDecoration(
-                                              contentPadding: EdgeInsets.only(left: width/18),
-                                              border: InputBorder.none,
-                                              hintText: "Type father name",
-                                              hintStyle: GoogleFonts.poppins()
-                                          ),
-                                          validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                ///Date of birth
-                                SizedBox(
-                                  height: height/8.4,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Date of Birth",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                            fontSize:width/22,
-                                            color: Colors.black),),
-                                      SizedBox(height: height/75.6,),
-                                      Container(
-                                        height: height/15.12,
-                                        width: width/1.2,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(
-                                                color: Color(0xff353535)
-                                            )
-                                        ),
-                                        child: TextFormField(
-                                          controller: dobcontroller,
-                                          readOnly: true,
-                                          decoration: InputDecoration(
-                                              contentPadding: EdgeInsets.only(left: width/18),
-                                              border: InputBorder.none,
-                                              hintText: "Type date of birth",
-                                              hintStyle: GoogleFonts.poppins()
-                                          ),
-                                          validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                                          onTap: (){
-                                            Datepickerfunction(context);
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-
-                                ///Gender
-                                SizedBox(
-                                  height: height/8.4,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Gender",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                            fontSize:width/22,
-                                            color: Colors.black),),
-                                      SizedBox(height: height/75.6,),
-                                      Container(
-                                        height: height/15.12,
-                                        width: width/1.2,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(
-                                                color: Color(0xff353535)
-                                            )
-                                        ),
-                                        child:  DropdownButtonHideUnderline(
-                                          child: DropdownButtonFormField2<String>(
-                                            isExpanded: true,
-                                            hint: Text(
-                                              'Select Gender',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: width/25.714,
-                                                color: Theme.of(context).hintColor,
-                                              ),
-                                            ),
-                                            items: Gender
-                                                .map((String item) => DropdownMenuItem<String>(
-                                              value: item,
-                                              child: Text(
-                                                item,
-                                                style:  GoogleFonts.poppins(
-                                                  fontSize: width/25.714,
-                                                ),
-                                              ),
-                                            ))
-                                                .toList(),
-                                            value: selectedValuegender,
-
-                                            onChanged: (String? value) {
-                                              setState(() {
-                                                selectedValuegender = value!;
-
-                                              });
-                                            },
-                                            buttonStyleData:  ButtonStyleData(
-                                              padding: EdgeInsets.symmetric(horizontal: width/22.5),
-                                              height: height/18.9,
-                                              width: width/2.571,
-                                            ),
-                                            menuItemStyleData:  MenuItemStyleData(
-                                              height: height/18.9,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ]),
-                        )
-
-
-                      ],
+                        ],
+                      ),
                     ):
                     steppervalue==1?
                     SingleChildScrollView(
@@ -971,6 +1052,18 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                           ),
                           SizedBox(height: height/47.25,),
 
+                          //front page
+                          Padding(
+                            padding:  EdgeInsets.only(left: width/14.4),
+                            child: Row(
+                              children: [
+                                Text("Front Side Of Aadhaar Card" ,style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                    fontSize:width/28,
+                                    color: Colors.black),),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: height/107.25,),
                           GestureDetector(
                             onTap: (){
                               _uploadImage3();
@@ -991,6 +1084,50 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                     _photo3==null? Image.asset(Uploaddocimg):Image.file(_photo3!,height: height/9.45,width: width/4.5,fit: BoxFit.cover,),
 
                                     _photo3==null?
+                                    Text("Upload File",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                          fontSize:width/26,
+                                          color: Colors.black),):Text(""),
+
+
+                                  ]),
+                            ),
+                          ),
+                          SizedBox(height: height/47.25,),
+
+                          ///back page
+                          Padding(
+                            padding:  EdgeInsets.only(left: width/14.4),
+                            child: Row(
+                              children: [
+                                Text("Back Side Of Aadhaar Card", style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                    fontSize:width/28,
+                                    color: Colors.black),),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: height/107.25,),
+                          GestureDetector(
+                            onTap: (){
+                              _uploadImage4();
+                            },
+                            child: Container(
+                              height: height/7.56,
+                              width: width/1.125,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Color(0xffFFFFFF)
+                              ),
+
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+
+                                    _photo4==null? Image.asset(Uploaddocimg):Image.file(_photo4!,height: height/9.45,width: width/4.5,fit: BoxFit.cover,),
+
+                                    _photo4==null?
                                     Text("Upload File",
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -1251,15 +1388,24 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
 
                       steppervalue==4?
                       GestureDetector(
-                        onTap: (){
+                        onTap: () async {
 
                           setState(() {
                           });
                           if (_formKey.currentState!.validate()) {
-                            setState(() {
-                              Loading=true;
+                            await FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
+                              if(value['walletamount']>157){
+                                setState(() {
+                                  Loading=true;
+                                });
+                                appiledpancardfunction();
+                              }
+                              else{
+                                lesspaymenterrorpopup();
+                              }
+
                             });
-                            appiledpancardfunction();
+
                           }
 
                         },
@@ -1405,6 +1551,18 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
     });
   }
 
+  _uploadImage4() async {
+
+    final picker = ImagePicker();
+    await picker.pickImage(source: ImageSource.gallery).then((value){
+      if (value != null) {
+        setState(() {
+          _photo4 = File(value.path);
+        });
+      }
+    });
+  }
+
   firebasestroragefunctionphoto() async {
     var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
     var uploadTask = await ref.putFile(_photo1!).catchError((error) async {
@@ -1438,129 +1596,144 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
     setState(() {
       imageUrl3=image3;
     });
-     await FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
-      if(value['usertype']=="Individual"){
-        if(value['usageccount']<3){
-          FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-            "usageccount":FieldValue.increment(1),
-            "walletamount":FieldValue.increment(-Total),
+    var ref1 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
+    var uploadTask1 = await ref1.putFile(_photo4!).catchError((error) async {
 
-          });
+    });
+    var image4 = await uploadTask1.ref.getDownloadURL();
+    setState(() {
+      imageUrl4=image4;
+    });
+     await FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
+       if(value['usertype']=="Individual"){
+         if(value['usageccount']<3){
+           FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+             "usageccount":FieldValue.increment(1),
+             "walletamount":FieldValue.increment(-Total),
+
+           });
 
            FirebaseFirestore.instance.collection("New_applied").doc().set({
-            "name":namecontroller.text,
-            "pantype":selectedValuepantype,
-            "father name":fathernamecontroller.text,
-            "dob":dobcontroller.text,
-            "gender":selectedValuegender,
-            "photo":imageUrl,
-            "updatestatus":"Applied",
-            "signpicture":imageUrl2,
-            "aadharpicture":imageUrl3,
+             "name":namecontroller.text,
+             "pantype":selectedValuepantype,
+             "father name":fathernamecontroller.text,
+             "aadhar no":aadhaarontroller.text,
+             "dob":dobcontroller.text,
+             "gender":selectedValuegender,
+             "photo":imageUrl,
+             "updatestatus":"Applied",
+             "signpicture":imageUrl2,
+             "aadharpicture":imageUrl3,
+             "aadharpicture2":imageUrl4,
              "usertype":widget.UserType,
-            "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-            "time":DateFormat('hh:mm a').format(DateTime.now()),
-            "timestamp":DateTime.now().millisecondsSinceEpoch
-          });
+             "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+             "time":DateFormat('hh:mm a').format(DateTime.now()),
+             "timestamp":DateTime.now().millisecondsSinceEpoch
+           });
 
-          FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
-            "name":namecontroller.text,
-            "pantype":selectedValuepantype,
-            "father name":fathernamecontroller.text,
-            "dob":dobcontroller.text,
-            "gender":selectedValuegender,
-            "photo":imageUrl,
-            "signpicture":imageUrl2,
-            "aadharpicture":imageUrl3,
-            "updatestatus":"",
-            "Type":"Applied",
-            "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-            "time":DateFormat('hh:mm a').format(DateTime.now()),
-            "timestamp":DateTime.now().millisecondsSinceEpoch
-          });
-          Succespopup();
-          Future.delayed(Duration(seconds: 1),(){
-            setState(() {
-              namecontroller.clear();
-              fathernamecontroller.clear();
-              dobcontroller.clear();
-              selectedValuepantype='Select Pan Type';
-              selectedValuegender='Select Gender';
-              imageUrl='';
-              imageUrl2='';
-              imageUrl3='';
-              Loading=false;
+           FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
+             "name":namecontroller.text,
+             "pantype":selectedValuepantype,
+             "father name":fathernamecontroller.text,
+             "aadhar no":aadhaarontroller.text,
+             "dob":dobcontroller.text,
+             "gender":selectedValuegender,
+             "photo":imageUrl,
+             "signpicture":imageUrl2,
+             "aadharpicture":imageUrl3,
+             "aadharpicture2":imageUrl4,
+             "updatestatus":"",
+             "Type":"Applied",
+             "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+             "time":DateFormat('hh:mm a').format(DateTime.now()),
+             "timestamp":DateTime.now().millisecondsSinceEpoch
+           });
+           Succespopup();
+           Future.delayed(Duration(seconds: 1),(){
+             setState(() {
+               namecontroller.clear();
+               fathernamecontroller.clear();
+               dobcontroller.clear();
+               aadhaarontroller.clear();
+               selectedValuepantype='Select Pan Type';
+               selectedValuegender='Select Gender';
+               imageUrl='';
+               imageUrl2='';
+               imageUrl3='';
+               Loading=false;
 
-            });
-          });
-        }
-        else{
-          planExitpopup();
-        }
-      }
-
-      else{
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-          "usageccount":FieldValue.increment(1),
-          "walletamount":FieldValue.increment(-Total),
-        });
+             });
+           });
+         }
+         else{
+           planExitpopup();
+         }
+       }
+       else{
+         FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+           "usageccount":FieldValue.increment(1),
+           "walletamount":FieldValue.increment(-Total),
+         });
          FirebaseFirestore.instance.collection("New_applied").doc().set({
-          "name":namecontroller.text,
-          "pantype":selectedValuepantype,
-          "father name":fathernamecontroller.text,
-          "dob":dobcontroller.text,
-          "gender":selectedValuegender,
-          "photo":imageUrl,
-          "updatestatus":"Applied",
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
+           "name":namecontroller.text,
+           "pantype":selectedValuepantype,
+           "father name":fathernamecontroller.text,
+           "aadhar no":aadhaarontroller.text,
+           "dob":dobcontroller.text,
+           "gender":selectedValuegender,
+           "photo":imageUrl,
+           "updatestatus":"Applied",
+           "signpicture":imageUrl2,
+           "aadharpicture":imageUrl3,
+           "aadharpicture2":imageUrl4,
            "usertype":widget.UserType,
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
+           "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+           "time":DateFormat('hh:mm a').format(DateTime.now()),
+           "timestamp":DateTime.now().millisecondsSinceEpoch
+         });
 
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
-          "name":namecontroller.text,
-          "pantype":selectedValuepantype,
-          "father name":fathernamecontroller.text,
-          "dob":dobcontroller.text,
-          "gender":selectedValuegender,
-          "photo":imageUrl,
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
-          "updatestatus":"",
-          "Type":"Applied",
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
-        Succespopup();
-        Future.delayed(Duration(seconds: 1),(){
-          setState(() {
-            namecontroller.clear();
-            fathernamecontroller.clear();
-            dobcontroller.clear();
-            selectedValuepantype='Select Pan Type';
-            selectedValuegender='Select Gender';
-            imageUrl='';
-            imageUrl2='';
-            imageUrl3='';
-            Loading=false;
+         FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
+           "name":namecontroller.text,
+           "pantype":selectedValuepantype,
+           "father name":fathernamecontroller.text,
+           "aadhar no":aadhaarontroller.text,
+           "dob":dobcontroller.text,
+           "gender":selectedValuegender,
+           "photo":imageUrl,
+           "signpicture":imageUrl2,
+           "aadharpicture":imageUrl3,
+           "aadharpicture2":imageUrl4,
+           "updatestatus":"",
+           "Type":"Applied",
+           "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+           "time":DateFormat('hh:mm a').format(DateTime.now()),
+           "timestamp":DateTime.now().millisecondsSinceEpoch
+         });
+         Succespopup();
+         Future.delayed(Duration(seconds: 1),(){
+           setState(() {
+             namecontroller.clear();
+             fathernamecontroller.clear();
+             dobcontroller.clear();
+             selectedValuepantype='Select Pan Type';
+             selectedValuegender='Select Gender';
+             imageUrl='';
+             imageUrl2='';
+             imageUrl3='';
+             Loading=false;
 
-          });
-        });
-      }
-
+           });
+         });
+       }
     });
   }
 
 
-  appiledpancardfunction()  {
+  appiledpancardfunction()  async {
+
     firebasestroragefunctionphoto();
     firebasestroragefunctionsign();
     firebasestroragefunctionaadharcard();
-
   }
 
   Succespopup() {
@@ -1819,7 +1992,9 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
   }
 }
 
-  Fieldfilluppopup() {
+
+
+  lesspaymenterrorpopup() {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -1836,93 +2011,84 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
             child: Scaffold(
               backgroundColor: Colors.transparent,
               body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xff245BCA),
-                          Color(0xff245BCA),
-                        ]
-                    )
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),
+                color: Colors.white
                 ),
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: height/25.2,),
 
-                      SizedBox(
-                        // height: height/47.250,
-                        // width: 150,
-                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
+                      SizedBox(height: height/75.2,),
+                      Text(
+                        'Warning.....!',
+                        style: GoogleFonts.poppins(
+                            fontSize: width / 23.613,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                      Row(
+
+                        children: [
+                          SizedBox(width:width/4.5),
+                          Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/7.3,width: width/6),
+                        ],
                       ),
                       SizedBox(height: height/75.6,),
 
-                      Text(
-                        "Please Fill All Fields....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white),
-                      ),
-                      SizedBox(height: height/12.6,),
-
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: width / 25.718),
-                                  )),
+                          SizedBox(
+                            width:width/1.525,
+                            child:
+                            Text(
+                              'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500',
+                              style: GoogleFonts.poppins(
+                                  fontSize: width / 28.613,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
                             ),
                           ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
+                        ],
+                      ),
+                      SizedBox(height: height/22.6,),
 
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           //okay button
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
                             },
                             child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
+                              height: height/19.6,
+                              width: width/4.2,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  gradient: const LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Color(0xff245BCA),
+                                        Color(0xff245BCA),
+                                      ]
+                                  ),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                   child: Text(
                                     "Okay",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: width / 25.718),
                                   )),
                             ),
                           ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
+
                         ],
                       )
+
                     ],
                   ),
                 ),
