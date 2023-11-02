@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splash_screen()
+      home: FirebaseAuth.instance.currentUser==null?LogIn_Page():const Landing_Screen()
     );
   }
 }

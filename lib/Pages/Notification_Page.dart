@@ -45,7 +45,7 @@ class _Notification_PageState extends State<Notification_Page> {
       ),
       body:
       StreamBuilder(
-       stream: FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Notification").snapshots(),
+       stream: FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Notification").orderBy("timestamp").snapshots(),
        builder: (context, snapshot) {
          if(snapshot.hasData==null){
            return const Center(child: CircularProgressIndicator(),);
@@ -125,7 +125,8 @@ class _Notification_PageState extends State<Notification_Page> {
                    ),
                    subtitle:
                    SizedBox(
-                     height: height/12.6,
+
+                     height: height/22.6,
                      width: width/1.44,
                      child: Text("Content : ${Notification['content'].toString()}",
                        style: GoogleFonts.poppins(fontWeight: FontWeight.w600,

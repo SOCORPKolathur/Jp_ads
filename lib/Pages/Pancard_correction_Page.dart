@@ -1336,7 +1336,80 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                          GestureDetector(
                            onTap: (){
-                             _uploadImage();
+
+                             showDialog(context: context, builder: (context) {
+                               return
+                                 Padding(
+                                   padding: EdgeInsets.only(top: 220, bottom: 220),
+                                   child: AlertDialog(
+                                     title: Row(
+                                       mainAxisAlignment: MainAxisAlignment.center,
+                                       children: [
+                                         Text("Please Select the Options", style: TextStyle(
+                                             fontWeight: FontWeight.w700, fontSize: 15),),
+                                       ],
+                                     ),
+                                     content: Column(
+                                       children: [
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(leading: Icon(Icons.camera),
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.camera)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo1 = File(value.path);
+                                                   });
+                                                   print(_photo1);
+                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
+                                                   print(_photo1);
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                               setState((){});
+                                             },
+                                             title:
+                                             Text("Camera",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+                                         SizedBox(height: 10),
+
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.gallery)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo1 = File(value.path);
+                                                   });
+                                                   setState((){});
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                             },
+                                             leading: Icon(Icons.browse_gallery),
+                                             title: Text("Gallery",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+
+                                       ],
+                                     ),
+                                   ),
+                                 );
+
+                             },);
+
                            },
                            child: Container(
                              height: height/7.56,
@@ -1393,27 +1466,27 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                      SizedBox(width: width/72,),
                                      SizedBox(
                                        width: width/1.290,
-                                       child: Text("Signature Should be clear and visible ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                       child: Text("Images Should be clear and visible ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                            fontSize:width/28,
                                            color: Colors.black)),
                                      )
                                    ],
                                  ),
                                  SizedBox(height: height/151.2,),
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                   children: [
-                                     Icon(Icons.circle,size: width/24,),
-                                     SizedBox(width: width/72,),
-                                     SizedBox(
-                                       width: width/1.290,
-                                       child: Text("Signature Should be written only in blue ink pen ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                           fontSize:width/28,
-                                           color: Colors.black)),
-                                     )
-                                   ],
-                                 ),
+                                 // Row(
+                                 //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                 //   crossAxisAlignment: CrossAxisAlignment.start,
+                                 //   children: [
+                                 //     Icon(Icons.circle,size: width/24,),
+                                 //     SizedBox(width: width/72,),
+                                 //     SizedBox(
+                                 //       width: width/1.290,
+                                 //       child: Text("Signature Should be written only in blue ink pen ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                 //           fontSize:width/28,
+                                 //           color: Colors.black)),
+                                 //     )
+                                 //   ],
+                                 // ),
 
                                ]),
                          ),
@@ -1455,7 +1528,80 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
                          GestureDetector(
                            onTap: (){
-                             _uploadImage2();
+
+                             showDialog(context: context, builder: (context) {
+                               return
+                                 Padding(
+                                   padding: EdgeInsets.only(top: 220, bottom: 220),
+                                   child: AlertDialog(
+                                     title: Row(
+                                       mainAxisAlignment: MainAxisAlignment.center,
+                                       children: [
+                                         Text("Please Select the Options", style: TextStyle(
+                                             fontWeight: FontWeight.w700, fontSize: 15),),
+                                       ],
+                                     ),
+                                     content: Column(
+                                       children: [
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(leading: Icon(Icons.camera),
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.camera)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo2 = File(value.path);
+                                                   });
+                                                   print(_photo2);
+                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
+                                                   print(_photo2);
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                               setState((){});
+                                             },
+                                             title:
+                                             Text("Camera",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+                                         SizedBox(height: 10),
+
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.gallery)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo2 = File(value.path);
+                                                   });
+                                                   setState((){});
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                             },
+                                             leading: Icon(Icons.browse_gallery),
+                                             title: Text("Gallery",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+
+                                       ],
+                                     ),
+                                   ),
+                                 );
+
+                             },);
+
                            },
                            child: Container(
                              height: height/7.56,
@@ -1586,7 +1732,80 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          SizedBox(height: height/107.25,),
                          GestureDetector(
                            onTap: (){
-                             _uploadImage3();
+
+                             showDialog(context: context, builder: (context) {
+                               return
+                                 Padding(
+                                   padding: EdgeInsets.only(top: 220, bottom: 220),
+                                   child: AlertDialog(
+                                     title: Row(
+                                       mainAxisAlignment: MainAxisAlignment.center,
+                                       children: [
+                                         Text("Please Select the Options", style: TextStyle(
+                                             fontWeight: FontWeight.w700, fontSize: 15),),
+                                       ],
+                                     ),
+                                     content: Column(
+                                       children: [
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(leading: Icon(Icons.camera),
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.camera)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo3 = File(value.path);
+                                                   });
+                                                   print(_photo3);
+                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
+                                                   print(_photo1);
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                               setState((){});
+                                             },
+                                             title:
+                                             Text("Camera",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+                                         SizedBox(height: 10),
+
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.gallery)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo3 = File(value.path);
+                                                   });
+                                                   setState((){});
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                             },
+                                             leading: Icon(Icons.browse_gallery),
+                                             title: Text("Gallery",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+
+                                       ],
+                                     ),
+                                   ),
+                                 );
+
+                             },);
+
                            },
                            child: Container(
                              height: height/7.56,
@@ -1630,7 +1849,82 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                          SizedBox(height: height/107.25,),
                          GestureDetector(
                            onTap: (){
-                             _uploadImage4();
+
+                             showDialog(context: context, builder: (context) {
+                               return
+                                 Padding(
+                                   padding: EdgeInsets.only(top: 220, bottom: 220),
+                                   child: AlertDialog(
+                                     title: Row(
+                                       mainAxisAlignment: MainAxisAlignment.center,
+                                       children: [
+                                         Text("Please Select the Options", style: TextStyle(
+                                             fontWeight: FontWeight.w700, fontSize: 15),),
+                                       ],
+                                     ),
+                                     content: Column(
+                                       children: [
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(leading: Icon(Icons.camera),
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.camera)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo4 = File(value.path);
+                                                   });
+                                                   print(_photo4);
+                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
+                                                   print(_photo4);
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                               setState((){});
+                                             },
+                                             title:
+                                             Text("Camera",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+                                         SizedBox(height: 10),
+
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.gallery)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo4 = File(value.path);
+                                                   });
+
+                                                   Navigator.pop(context);
+
+                                                 }
+                                               });
+                                               setState((){});
+                                             },
+                                             leading: Icon(Icons.browse_gallery),
+                                             title: Text("Gallery",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+
+                                       ],
+                                     ),
+                                   ),
+                                 );
+
+                             },);
+
                            },
                            child: Container(
                              height: height/7.56,
@@ -1686,7 +1980,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                      SizedBox(width: width/72,),
                                      SizedBox(
                                        width: width/1.290,
-                                       child: Text("Signature Should be clear and visible ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                       child: Text("Images Should be clear and visible ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                            fontSize:width/28,
                                            color: Colors.black)),
                                      )
@@ -1701,7 +1995,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                      SizedBox(width: width/72,),
                                      SizedBox(
                                        width: width/1.290,
-                                       child: Text("Signature Should be written only in blue ink pen ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                       child: Text("Please Correct the Edge to Upload Image",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                            fontSize:width/28,
                                            color: Colors.black)),
                                      )
@@ -1820,8 +2114,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                height: height/37.8,
                                                width: width/4.5,
 
-                                               child: Text("₹ -${Total.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-
+                                               child: Text("₹ -${payableamount().toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
                                          ],
                                        ),
                                        Divider(color: Colors.black,),
@@ -1869,6 +2162,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                  Row(
                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                    children: [
+                     steppervalue>0?
                      GestureDetector(
                        onTap: (){
 
@@ -1904,28 +2198,35 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            ),
                          ),
                        ),
-                     ),
+                     ):SizedBox(
+                       height: height/21.6,
+                       width: width/4.5,),
                      SizedBox(width: width/7.2,),
 
                      steppervalue==4?
                      GestureDetector(
                        onTap: () async {
                          if (_formKey.currentState!.validate()&&Selectedradiovalue.isNotEmpty
-                             &&corerctpincodecontroller.text.length==6&&corerctphonenumbercontroller.length==10) {
+                             &&corerctpincodecontroller.text.length==6&&corerctphonenumbercontroller.length==10
+                         &&_photo1!=null&&_photo2!=null&&_photo3!=null&&_photo4!=null) {
 
                            await FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
                              if(value['walletamount']>157){
-
                                setState(() {
                                  Loading=true;
                                });
-                               appiledpancardfunction();
+                               firebasestroragefunctionphoto();
+                               firebasestroragefunctionsign();
+                               firebasestroragefunctionaadharcard();
                              }
                              else{
                                lesspaymenterrorpopup();
                              }
 
                            });
+                         }
+                         else{
+                           Fielderrorpopup();
                          }
 
                        },
@@ -1958,7 +2259,9 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                      GestureDetector(
                        onTap: (){
 
-                         if(_formKey.currentState!.validate()&& selectedValuegender!="Select Gender"){
+                         if(_formKey.currentState!.validate()&& selectedValuegender!="Select Gender"&&
+                             corerctpincodecontroller.text.length==6&&
+                             Pannumbercontroller.text.length==10&&aadhaarontroller.text.length==14){
                            if(steppervalue<4) {
                              setState(() {
                                steppervalue++;
@@ -1968,8 +2271,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                              paymentfunction();
                            }
                            print(steppervalue);
-
                          }
+
 
                        },
                        child: Center(
@@ -2273,14 +2576,6 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
   }
 
 
-  appiledpancardfunction()  {
-    firebasestroragefunctionphoto();
-    firebasestroragefunctionsign();
-    firebasestroragefunctionaadharcard();
-
-  }
-
-
   correctionpancardfunction() async {
 
     FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
@@ -2428,16 +2723,31 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
   }
 
   paymentfunction(){
-    setState(() {
-      normal_fees=200;
-      Gst=(18/100)*normal_fees;
-      Total=normal_fees+Gst;
-    });
+    if(double.parse(widget.UserWalletamount.toString())>156){
+      setState(() {
+        normal_fees=250;
+        Gst=(18/100)*normal_fees;
+        Total=normal_fees+Gst;
+      });
+    }
+    else{
+      setState(() {
+        Total=0;
+      });
+    }
     print(normal_fees);
     print(Gst);
 
+  }
 
 
+  payableamount(){
+    if(double.parse(widget.UserWalletamount.toString())>156){
+      return ( double.parse(widget.UserWalletamount.toString())-Total);
+    }
+    else{
+      return 0;
+    }
 
   }
 
@@ -2651,6 +2961,111 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                           )
                         ],
                       )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+      },
+    );
+  }
+
+  Fielderrorpopup() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return
+          Padding(
+            padding: EdgeInsets.only(
+                left: width / 8.268,
+                right: width / 8.845,
+                top: height / 3.5,
+                bottom: height / 3.5),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),
+                    color: Colors.white
+                ),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+
+                      SizedBox(height: height/75.2,),
+                      Text(
+                        'Warning.....!',
+                        style: GoogleFonts.poppins(
+                            fontSize: width / 23.613,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                      Row(
+
+                        children: [
+                          SizedBox(width:width/4.5),
+                          Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/7.3,width: width/6),
+                        ],
+                      ),
+                      SizedBox(height: height/75.6,),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width:width/1.525,
+                            child:
+                            Text(
+                              'Please Fill the All Fields And Images',
+                              style: GoogleFonts.poppins(
+                                  fontSize: width / 28.613,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: height/22.6,),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //okay button
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: height/19.6,
+                              width: width/4.2,
+                              decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Color(0xff245BCA),
+                                        Color(0xff245BCA),
+                                      ]
+                                  ),
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Center(
+                                  child: Text(
+                                    "Okay",
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: width / 25.718),
+                                  )),
+                            ),
+                          ),
+
+                        ],
+                      )
+
                     ],
                   ),
                 ),

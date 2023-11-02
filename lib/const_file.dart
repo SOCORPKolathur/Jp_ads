@@ -9,7 +9,12 @@ String Homeicon="assets/icon_home_active.png";
 String walleticon="assets/icons8-wallet-100 (1) 1.png";
 String Uploaddocimg='assets/icon_upload_file.png';
 
+String Referencevc_icon="assets/referebce vc icon.png";
+String Form_Icon="assets/form icon.png";
+
 String ProfileImage="assets/foto_profil.png";
+
+String loginprofileimg= "assets/man.png";
 
 
 

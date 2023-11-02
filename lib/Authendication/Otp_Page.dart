@@ -15,7 +15,8 @@ class Otp_Page extends StatefulWidget {
   String ?Username;
   String ?phonenumber;
   String ?UserType;
-   Otp_Page({this.Username,this.phonenumber,this.UserType});
+  String ?imageUrl;
+   Otp_Page({this.Username,this.phonenumber,this.UserType,this.imageUrl});
 
   @override
   State<Otp_Page> createState() => _Otp_PageState();
@@ -250,13 +251,15 @@ class _Otp_PageState extends State<Otp_Page> {
 
 
   userdatacreatefunction() async {
+    print(widget.imageUrl);
+    print("Image urlll passsingggggggggggggggggggggggggggggg");
     String? token = await FirebaseMessaging.instance.getToken();
     FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).set({
       "name":widget.Username,
       "phone":widget.phonenumber,
       "walletamount":0,
       "userid":FirebaseAuth.instance.currentUser!.uid,
-      "picture":"",
+      "picture":widget.imageUrl==""?"":widget.imageUrl,
       "fcmtoken":token,
       "usertype":widget.UserType,
       "payment":false,
