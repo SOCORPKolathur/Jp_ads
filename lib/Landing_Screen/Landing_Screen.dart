@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +35,12 @@ class _Landing_ScreenState extends State<Landing_Screen>
   TabController? tabController;
   int selectTabIndex = 0;
 
+  String userDocid="";
+  double userWalletamount=0;
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
+    walletamontcheckfun();
     // TODO: implement initState
     super.initState();
   }
@@ -343,9 +347,9 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                             UserType: userdata[
                                                             'usertype'],
                                                             UserWalletamount:
-                                                            userdata[
-                                                            'walletamount']
-                                                                .toString()),
+                                                            userdata['walletamount'].toString(),
+                                                           Usagecount:userdata['usageccount'],
+                                                        ),
                                                   ));
                                             },
                                             child: Column(
@@ -3749,6 +3753,41 @@ class _Landing_ScreenState extends State<Landing_Screen>
                   Userdocid: Userdocid),
         ));
   }
+
+
+  walletamontcheckfun()async{
+    print("userd id");
+    print(FirebaseAuth.instance.currentUser!.uid);
+    var data=await FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).get();
+    Map<String ,dynamic>?value=data.data();
+    print(value!['userid']);
+    print(value!['walletamount']);
+    setState(() {
+      userDocid=value!['userid'];
+      userWalletamount=double.parse(value['walletamount']);
+    });
+
+    if(userWalletamount<157){
+      print("Entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      awesomeDialog("Wallet amount Less","Your Wallet amount is Low  Kindly Recharge Your Wallet ");
+
+    }
+    else{
+      print("Wallet amount graterthan 157");
+    }
+  }
+
+  awesomeDialog(title,description){
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.rightSlide,
+      title: title,
+      desc: description,
+      btnOkOnPress: () {},
+    )..show();
+  }
+
 
 
 }

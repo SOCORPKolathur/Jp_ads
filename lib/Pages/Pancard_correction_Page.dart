@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -90,9 +91,14 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
         print(document["usageccount"]);
         planExitpopup();
       }
+      if(document['walletamount']<=157){
+        return  awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount");
+      }
     }
 
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -346,7 +352,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                          maxLength: 10,
                                          maxLines: 1,
                                          inputFormatters: [
-                                           FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+                                           FilteringTextInputFormatter.allow(RegExp("[0-9A-Z]")),
                                          ],
                                          decoration: InputDecoration(
                                              counterText: "",
@@ -355,7 +361,16 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                              hintText: "Type pan number",
                                              hintStyle: GoogleFonts.poppins()
                                          ),
-                                         validator: (value) => value!.isEmpty ? 'Field is required' : null,
+                                         validator: (value) {
+                                           if(value!.isEmpty){
+                                             return 'Field is required';
+                                           }
+                                           else if(value.isNotEmpty){
+                                             if(value.length!=10){
+                                               return 'Enter the Pan card no correctly';
+                                             }
+                                           }
+                                         },
 
                                        ),
                                      )
@@ -422,7 +437,18 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                              hintText: "Type Aadhaar Number",
                                              hintStyle: GoogleFonts.poppins()
                                          ),
-                                         validator: (value) => value!.isEmpty ? 'Field is required' : null,
+                                         validator: (value){
+                                           if(value!.isEmpty){
+                                             return 'Field is required';
+                                           }
+                                           else if(value!.isNotEmpty){
+                                             if(value!.length!=14){
+                                               return "Fill the Aadhaar Number Correctly";
+                                             }
+                                           }
+
+
+                                         },
                                        ),
                                        // TextFormField(
                                        //   textCapitalization: TextCapitalization.characters,
@@ -859,7 +885,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                        child: TextFormField(
                                          textCapitalization: TextCapitalization.characters,
                                          inputFormatters: [
-                                           FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                          ],
                                          controller: corerctnamecontroller,
                                          decoration: InputDecoration(
@@ -908,7 +934,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                        child: TextFormField(
                                          textCapitalization: TextCapitalization.characters,
                                          inputFormatters: [
-                                           FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                          ],
                                          controller: corerctfathernamecontroller,
                                          decoration: InputDecoration(
@@ -1060,6 +1086,9 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                        ),
                                        child: TextFormField(
                                          textCapitalization: TextCapitalization.characters,
+                                         inputFormatters: [
+                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                                         ],
                                          maxLines: null,
                                          controller: corerctnameandvillagecontroller,
                                          decoration: InputDecoration(
@@ -1100,6 +1129,9 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                        ),
                                        child: TextFormField(
                                          textCapitalization: TextCapitalization.characters,
+                                         inputFormatters: [
+                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                                         ],
                                          maxLines: null,
                                          controller: corerctaddresscontroller,
                                          decoration: InputDecoration(
@@ -1143,7 +1175,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                          textCapitalization: TextCapitalization.characters,
                                          maxLines: 1,
                                          inputFormatters: [
-                                           FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                          ],
                                          controller: corerctdistrictcontroller,
                                          keyboardType: TextInputType.name,
@@ -1188,7 +1220,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                          textCapitalization: TextCapitalization.characters,
                                          maxLines: 1,
                                          inputFormatters: [
-                                           FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                          ],
                                          controller: corerctstatecontroller,
                                          decoration: InputDecoration(
@@ -1244,8 +1276,16 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                              hintText: "Type pin code",
                                              hintStyle: GoogleFonts.poppins()
                                          ),
-                                         validator: (value) => value!.isEmpty ? 'Field is required' : null,
-
+                                         validator: (value) {
+                                           if(value!.isEmpty){
+                                             return 'Field is required';
+                                           }
+                                           else if(value.isNotEmpty){
+                                             if(value.length!=6){
+                                               return 'Enter the Pin code no correctly';
+                                             }
+                                           }
+                                         },
                                        ),
                                      )
                                    ],
@@ -1290,7 +1330,6 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                              hintText: "Type phone number",
                                              hintStyle: GoogleFonts.poppins()
                                          ),
-                                         validator: (value) => value!.isEmpty ? 'Field is required' : null,
 
                                        ),
                                      )
@@ -3074,6 +3113,19 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
           );
       },
     );
+  }
+
+  awesomeDialog(title,description){
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.rightSlide,
+      title: title,
+      desc: description,
+      btnOkOnPress: () {
+        Navigator.pop(context);
+      },
+    )..show();
   }
 
 

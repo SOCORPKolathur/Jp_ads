@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -52,6 +53,9 @@ class _Reprint_PageState extends State<Reprint_Page> {
       if(document['usageccount']==3){
         print(document["usageccount"]);
         planExitpopup();
+      }
+      if(document['walletamount']<=157){
+        return  awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount");
       }
     }
 
@@ -348,7 +352,16 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                               hintText: "Type Aadhaar Number",
                                               hintStyle: GoogleFonts.poppins()
                                           ),
-                                          validator: (value) => value!.isEmpty ? 'Field is required' : null,
+                                          validator: (value) {
+                                            if(value!.isEmpty){
+                                              return 'Field is required';
+                                            }
+                                            else if(value.isNotEmpty){
+                                              if(value.length!=14){
+                                                return 'Enter the Aadhaar card no correctly';
+                                              }
+                                            }
+                                          },
                                         ),
                                         // TextFormField(
                                         //   textCapitalization: TextCapitalization.characters,
@@ -402,7 +415,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                         child: TextFormField(
                                           textCapitalization: TextCapitalization.characters,
                                           inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                                            FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                           ],
                                           controller: printnamecontroller,
                                           decoration: InputDecoration(
@@ -446,7 +459,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                         child: TextFormField(
                                           textCapitalization: TextCapitalization.characters,
                                           inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                                            FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                           ],
                                           controller: printfathernamecontroller,
                                           decoration: InputDecoration(
@@ -680,7 +693,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                           textCapitalization: TextCapitalization.characters,
                                           maxLines: 1,
                                           inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                                            FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                           ],
                                           controller: printdistrictcontroller,
                                           keyboardType: TextInputType.name,
@@ -725,7 +738,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                           textCapitalization: TextCapitalization.characters,
                                           maxLines: 1,
                                           inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                                            FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                           ],
                                           controller: printstatecontroller,
                                           decoration: InputDecoration(
@@ -781,7 +794,16 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                               hintText: "Type pincode",
                                               hintStyle: GoogleFonts.poppins()
                                           ),
-                                          validator: (value) => value!.isEmpty ? 'Field is required' : null,
+                                          validator: (value) {
+                                            if(value!.isEmpty){
+                                              return 'Field is required';
+                                            }
+                                            else if(value.isNotEmpty){
+                                              if(value.length!=6){
+                                                return 'Enter the Pin Code correctly';
+                                              }
+                                            }
+                                          },
 
                                         ),
                                       )
@@ -827,7 +849,16 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                               hintText: "Type phone number",
                                               hintStyle: GoogleFonts.poppins()
                                           ),
-                                          validator: (value) => value!.isEmpty ? 'Field is required' : null,
+                                          validator: (value) {
+                                            if(value!.isEmpty){
+                                              return 'Field is required';
+                                            }
+                                            else if(value.isNotEmpty){
+                                              if(value.length!=10){
+                                                return 'Enter the Phone no correctly';
+                                              }
+                                            }
+                                          },
 
                                         ),
                                       )
@@ -2593,6 +2624,20 @@ class _Reprint_PageState extends State<Reprint_Page> {
       return 0;
     }
 
+  }
+
+
+  awesomeDialog(title,description){
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.rightSlide,
+      title: title,
+      desc: description,
+      btnOkOnPress: () {
+        Navigator.pop(context);
+      },
+    )..show();
   }
 
 

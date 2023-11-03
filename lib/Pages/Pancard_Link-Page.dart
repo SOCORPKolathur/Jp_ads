@@ -112,8 +112,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                           maxLength: 10,
                           maxLines: 1,
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
-
+                            FilteringTextInputFormatter.allow(RegExp("[0-9A-Z]")),
                           ],
                           decoration: InputDecoration(
                             counterText: "",

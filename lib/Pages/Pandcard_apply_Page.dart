@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -19,7 +20,8 @@ class Pandcard_apply_Page extends StatefulWidget {
   String ?Userdocid;
   String ?UserType;
   String ?UserWalletamount;
-  Pandcard_apply_Page({this.Userdocid,this.UserType,this.UserWalletamount});
+  int ?Usagecount;
+  Pandcard_apply_Page({this.Userdocid,this.UserType,this.UserWalletamount,this.Usagecount});
 
   @override
   State<Pandcard_apply_Page> createState() => _Pandcard_apply_PageState();
@@ -51,6 +53,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
   int steppervalue=0;
 
   bool Loading=false;
+  bool imgaeSelcted=false;
 
 
   ///payment controller
@@ -60,6 +63,8 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
   double normal_fees=0;
   double Gst=0;
   double Total=0;
+
+  double FirebaseWalletAmount=0;
 
 
 @override
@@ -81,11 +86,15 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
       print(document["usageccount"]);
       planExitpopup();
     }
+    if(document['walletamount']<=157){
+      return  awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount");
+    }
   }
 
   }
 
   final RegExp _inputPattern = RegExp(r'^\d{4}\s\d{4}\s\d{4}$');
+
 
   @override
   Widget build(BuildContext context) {
@@ -349,7 +358,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                 controller: namecontroller,
                                                 textCapitalization: TextCapitalization.characters,
                                                 inputFormatters: [
-                                                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                                                  FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                                 ],
                                                 decoration: InputDecoration(
                                                     contentPadding: EdgeInsets.only(left: width/18),
@@ -457,7 +466,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                 controller: fathernamecontroller,
                                                 textCapitalization: TextCapitalization.characters,
                                                 inputFormatters: [
-                                                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                                                  FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                                 ],
                                                 decoration: InputDecoration(
                                                     contentPadding: EdgeInsets.only(left: width/18),
@@ -645,7 +654,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     return 'Field is required';
                                                   }
                                                  else if(value.isNotEmpty){
-                                                    if(value.characters!=14){
+                                                    if(value.length!=14){
                                                       return 'Enter the Aadhaar no correctly';
                                                     }
                                                   }
@@ -724,6 +733,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     if (value != null) {
                                                       setState(() {
                                                         _photo1 = File(value.path);
+                                                        imgaeSelcted=false;
                                                       });
                                                       print(_photo1);
                                                       print("sssssssssssssssssssssssssssssssssssssssssssssss");
@@ -752,6 +762,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     if (value != null) {
                                                       setState(() {
                                                         _photo1 = File(value.path);
+                                                        imgaeSelcted=false;
                                                       });
                                                       setState((){});
                                                       Navigator.pop(context);
@@ -913,6 +924,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                   if (value != null) {
                                                     setState(() {
                                                       _photo2 = File(value.path);
+                                                      imgaeSelcted=false;
                                                     });
                                                     print(_photo2);
                                                     print("sssssssssssssssssssssssssssssssssssssssssssssss");
@@ -941,6 +953,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                   if (value != null) {
                                                     setState(() {
                                                       _photo2 = File(value.path);
+                                                      imgaeSelcted=false;
                                                     });
                                                     setState((){});
                                                     Navigator.pop(context);
@@ -1229,6 +1242,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     if (value != null) {
                                                       setState(() {
                                                         _photo4 = File(value.path);
+                                                        imgaeSelcted=false;
                                                       });
                                                       print(_photo4);
                                                       print("sssssssssssssssssssssssssssssssssssssssssssssss");
@@ -1257,6 +1271,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     if (value != null) {
                                                       setState(() {
                                                         _photo4 = File(value.path);
+                                                        imgaeSelcted=false;
                                                       });
 
                                                       Navigator.pop(context);
@@ -1464,7 +1479,22 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                   height: height/37.8,
                                                   width: width/4.5,
 
-                                                  child: Text("₹ -${payableamount()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                                  child: Text("₹ -${Total.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                  height: height/37.8,
+                                                  width: width/1.636,
+
+                                                  child: Text("Your wallet Balance :  ",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                              Container(
+                                                  height: height/37.8,
+                                                  width: width/4.5,
+
+                                                  child: Text("₹ ${FirebaseWalletAmount.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
 
                                             ],
                                           ),
@@ -1481,7 +1511,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                   width: width/4.5,
                                                   child: Text(
 
-                                                    widget.UserWalletamount==0?
+                                                    widget.UserWalletamount!=0?
                                                     "₹ ${Total.toString()}":"₹ 0.00",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
 
                                             ],
@@ -1555,26 +1585,17 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                       steppervalue==4?
                       GestureDetector(
                         onTap: () async {
-                          print(aadhaarontroller.text.length);
                           if (_formKey.currentState!.validate()&&aadhaarontroller.text.length==14&&_photo1!=null&&_photo2!=null&&_photo3!=null&&_photo4!=null) {
-                            await FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
-                              if(value['walletamount']>157){
-                                setState(() {
-                                  Loading=true;
-                                });
-                                  firebasestroragefunctionphoto();
-                                  firebasestroragefunctionsign();
-                                  firebasestroragefunctionaadharcard();
-                              }
-                              else{
-                                lesspaymenterrorpopup();
-                              }
+                            if(double.parse(widget.UserWalletamount.toString())>157){
+                              setState(() {
+                                Loading=true;
+                              });
+                              firebasestroragefunctionphoto();
+                            }
+                            else{
+                              awesomeDialog("Warning", 'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500');
+                            }
 
-                            });
-
-                          }
-                          else{
-                            Fielderrorpopup();
                           }
                         },
                         child: Center(
@@ -1607,24 +1628,36 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                       GestureDetector(
                         onTap: (){
 
-                          if(_formKey.currentState!.validate() && selectedValuegender!="Select Gender"&&
-                              selectedValuepantype!="Select Pan Type"&&aadhaarontroller.text.length==14){
+                            if(imgaeSelcted==false){
+                              if (_formKey.currentState!.validate() &&
+                                  selectedValuegender != "Select Gender" &&
+                                  selectedValuepantype != "Select Pan Type" &&
+                                  aadhaarontroller.text.length == 14) {
+                                if (steppervalue < 4) {
+                                  setState(() {
+                                    steppervalue++;
+                                    imgaeSelcted=false;
+                                  });
+                                }
+                                if (steppervalue == 4) {
+                                  paymentfunction();
+                                }
+                                if(steppervalue>0&&steppervalue<4) {
+                                  setState(() {
+                                    imgaeSelcted = true;
+                                  });
 
-                            if(steppervalue<4) {
-                              setState(() {
-                                steppervalue++;
-                              });
+                                }
+
+                                }
 
 
                             }
-
-                           if(steppervalue==4){
-                             paymentfunction();
-                           }
-
-                            print(steppervalue);
-
-                          }
+                            else{
+                              return
+                                photerrorDialog("Photo Are Invalid",
+                                    "Please Select the Image");
+                            }
 
                         },
                         child: Center(
@@ -1692,219 +1725,198 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
     );
   }
 
-  _uploadImage() async {
-    final picker = ImagePicker();
-    await picker.pickImage(source: ImageSource.gallery).then((value){
-      if (value != null) {
-        setState(() {
-          _photo1 = File(value.path);
-        });
-      }
-    });
+  awesomeDialog(title,description){
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.rightSlide,
+      title: title,
+      desc: description,
+      btnOkOnPress: () {
+        Navigator.pop(context);
+      },
+    )..show();
   }
 
-  _uploadImage2() async {
-
-    final picker = ImagePicker();
-    await picker.pickImage(source: ImageSource.gallery).then((value){
-      if (value != null) {
-        setState(() {
-          _photo2 = File(value.path);
-        });
-      }
-    });
+  photerrorDialog(title,description){
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.rightSlide,
+      title: title,
+      desc: description,
+      btnOkOnPress: () {
+      },
+    )..show();
   }
-
-  _uploadImage3() async {
-
-    final picker = ImagePicker();
-    await picker.pickImage(source: ImageSource.gallery).then((value){
-      if (value != null) {
-        setState(() {
-          _photo3 = File(value.path);
-        });
-      }
-    });
-  }
-
-  _uploadImage4() async {
-
-    final picker = ImagePicker();
-    await picker.pickImage(source: ImageSource.gallery).then((value){
-      if (value != null) {
-        setState(() {
-          _photo4 = File(value.path);
-        });
-      }
-    });
-  }
-
 
   firebasestroragefunctionphoto() async {
-    var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
-    var uploadTask = await ref.putFile(_photo1!).catchError((error) async {
+    if(FirebaseWalletAmount>0){
+      var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
+      var uploadTask = await ref.putFile(_photo1!).catchError((error) async {
+
+      });
+      var image = await uploadTask.ref.getDownloadURL();
+      setState(() {
+        imageUrl=image;
+      });
+
+      var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
+      var uploadTask2 = await ref2.putFile(_photo2!).catchError((error) async {
+      });
+      var image2 = await uploadTask2.ref.getDownloadURL();
+      setState(() {
+        imageUrl2=image2;
+      });
+    }
+
+    var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
+    var uploadTask3 = await ref3.putFile(_photo3!).catchError((error) async {
 
     });
-     var image = await uploadTask.ref.getDownloadURL();
-     setState(() {
-       imageUrl=image;
-     });
-
-
-  }
-
-  firebasestroragefunctionsign() async {
-    var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
-    var uploadTask = await ref.putFile(_photo2!).catchError((error) async {
-
-    });
-    var image2 = await uploadTask.ref.getDownloadURL();
-    setState(() {
-      imageUrl2=image2;
-    });
-
-  }
-
-  firebasestroragefunctionaadharcard() async {
-    var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
-    var uploadTask = await ref.putFile(_photo3!).catchError((error) async {
-
-    });
-    var image3 = await uploadTask.ref.getDownloadURL();
+    var image3 = await uploadTask3.ref.getDownloadURL();
     setState(() {
       imageUrl3=image3;
     });
-    var ref1 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
-    var uploadTask1 = await ref1.putFile(_photo4!).catchError((error) async {
+
+    var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
+    var uploadTask4 = await ref4.putFile(_photo4!).catchError((error) async {
 
     });
-    var image4 = await uploadTask1.ref.getDownloadURL();
+    var image4 = await uploadTask4.ref.getDownloadURL();
     setState(() {
       imageUrl4=image4;
     });
-      FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
-       if(value['usertype']=="Individual"){
-         if(value['usageccount']<3){
-           FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-             "usageccount":FieldValue.increment(1),
-             "walletamount":FieldValue.increment(-Total),
 
-           });
+    if(widget.UserType=="Individual"){
 
-           FirebaseFirestore.instance.collection("New_applied").doc().set({
-             "name":namecontroller.text,
-             "pantype":selectedValuepantype,
-             "father name":fathernamecontroller.text,
-             "aadhar no":aadhaarontroller.text,
-             "dob":dobcontroller.text,
-             "gender":selectedValuegender,
-             "photo":imageUrl,
-             "updatestatus":"Applied",
-             "signpicture":imageUrl2,
-             "aadharpicture":imageUrl3,
-             "aadharpicture2":imageUrl4,
-             "usertype":widget.UserType,
-             "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-             "time":DateFormat('hh:mm a').format(DateTime.now()),
-             "timestamp":DateTime.now().millisecondsSinceEpoch
-           });
+      if(widget.Usagecount!<3){
+        //Total
+        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+          "usageccount":FieldValue.increment(1),
+          "walletamount":FieldValue.increment(-Total),
+        });
 
-           FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
-             "name":namecontroller.text,
-             "pantype":selectedValuepantype,
-             "father name":fathernamecontroller.text,
-             "aadhar no":aadhaarontroller.text,
-             "dob":dobcontroller.text,
-             "gender":selectedValuegender,
-             "photo":imageUrl,
-             "signpicture":imageUrl2,
-             "aadharpicture":imageUrl3,
-             "aadharpicture2":imageUrl4,
-             "updatestatus":"",
-             "Type":"Applied",
-             "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-             "time":DateFormat('hh:mm a').format(DateTime.now()),
-             "timestamp":DateTime.now().millisecondsSinceEpoch
-           });
-           Succespopup();
-           Future.delayed(Duration(seconds: 1),(){
-             setState(() {
-               namecontroller.clear();
-               fathernamecontroller.clear();
-               dobcontroller.clear();
-               aadhaarontroller.clear();
-               selectedValuepantype='Select Pan Type';
-               selectedValuegender='Select Gender';
-               imageUrl='';
-               imageUrl2='';
-               imageUrl3='';
-               Loading=false;
+        FirebaseFirestore.instance.collection("New_applied").doc().set({
+          "name":namecontroller.text,
+          "pantype":selectedValuepantype,
+          "father name":fathernamecontroller.text,
+          "aadhar no":aadhaarontroller.text,
+          "dob":dobcontroller.text,
+          "gender":selectedValuegender,
+          "photo":imageUrl,
+          "updatestatus":"Applied",
+          "signpicture":imageUrl2,
+          "aadharpicture":imageUrl3,
+          "aadharpicture2":imageUrl4,
+          "usertype":widget.UserType,
+          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+          "time":DateFormat('hh:mm a').format(DateTime.now()),
+          "timestamp":DateTime.now().millisecondsSinceEpoch
+        });
 
-             });
-           });
-         }
-         else{
-           planExitpopup();
-         }
-       }
-       else{
-         FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-           "usageccount":FieldValue.increment(1),
-           "walletamount":FieldValue.increment(-Total),
-         });
-         FirebaseFirestore.instance.collection("New_applied").doc().set({
-           "name":namecontroller.text,
-           "pantype":selectedValuepantype,
-           "father name":fathernamecontroller.text,
-           "aadhar no":aadhaarontroller.text,
-           "dob":dobcontroller.text,
-           "gender":selectedValuegender,
-           "photo":imageUrl,
-           "updatestatus":"Applied",
-           "signpicture":imageUrl2,
-           "aadharpicture":imageUrl3,
-           "aadharpicture2":imageUrl4,
-           "usertype":widget.UserType,
-           "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-           "time":DateFormat('hh:mm a').format(DateTime.now()),
-           "timestamp":DateTime.now().millisecondsSinceEpoch
-         });
+        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
+          "name":namecontroller.text,
+          "pantype":selectedValuepantype,
+          "father name":fathernamecontroller.text,
+          "aadhar no":aadhaarontroller.text,
+          "dob":dobcontroller.text,
+          "gender":selectedValuegender,
+          "photo":imageUrl,
+          "signpicture":imageUrl2,
+          "aadharpicture":imageUrl3,
+          "aadharpicture2":imageUrl4,
+          "updatestatus":"",
+          "Type":"Applied",
+          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+          "time":DateFormat('hh:mm a').format(DateTime.now()),
+          "timestamp":DateTime.now().millisecondsSinceEpoch
+        });
+        Succespopup();
+        Future.delayed(Duration(seconds: 1),(){
+          setState(() {
+            namecontroller.clear();
+            fathernamecontroller.clear();
+            dobcontroller.clear();
+            aadhaarontroller.clear();
+            selectedValuepantype='Select Pan Type';
+            selectedValuegender='Select Gender';
+            imageUrl='';
+            imageUrl2='';
+            imageUrl3='';
+            Loading=false;
 
-         FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
-           "name":namecontroller.text,
-           "pantype":selectedValuepantype,
-           "father name":fathernamecontroller.text,
-           "aadhar no":aadhaarontroller.text,
-           "dob":dobcontroller.text,
-           "gender":selectedValuegender,
-           "photo":imageUrl,
-           "signpicture":imageUrl2,
-           "aadharpicture":imageUrl3,
-           "aadharpicture2":imageUrl4,
-           "updatestatus":"",
-           "Type":"Applied",
-           "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-           "time":DateFormat('hh:mm a').format(DateTime.now()),
-           "timestamp":DateTime.now().millisecondsSinceEpoch
-         });
-         Succespopup();
-         Future.delayed(Duration(seconds: 1),(){
-           setState(() {
-             namecontroller.clear();
-             fathernamecontroller.clear();
-             dobcontroller.clear();
-             selectedValuepantype='Select Pan Type';
-             selectedValuegender='Select Gender';
-             imageUrl='';
-             imageUrl2='';
-             imageUrl3='';
-             Loading=false;
+          });
+        });
+      }
+      else{
+        planExitpopup();
+      }
+    }
+    else{
+      FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+        "usageccount":FieldValue.increment(1),
+        "walletamount":FieldValue.increment(-Total),
+      });
+      FirebaseFirestore.instance.collection("New_applied").doc().set({
+        "name":namecontroller.text,
+        "pantype":selectedValuepantype,
+        "father name":fathernamecontroller.text,
+        "aadhar no":aadhaarontroller.text,
+        "dob":dobcontroller.text,
+        "gender":selectedValuegender,
+        "photo":imageUrl,
+        "updatestatus":"Applied",
+        "signpicture":imageUrl2,
+        "aadharpicture":imageUrl3,
+        "aadharpicture2":imageUrl4,
+        "usertype":widget.UserType,
+        "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+        "time":DateFormat('hh:mm a').format(DateTime.now()),
+        "timestamp":DateTime.now().millisecondsSinceEpoch
+      });
 
-           });
-         });
-       }
-    });
+      FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
+        "name":namecontroller.text,
+        "pantype":selectedValuepantype,
+        "father name":fathernamecontroller.text,
+        "aadhar no":aadhaarontroller.text,
+        "dob":dobcontroller.text,
+        "gender":selectedValuegender,
+        "photo":imageUrl,
+        "signpicture":imageUrl2,
+        "aadharpicture":imageUrl3,
+        "aadharpicture2":imageUrl4,
+        "updatestatus":"",
+        "Type":"Applied",
+        "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+        "time":DateFormat('hh:mm a').format(DateTime.now()),
+        "timestamp":DateTime.now().millisecondsSinceEpoch
+      });
+      Succespopup();
+      Future.delayed(Duration(seconds: 1),(){
+        setState(() {
+          namecontroller.clear();
+          fathernamecontroller.clear();
+          dobcontroller.clear();
+          selectedValuepantype='Select Pan Type';
+          selectedValuegender='Select Gender';
+          imageUrl='';
+          imageUrl2='';
+          imageUrl3='';
+          Loading=false;
+
+        });
+      });
+    }
+
+
+
   }
+
+
+
+
 
 
   Succespopup() {
@@ -2375,20 +2387,37 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
   }
 
   paymentfunction(){
+    setState(() {
+  FirebaseWalletAmount=0;
+  normal_fees=0;
+  Gst=0;
+  Total=0;
+    });
     if(double.parse(widget.UserWalletamount.toString())>156){
       setState(() {
         normal_fees=250;
         Gst=(18/100)*normal_fees;
         Total=normal_fees+Gst;
       });
+      if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
+       print(double.parse(widget.UserWalletamount.toString())-Total);
+        return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
+      }
+      else{
+        if(double.parse(widget.UserWalletamount.toString())-Total>0){
+          print(double.parse(widget.UserWalletamount.toString())-Total);
+          print("else Functionsssssssss");
+          setState(() {
+            FirebaseWalletAmount=double.parse(widget.UserWalletamount.toString())-Total;
+          });
+          print("FirebaseWalletAmount");
+          print(FirebaseWalletAmount);
+        }
+      }
     }
     else{
-      setState(() {
-        Total=0;
-      });
+    return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
     }
-    print(normal_fees);
-    print(Gst);
 
   }
 

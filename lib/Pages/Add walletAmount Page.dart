@@ -111,7 +111,7 @@ class _addwallet_Amount_PageState extends State<addwallet_Amount_Page> {
                                       maxLength: 10,
                                       maxLines: 1,
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                                        FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                       ],
                                       decoration: InputDecoration(
                                           counterText: "",
