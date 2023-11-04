@@ -28,11 +28,14 @@ class _Otp_PageState extends State<Otp_Page> {
 
   @override
   void initState() {
+
     // TODO: implement initState
     _verifyphone();
 
     super.initState();
   }
+
+  String? token = "";
   var _verificationCode;
   String PinValue='';
   bool Loading=false;
@@ -220,6 +223,9 @@ class _Otp_PageState extends State<Otp_Page> {
   }
 
   _verifyphone()async{
+       token = await FirebaseMessaging.instance.getToken();
+       print("token valueeeeeeeeeeeeeeeeeeee");
+       print(token);
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: "+91${widget.phonenumber}" ,
         verificationCompleted:(PhoneAuthCredential credential)async{
@@ -253,7 +259,6 @@ class _Otp_PageState extends State<Otp_Page> {
   userdatacreatefunction() async {
     print(widget.imageUrl);
     print("Image urlll passsingggggggggggggggggggggggggggggg");
-    String? token = await FirebaseMessaging.instance.getToken();
     FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).set({
       "name":widget.Username,
       "phone":widget.phonenumber,

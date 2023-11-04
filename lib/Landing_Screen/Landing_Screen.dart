@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jp_ads/Pages/Applied_Histroy.dart';
+import 'package:jp_ads/Pages/Find_Pancard.dart';
 import 'package:jp_ads/Pages/Notification_Page.dart';
 import 'package:jp_ads/Pages/Pancard_Link-Page.dart';
 import 'package:jp_ads/Pages/Pancard_correction_Page.dart';
@@ -36,9 +37,12 @@ class _Landing_ScreenState extends State<Landing_Screen>
   int selectTabIndex = 0;
 
   String userDocid="";
-  double userWalletamount=0;
+  int userWalletamount=0;
   @override
   void initState() {
+    setState(() {
+
+    });
     tabController = TabController(length: 3, vsync: this);
     walletamontcheckfun();
     // TODO: implement initState
@@ -315,7 +319,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                               elevation: 15,
                               shadowColor: Colors.black12,
                               child: Container(
-                                height: height / 2.0,
+                                height: height / 1.51,
                                 width: width / 1.058,
                                 decoration: BoxDecoration(
                                     color: const Color(0xffFFFFFF),
@@ -395,11 +399,14 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         Pancard_correction_Page(
-                                                          Userdocid: userdata
-                                                              .id,
-                                                          UserType: userdata['usertype'],
-                                                          UserWalletamount: userdata['walletamount']
-                                                              .toString(),),
+                                                            Userdocid:
+                                                            userdata.id,
+                                                            UserType: userdata[
+                                                            'usertype'],
+                                                            UserWalletamount:
+                                                            userdata['walletamount'].toString(),
+                                                            Usagecount:userdata['usageccount']
+                                                        ),
                                                   ));
                                             },
                                             child: Column(
@@ -448,7 +455,10 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                             Userdocid:
                                                             userdata.id,
                                                             UserType: userdata[
-                                                            'usertype']),
+                                                            'usertype'],
+                                                            UserWalletamount:
+                                                            userdata['walletamount'].toString(),
+                                                            Usagecount:userdata['usageccount']),
                                                   ));
                                             },
                                             child: Padding(
@@ -512,12 +522,14 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         Reprint_Page(
-                                                          Userdocid:
-                                                          userdata.id,
-                                                          UserType: userdata[
-                                                          'usertype'],
-                                                          UserWalletamount: userdata['walletamount']
-                                                              .toString(),),
+                                                            Userdocid:
+                                                            userdata.id,
+                                                            UserType: userdata[
+                                                            'usertype'],
+                                                            UserWalletamount:
+                                                            userdata['walletamount'].toString(),
+                                                            Usagecount:userdata['usageccount']
+                                                        ),
                                                   ));
                                             },
                                             child: Column(
@@ -656,7 +668,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
 
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          bottom: height / 50.4),
+                                          bottom: 0),
                                       child: Row(
                                         mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
@@ -672,7 +684,13 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   MaterialPageRoute(
                                                   builder: (context)
                                               =>
-                                                  Minor_Page()
+                                                  Minor_Page(Userdocid:
+                                                  userdata.id,
+                                                      UserType: userdata[
+                                                      'usertype'],
+                                                      UserWalletamount:
+                                                      userdata['walletamount'].toString(),
+                                                      Usagecount:userdata['usageccount'])
                                               ));
                                             },
                                             child: Column(
@@ -799,6 +817,152 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                 ),
                                                 Text(
                                                   "Forms",
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      fontSize: width / 30,
+                                                      color: const Color(
+                                                          0xff00194A)),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: height / 50.4),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
+
+                                        children: [
+
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context)
+                                                      =>
+                                                          Find_Pancard(Userdocid:
+                                                          userdata.id,
+                                                              UserType: userdata[
+                                                              'usertype'],
+                                                              UserWalletamount:
+                                                              userdata['walletamount'].toString(),
+                                                              Usagecount:userdata['usageccount'])
+                                                  ));
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  height: height / 15.12,
+                                                  width: width / 7.2,
+                                                  // margin: EdgeInsets.only(right:width/36.0),
+                                                  decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xffD3D8E2),
+                                                      borderRadius:
+                                                      BorderRadius
+                                                          .circular(
+                                                          width /
+                                                              3.60)),
+                                                  child: Center(
+                                                      child: Image.asset(
+                                                        pancardapplyicon,
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                ),
+                                                SizedBox(
+                                                  height: height / 75.6,
+                                                ),
+                                                Text(
+                                                  "Find \nPan Card",
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      fontSize: width / 30,
+                                                      color: const Color(
+                                                          0xff00194A)),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+
+                                          GestureDetector(
+                                            onTap: () {
+
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  height: height / 15.12,
+                                                  width: width / 7.2,
+                                                  //   margin: EdgeInsets.only(left:width/96.0),
+                                                  decoration: BoxDecoration(
+                                                      //color: const Color(0xffD3D8E2),
+                                                      borderRadius:
+                                                      BorderRadius
+                                                          .circular(
+                                                          width /
+                                                              3.60)),
+                                                  child: Center(
+                                                      child: Image.asset(
+                                                        pancardapplyicon,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: height / 75.6,
+                                                ),
+                                                Text(
+                                                  "FAQ",
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      fontSize: width / 30,
+                                                      color: const Color(
+                                                          0xff00194A)),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+
+                                          GestureDetector(
+                                            onTap: () {
+
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  height: height / 15.12,
+                                                  width: width / 7.2,
+                                                  decoration: BoxDecoration(
+                                                   ///   color: const Color(0xffD3D8E2),
+                                                      borderRadius:
+                                                      BorderRadius
+                                                          .circular(
+                                                          width /
+                                                              3.60)),
+                                                ),
+                                                SizedBox(
+                                                  height: height / 75.6,
+                                                ),
+                                                Text(
+                                                  "",
                                                   textAlign:
                                                   TextAlign.center,
                                                   style: GoogleFonts.poppins(
@@ -2592,9 +2756,9 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   UserType: userdata[
                                                   'usertype'],
                                                   UserWalletamount:
-                                                  userdata[
-                                                  'walletamount']
-                                                      .toString()),
+                                                  userdata['walletamount'].toString(),
+                                                  Usagecount:userdata['usageccount']
+                                              ),
                                         ));
                                   },
                                   child: Row(
@@ -2648,9 +2812,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   UserType: userdata[
                                                   'usertype'],
                                                   UserWalletamount:
-                                                  userdata[
-                                                  'walletamount']
-                                                      .toString()),
+                                                  userdata['walletamount'].toString(),
+                                                  Usagecount:userdata['usageccount']),
                                         ));
                                   },
                                   child: Row(
@@ -2701,8 +2864,13 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                           builder: (context) =>
                                               Reprint_Page(
                                                   Userdocid:
-                                                  userdata
-                                                      .id),
+                                                  userdata.id,
+                                                  UserType: userdata[
+                                                  'usertype'],
+                                                  UserWalletamount:
+                                                  userdata['walletamount'].toString(),
+                                                  Usagecount:userdata['usageccount']
+                                              ),
                                         ));
                                   },
                                   child: Row(
@@ -2750,13 +2918,13 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              Pancard_Link_Page(
-                                                  Userdocid:
-                                                  userdata
-                                                      .id,
-                                                  UserType:
-                                                  userdata[
-                                                  'usertype']),
+                                              Pancard_Link_Page(Userdocid:
+                                              userdata.id,
+                                                  UserType: userdata[
+                                                  'usertype'],
+                                                  UserWalletamount:
+                                                  userdata['walletamount'].toString(),
+                                                  Usagecount:userdata['usageccount']),
                                         ));
                                   },
                                   child: Row(
@@ -2784,6 +2952,114 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                       ),
                                       Text(
                                         "PAN Card Link",
+                                        textAlign:
+                                        TextAlign.center,
+                                        style: GoogleFonts.poppins(
+                                            fontWeight:
+                                            FontWeight
+                                                .w500,
+                                            fontSize:
+                                            width / 22,
+                                            color: const Color(
+                                                0xff00194A)),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              Minor_Page(Userdocid:
+                                              userdata.id,
+                                                  UserType: userdata[
+                                                  'usertype'],
+                                                  UserWalletamount:
+                                                  userdata['walletamount'].toString(),
+                                                  Usagecount:userdata['usageccount']),
+                                        ));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height:
+                                        height / 15.12,
+                                        width: width / 7.2,
+                                        decoration: BoxDecoration(
+                                            color: const Color(
+                                                0xffD3D8E2),
+                                            borderRadius:
+                                            BorderRadius
+                                                .circular(
+                                                100)),
+                                        child: Center(
+                                            child:
+                                            Image.asset(
+                                              newpancardicon,
+                                              fit: BoxFit.cover,
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: width / 15.6,
+                                      ),
+                                      Text(
+                                        "Minor PAN Card Apply",
+                                        textAlign:
+                                        TextAlign.center,
+                                        style: GoogleFonts.poppins(
+                                            fontWeight:
+                                            FontWeight
+                                                .w500,
+                                            fontSize:
+                                            width / 22,
+                                            color: const Color(
+                                                0xff00194A)),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              Find_Pancard(Userdocid:
+                                              userdata.id,
+                                                  UserType: userdata[
+                                                  'usertype'],
+                                                  UserWalletamount:
+                                                  userdata['walletamount'].toString(),
+                                                  Usagecount:userdata['usageccount']),
+                                        ));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height:
+                                        height / 15.12,
+                                        width: width / 7.2,
+                                        decoration: BoxDecoration(
+                                            color: const Color(
+                                                0xffD3D8E2),
+                                            borderRadius:
+                                            BorderRadius
+                                                .circular(
+                                                100)),
+                                        child: Center(
+                                            child:
+                                            Image.asset(
+                                              newpancardicon,
+                                              fit: BoxFit.cover,
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: width / 15.6,
+                                      ),
+                                      Text(
+                                        "Find PAN Card ",
                                         textAlign:
                                         TextAlign.center,
                                         style: GoogleFonts.poppins(
@@ -3762,12 +4038,9 @@ class _Landing_ScreenState extends State<Landing_Screen>
     Map<String ,dynamic>?value=data.data();
     print(value!['userid']);
     print(value!['walletamount']);
-    setState(() {
-      userDocid=value!['userid'];
-      userWalletamount=double.parse(value['walletamount']);
-    });
-
-    if(userWalletamount<157){
+    print("userWalletamount value0000000000000000000000000");
+    print(userWalletamount);
+    if(value['walletamount']<157){
       print("Entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
       awesomeDialog("Wallet amount Less","Your Wallet amount is Low  Kindly Recharge Your Wallet ");
 

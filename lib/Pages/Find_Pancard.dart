@@ -1,24 +1,24 @@
+import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jp_ads/const_file.dart';
 import 'package:lottie/lottie.dart';
 
-class Pancard_Link_Page extends StatefulWidget {
+class Find_Pancard extends StatefulWidget {
   String ?Userdocid;
   String ?UserType;
   String ?UserWalletamount;
   int ?Usagecount;
-  Pancard_Link_Page({this.Userdocid,this.UserType,this.UserWalletamount,this.Usagecount});
+  Find_Pancard({this.Userdocid,this.UserType,this.UserWalletamount,this.Usagecount});
 
   @override
-  State<Pancard_Link_Page> createState() => _Pancard_Link_PageState();
+  State<Find_Pancard> createState() => _Find_PancardState();
 }
 
-class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
-
+class _Find_PancardState extends State<Find_Pancard> {
   TextEditingController Pannumbercontroller=TextEditingController();
 
 
@@ -52,7 +52,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
         backgroundColor: Color(0xffF2F6FF),
         elevation: 0,
         toolbarHeight: height/10.8,
-        title: Text("PAN Card Link",
+        title: Text("Find PAN Card",
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
               fontSize:width/22,
@@ -88,7 +88,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Check Your Pan Link Status",
+                      Text("Check Your Pan ",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                             fontSize:width/22,
@@ -116,9 +116,9 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                             FilteringTextInputFormatter.allow(RegExp("[0-9A-Z]")),
                           ],
                           decoration: InputDecoration(
-                            counterText: "",
-                            contentPadding: EdgeInsets.only(left: width/18),
-                            border: InputBorder.none,
+                              counterText: "",
+                              contentPadding: EdgeInsets.only(left: width/18),
+                              border: InputBorder.none,
                               hintText: "Type pan number",
                               hintStyle: GoogleFonts.poppins()
                           ),
@@ -132,12 +132,12 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                           SizedBox(width: width/1.531,),
                           GestureDetector(
                             onTap: (){
-                             // pancardstatuscheckfunction();
+                              // pancardstatuscheckfunction();
                             },
                             child: Center(
                               child:
                               Container(
-                               height: height/21.6,
+                                height: height/21.6,
                                 width: width/4.5,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
@@ -151,7 +151,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
                                     )
                                 ),
                                 child: Center(
-                                  child:  Text("Check",
+                                  child:  Text("Find",
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                         fontSize:width/25,
@@ -274,22 +274,22 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
   pancardstatuscheckfunction() async {
 
     FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).get().then((value){
-    if(value['usertype']=="Individual"){
-      if(value['usageccount']<3){
+      if(value['usertype']=="Individual"){
+        if(value['usageccount']<3){
+          FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+            "usageccount":FieldValue.increment(1)
+          });
+        }
+        else{
+          planExitpopup();
+        }
+      }
+
+      else{
         FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
           "usageccount":FieldValue.increment(1)
         });
       }
-      else{
-        planExitpopup();
-      }
-    }
-
-    else{
-      FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-        "usageccount":FieldValue.increment(1)
-      });
-    }
 
     });
 

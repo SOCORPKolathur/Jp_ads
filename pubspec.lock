@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.7"
+  age_calculator:
+    dependency: "direct main"
+    description:
+      name: age_calculator
+      sha256: "00190836e4e0ab9d11a60675a7109b36e5771bdfd4d24d7c55012d8370ecccba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   archive:
     dependency: transitive
     description:
@@ -153,14 +161,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
-  cupertino_stepper:
-    dependency: "direct main"
-    description:
-      name: cupertino_stepper
-      sha256: "124690b8b23db7b43fc6d547688e42a9f3d73c8f46d0b210568e98a04b5645b2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.1"
   dropdown_button2:
     dependency: "direct main"
     description:
@@ -169,14 +169,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.9"
-  easy_stepper:
-    dependency: "direct main"
-    description:
-      name: easy_stepper
-      sha256: "67df9090c8ae206e75e26fb8ff557defdb615785425c7d26ea663022bbf5236e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.1"
   fake_async:
     dependency: transitive
     description:
@@ -400,38 +392,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  im_stepper:
-    dependency: "direct main"
-    description:
-      name: im_stepper
-      sha256: "84ca411f7c4666cb8762a6dd6eec0353c96c67f674124614263875d0570ca634"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1+1"
-  image_cropper:
-    dependency: "direct main"
-    description:
-      name: image_cropper
-      sha256: "19340e50a8c09124ef2196884e9eb79d219d84cb819cfbf52141221216e30515"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0"
-  image_cropper_for_web:
-    dependency: transitive
-    description:
-      name: image_cropper_for_web
-      sha256: "865d798b5c9d826f1185b32e5d0018c4183ddb77b7b82a931e1a06aa3b74974e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  image_cropper_platform_interface:
-    dependency: transitive
-    description:
-      name: image_cropper_platform_interface
-      sha256: ee160d686422272aa306125f3b6fb1c1894d9b87a5e20ed33fa008e7285da11e
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -749,22 +709,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
-  stepper_a:
-    dependency: "direct main"
-    description:
-      name: stepper_a
-      sha256: b3082adff4aad68b5441f823757ff40d5aeac24e62b257ed7bbb0d4fdbc443f1
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0"
-  steps_indicator:
-    dependency: "direct main"
-    description:
-      name: steps_indicator
-      sha256: a6e55fae97f29db3df2b8bed77d55ead127f16ffa024e0fe0234b5d71eddffa1
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0"
   stream_channel:
     dependency: transitive
     description:

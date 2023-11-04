@@ -45,7 +45,7 @@ class _Notification_PageState extends State<Notification_Page> {
       ),
       body:
       StreamBuilder(
-       stream: FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Notification").orderBy("timestamp").snapshots(),
+       stream: FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Notification").orderBy("timestamp",descending: true).snapshots(),
        builder: (context, snapshot) {
          if(snapshot.hasData==null){
            return const Center(child: CircularProgressIndicator(),);
