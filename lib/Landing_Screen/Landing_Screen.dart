@@ -37,12 +37,11 @@ class _Landing_ScreenState extends State<Landing_Screen>
   int selectTabIndex = 0;
 
   String userDocid="";
-  int userWalletamount=0;
+  int Walletamount=0;
+  int notificationcount=0;
+  int usgaeCount=0;
   @override
   void initState() {
-    setState(() {
-
-    });
     tabController = TabController(length: 3, vsync: this);
     walletamontcheckfun();
     // TODO: implement initState
@@ -168,109 +167,46 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                               userdata["picture"]
                                                   .toString())),
 
-                                      StreamBuilder(
-                                        stream: FirebaseFirestore.instance
-                                            .collection("Users")
-                                            .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
-                                            .collection("Notification")
-                                            .where("isviewed",
-                                            isEqualTo: false)
-                                            .snapshots(),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasData == null) {
-                                            return Center(
-                                              child: Container(
-                                                  child: Icon(
-                                                    Icons.notifications,
-                                                    color: Colors.white,
-                                                    weight: 50,
-                                                    size: width / 12,
-                                                  )),
-                                            );
-                                          }
-                                          if (!snapshot.hasData) {
-                                            return Center(
-                                              child: Container(
-                                                  child: Icon(
-                                                    Icons.notifications,
-                                                    color: Colors.white,
-                                                    weight: 50,
-                                                    size: width / 12,
-                                                  )),
-                                            );
-                                          }
-                                          return GestureDetector(
-                                              onTap: () {
+                                      GestureDetector(
+                                          onTap: () {
 
-                                                notificationcountdisablefun(userdata.id);
+                                            notificationcountdisablefun(userdata.id);
 
-                                              },
-                                              child: Stack(
-                                                alignment:
-                                                Alignment.topRight,
-                                                children: [
-                                                  Icon(
-                                                    Icons.notifications,
-                                                    color: Colors.white,
-                                                    weight: 50,
-                                                    size: width / 12,
-                                                  ),
-                                                  snapshot.data!.docs
-                                                      .length ==
-                                                      0
-                                                      ? const SizedBox()
-                                                      : Container(
-                                                    height:
-                                                    height / 42,
-                                                    width: width / 20,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors
-                                                            .yellowAccent,
-                                                        borderRadius:
-                                                        BorderRadius.circular(
-                                                            width /
-                                                                3.60)),
-                                                    child: Center(
-                                                        child: Text(
-                                                            snapshot
-                                                                .data!
-                                                                .docs
-                                                                .length
-                                                                .toString(),
-                                                            style: GoogleFonts
-                                                                .poppins())),
-                                                  )
-                                                ],
-                                              ));
-                                        },
-                                      ),
-                                      // GestureDetector(
-                                      //     onTap: (){
-                                      //       setState(() {
-                                      //
-                                      //       });
-                                      //        Navigator.push(context, MaterialPageRoute(builder: (context) =>  Notification_Page(Userdocid:userdata.id),));
-                                      //     },
-                                      //     child:Stack(
-                                      //       alignment: Alignment.topRight,
-                                      //       children: [
-                                      //         Icon(Icons.notifications,color: Colors.white,
-                                      //           weight: 50,
-                                      //           size: width/12,
-                                      //
-                                      //         ),
-                                      //         notificationcount==0? const SizedBox(): Container(
-                                      //           height:height/42,
-                                      //           width:width/20,
-                                      //           decoration: BoxDecoration(
-                                      //             color:Colors.yellowAccent,
-                                      //             borderRadius: BorderRadius.circular(width/3.60)
-                                      //         ),
-                                      //         child:Center(child: Text(notificationcount.toString(),style:GoogleFonts.poppins())),
-                                      // )
-                                      //       ],
-                                      //     ))
+                                          },
+                                          child: Stack(
+                                            alignment:
+                                            Alignment.topRight,
+                                            children: [
+                                              Icon(
+                                                Icons.notifications,
+                                                color: Colors.white,
+                                                weight: 50,
+                                                size: width / 12,
+                                              ),
+                                              notificationcount ==
+                                                  0
+                                                  ? const SizedBox()
+                                                  : Container(
+                                                height:
+                                                height / 42,
+                                                width: width / 20,
+                                                decoration: BoxDecoration(
+                                                    color: Colors
+                                                        .yellowAccent,
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        width /
+                                                            3.60)),
+                                                child: Center(
+                                                    child: Text(
+                                                        notificationcount
+                                                            .toString(),
+                                                        style: GoogleFonts
+                                                            .poppins())),
+                                              )
+                                            ],
+                                          )),
+                                    
                                     ],
                                   ),
                                 ),
@@ -292,8 +228,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                   padding: EdgeInsets.only(
                                       left: width / 18, right: width / 18),
                                   child: Text(
-                                    "Wallet Balance:  ₹ ${userdata["walletamount"]
-                                        .toString()}",
+                                    "Wallet Balance:  ₹ ${Walletamount.toString()}",
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w500,
                                         fontSize: width / 24,
@@ -351,8 +286,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                             UserType: userdata[
                                                             'usertype'],
                                                             UserWalletamount:
-                                                            userdata['walletamount'].toString(),
-                                                           Usagecount:userdata['usageccount'],
+                                                            Walletamount.toString(),
+                                                           Usagecount:usgaeCount,
                                                         ),
                                                   ));
                                             },
@@ -404,8 +339,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                             UserType: userdata[
                                                             'usertype'],
                                                             UserWalletamount:
-                                                            userdata['walletamount'].toString(),
-                                                            Usagecount:userdata['usageccount']
+                                                            Walletamount.toString(),
+                                                            Usagecount:usgaeCount
                                                         ),
                                                   ));
                                             },
@@ -457,8 +392,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                             UserType: userdata[
                                                             'usertype'],
                                                             UserWalletamount:
-                                                            userdata['walletamount'].toString(),
-                                                            Usagecount:userdata['usageccount']),
+                                                            Walletamount.toString(),
+                                                            Usagecount:usgaeCount),
                                                   ));
                                             },
                                             child: Padding(
@@ -527,8 +462,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                             UserType: userdata[
                                                             'usertype'],
                                                             UserWalletamount:
-                                                            userdata['walletamount'].toString(),
-                                                            Usagecount:userdata['usageccount']
+                                                            Walletamount.toString(),
+                                                            Usagecount:usgaeCount
                                                         ),
                                                   ));
                                             },
@@ -689,8 +624,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                       UserType: userdata[
                                                       'usertype'],
                                                       UserWalletamount:
-                                                      userdata['walletamount'].toString(),
-                                                      Usagecount:userdata['usageccount'])
+                                                      Walletamount.toString(),
+                                                      Usagecount:usgaeCount)
                                               ));
                                             },
                                             child: Column(
@@ -857,8 +792,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                               UserType: userdata[
                                                               'usertype'],
                                                               UserWalletamount:
-                                                              userdata['walletamount'].toString(),
-                                                              Usagecount:userdata['usageccount'])
+                                                              Walletamount.toString(),
+                                                              Usagecount:usgaeCount)
                                                   ));
                                             },
                                             child: Column(
@@ -1992,83 +1927,45 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                       NetworkImage(
                                           userdata["picture"]
                                               .toString())),
-                                  StreamBuilder(
-                                    stream: FirebaseFirestore.instance
-                                        .collection("Users")
-                                        .doc(FirebaseAuth.instance
-                                        .currentUser!.uid)
-                                        .collection("Notification")
-                                        .where("isviewed",
-                                        isEqualTo: false)
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData == null) {
-                                        return Center(
-                                          child: Container(
-                                              child: Icon(
-                                                Icons.notifications,
-                                                color: Colors.white,
-                                                weight: 50,
-                                                size: width / 12,
-                                              )),
-                                        );
-                                      }
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: Container(
-                                              child: Icon(
-                                                Icons.notifications,
-                                                color: Colors.white,
-                                                weight: 50,
-                                                size: width / 12,
-                                              )),
-                                        );
-                                      }
-                                      return GestureDetector(
-                                          onTap: () {
-                                            notificationcountdisablefun(userdata.id);
+                                  GestureDetector(
+                                      onTap: () {
 
-                                          },
-                                          child: Stack(
-                                            alignment:
-                                            Alignment.topRight,
-                                            children: [
-                                              Icon(
-                                                Icons.notifications,
-                                                color: Colors.white,
-                                                weight: 50,
-                                                size: width / 12,
-                                              ),
-                                              snapshot.data!.docs
-                                                  .length ==
-                                                  0
-                                                  ? const SizedBox()
-                                                  : Container(
-                                                height:
-                                                height / 42,
-                                                width:
-                                                width / 20,
-                                                decoration: BoxDecoration(
-                                                    color: Colors
-                                                        .yellowAccent,
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        width /
-                                                            3.60)),
-                                                child: Center(
-                                                    child: Text(
-                                                        snapshot
-                                                            .data!
-                                                            .docs
-                                                            .length
-                                                            .toString(),
-                                                        style: GoogleFonts
-                                                            .poppins())),
-                                              )
-                                            ],
-                                          ));
-                                    },
-                                  ),
+                                        notificationcountdisablefun(userdata.id);
+
+                                      },
+                                      child: Stack(
+                                        alignment:
+                                        Alignment.topRight,
+                                        children: [
+                                          Icon(
+                                            Icons.notifications,
+                                            color: Colors.white,
+                                            weight: 50,
+                                            size: width / 12,
+                                          ),
+                                          notificationcount ==
+                                              0
+                                              ? const SizedBox()
+                                              : Container(
+                                            height:
+                                            height / 42,
+                                            width: width / 20,
+                                            decoration: BoxDecoration(
+                                                color: Colors
+                                                    .yellowAccent,
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    width /
+                                                        3.60)),
+                                            child: Center(
+                                                child: Text(
+                                                    notificationcount
+                                                        .toString(),
+                                                    style: GoogleFonts
+                                                        .poppins())),
+                                          )
+                                        ],
+                                      ))
                                 ],
                               ),
                             ),
@@ -2085,8 +1982,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                             ),
 
                             Text(
-                              "Wallet Balance : ₹ ${userdata['walletamount']
-                                  .toString()}",
+                              "Wallet Balance : ₹ ${Walletamount.toString()}",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500,
@@ -2427,89 +2323,45 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                       NetworkImage(userdata[
                                       "picture"]
                                           .toString())),
-                                  StreamBuilder(
-                                    stream: FirebaseFirestore
-                                        .instance
-                                        .collection("Users")
-                                        .doc(FirebaseAuth.instance
-                                        .currentUser!.uid)
-                                        .collection(
-                                        "Notification")
-                                        .where("isviewed",
-                                        isEqualTo: false)
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData ==
-                                          null) {
-                                        return Center(
-                                          child: Container(
-                                              child: Icon(
-                                                Icons.notifications,
-                                                color: Colors.white,
-                                                weight: 50,
-                                                size: width / 12,
-                                              )),
-                                        );
-                                      }
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: Container(
-                                              child: Icon(
-                                                Icons.notifications,
-                                                color: Colors.white,
-                                                weight: 50,
-                                                size: width / 12,
-                                              )),
-                                        );
-                                      }
+                                  GestureDetector(
+                                      onTap: () {
 
-                                      return GestureDetector(
-                                          onTap: () {
-                                            notificationcountdisablefun(userdata.id);
+                                        notificationcountdisablefun(userdata.id);
 
-                                          },
-                                          child: Stack(
-                                            alignment: Alignment
-                                                .topRight,
-                                            children: [
-                                              Icon(
-                                                Icons
-                                                    .notifications,
-                                                color:
-                                                Colors.white,
-                                                weight: 50,
-                                                size: width / 12,
-                                              ),
-                                              snapshot.data!.docs
-                                                  .length ==
-                                                  0
-                                                  ? const SizedBox()
-                                                  : Container(
-                                                height:
-                                                height /
-                                                    42,
-                                                width:
-                                                width /
-                                                    20,
-                                                decoration: BoxDecoration(
-                                                    color: Colors
-                                                        .yellowAccent,
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        width /
-                                                            3.60)),
-                                                child: Center(
-                                                    child: Text(
-                                                        snapshot.data!.docs
-                                                            .length
-                                                            .toString(),
-                                                        style:
-                                                        GoogleFonts.poppins())),
-                                              )
-                                            ],
-                                          ));
-                                    },
-                                  ),
+                                      },
+                                      child: Stack(
+                                        alignment:
+                                        Alignment.topRight,
+                                        children: [
+                                          Icon(
+                                            Icons.notifications,
+                                            color: Colors.white,
+                                            weight: 50,
+                                            size: width / 12,
+                                          ),
+                                          notificationcount ==
+                                              0
+                                              ? const SizedBox()
+                                              : Container(
+                                            height:
+                                            height / 42,
+                                            width: width / 20,
+                                            decoration: BoxDecoration(
+                                                color: Colors
+                                                    .yellowAccent,
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    width /
+                                                        3.60)),
+                                            child: Center(
+                                                child: Text(
+                                                    notificationcount
+                                                        .toString(),
+                                                    style: GoogleFonts
+                                                        .poppins())),
+                                          )
+                                        ],
+                                      ))
                                 ],
                               ),
                             ),
@@ -2529,7 +2381,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                   color: Colors.white),
                             ),
                             Text(
-                              "₹ ${userdata['walletamount']}",
+                              "₹ ${Walletamount.toString()}",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500,
@@ -2756,8 +2608,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   UserType: userdata[
                                                   'usertype'],
                                                   UserWalletamount:
-                                                  userdata['walletamount'].toString(),
-                                                  Usagecount:userdata['usageccount']
+                                                  Walletamount.toString(),
+                                                  Usagecount:usgaeCount
                                               ),
                                         ));
                                   },
@@ -2812,8 +2664,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   UserType: userdata[
                                                   'usertype'],
                                                   UserWalletamount:
-                                                  userdata['walletamount'].toString(),
-                                                  Usagecount:userdata['usageccount']),
+                                                  Walletamount.toString(),
+                                                  Usagecount:usgaeCount),
                                         ));
                                   },
                                   child: Row(
@@ -2868,8 +2720,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   UserType: userdata[
                                                   'usertype'],
                                                   UserWalletamount:
-                                                  userdata['walletamount'].toString(),
-                                                  Usagecount:userdata['usageccount']
+                                                  Walletamount.toString(),
+                                                  Usagecount:usgaeCount
                                               ),
                                         ));
                                   },
@@ -2923,8 +2775,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   UserType: userdata[
                                                   'usertype'],
                                                   UserWalletamount:
-                                                  userdata['walletamount'].toString(),
-                                                  Usagecount:userdata['usageccount']),
+                                                  Walletamount.toString(),
+                                                  Usagecount:usgaeCount),
                                         ));
                                   },
                                   child: Row(
@@ -2977,8 +2829,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   UserType: userdata[
                                                   'usertype'],
                                                   UserWalletamount:
-                                                  userdata['walletamount'].toString(),
-                                                  Usagecount:userdata['usageccount']),
+                                                  Walletamount.toString(),
+                                                  Usagecount:usgaeCount),
                                         ));
                                   },
                                   child: Row(
@@ -3031,8 +2883,8 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   UserType: userdata[
                                                   'usertype'],
                                                   UserWalletamount:
-                                                  userdata['walletamount'].toString(),
-                                                  Usagecount:userdata['usageccount']),
+                                                  Walletamount.toString(),
+                                                  Usagecount:usgaeCount),
                                         ));
                                   },
                                   child: Row(
@@ -3166,95 +3018,45 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                       AssetImage(ProfileImage))
                                       : CircleAvatar(radius: 25, foregroundImage:
                                   NetworkImage(userdata["picture"].toString())),
-                                  StreamBuilder(
-                                    stream: FirebaseFirestore
-                                        .instance
-                                        .collection("Users")
-                                        .doc(FirebaseAuth
-                                        .instance
-                                        .currentUser!
-                                        .uid)
-                                        .collection(
-                                        "Notification")
-                                        .where("isviewed",
-                                        isEqualTo: false)
-                                        .snapshots(),
-                                    builder:
-                                        (context, snapshot) {
-                                      if (snapshot.hasData ==
-                                          null) {
-                                        return Center(
-                                          child: Container(
-                                              child: Icon(
-                                                Icons
-                                                    .notifications,
-                                                color:
-                                                Colors.white,
-                                                weight: 50,
-                                                size: width / 12,
-                                              )),
-                                        );
-                                      }
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: Container(
-                                              child: Icon(
-                                                Icons
-                                                    .notifications,
-                                                color:
-                                                Colors.white,
-                                                weight: 50,
-                                                size: width / 12,
-                                              )),
-                                        );
-                                      }
+                                  GestureDetector(
+                                      onTap: () {
 
-                                      return GestureDetector(
-                                          onTap: () {
-                                            notificationcountdisablefun(userdata.id);
+                                        notificationcountdisablefun(userdata.id);
 
-                                          },
-                                          child: Stack(
-                                            alignment:
-                                            Alignment
-                                                .topRight,
-                                            children: [
-                                              Icon(
-                                                Icons
-                                                    .notifications,
+                                      },
+                                      child: Stack(
+                                        alignment:
+                                        Alignment.topRight,
+                                        children: [
+                                          Icon(
+                                            Icons.notifications,
+                                            color: Colors.white,
+                                            weight: 50,
+                                            size: width / 12,
+                                          ),
+                                          notificationcount ==
+                                              0
+                                              ? const SizedBox()
+                                              : Container(
+                                            height:
+                                            height / 42,
+                                            width: width / 20,
+                                            decoration: BoxDecoration(
                                                 color: Colors
-                                                    .white,
-                                                weight: 50,
-                                                size: width /
-                                                    12,
-                                              ),
-                                              snapshot.data!.docs
-                                                  .length ==
-                                                  0
-                                                  ? const SizedBox()
-                                                  : Container(
-                                                height:
-                                                height /
-                                                    42,
-                                                width: width /
-                                                    20,
-                                                decoration: BoxDecoration(
-                                                    color:
-                                                    Colors.yellowAccent,
-                                                    borderRadius: BorderRadius
-                                                        .circular(
-                                                        width / 3.60)),
-                                                child: Center(
-                                                    child:
-                                                    Text(snapshot.data!.docs
-                                                        .length.toString(),
-                                                        style: GoogleFonts
-                                                            .poppins())),
-                                              )
-                                            ],
-                                          ));
-                                    },
-                                  ),
+                                                    .yellowAccent,
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    width /
+                                                        3.60)),
+                                            child: Center(
+                                                child: Text(
+                                                    notificationcount
+                                                        .toString(),
+                                                    style: GoogleFonts
+                                                        .poppins())),
+                                          )
+                                        ],
+                                      )),
                                 ],
                               ),
                             ),
@@ -3293,7 +3095,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                               ),
                             ),
                             Text(
-                              "Wallet Balance : ₹ ${userdata['walletamount']
+                              "Wallet Balance : ₹ ${Walletamount
                                   .toString()}",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
@@ -3467,121 +3269,6 @@ class _Landing_ScreenState extends State<Landing_Screen>
         ));
   }
 
-  planExitpopup() {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-              left: width / 8.268,
-              right: width / 8.845,
-              top: height / 3.5,
-              bottom: height / 3.5),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8), color: Colors.white),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: height / 25.2,
-                    ),
-                    SizedBox(
-                      // height: 150,
-                      // width:width/2.4,
-                      child: Lottie.asset(Errrorlottie,
-                          fit: BoxFit.cover,
-                          height: height / 6.3,
-                          width: width / 3),
-                    ),
-                    SizedBox(
-                      height: height / 75.6,
-                    ),
-                    Text(
-                      "Exist Your  Free Apply....",
-                      style: GoogleFonts.poppins(
-                          fontSize: width / 25.613,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black),
-                    ),
-                    SizedBox(
-                      height: height / 12.6,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        //cancel button
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height: height / 21.6,
-                            width: width / 4.5,
-                            decoration: BoxDecoration(
-                                color: Color(0xff255BCA),
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Center(
-                                child: Text(
-                                  "Cancel",
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: width / 25.718),
-                                )),
-                          ),
-                        ),
-                        SizedBox(
-                          width: width / 34.15,
-                        ),
-
-                        //okay button
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height: height / 21.6,
-                            width: width / 4.5,
-                            decoration: BoxDecoration(
-                                color: Color(0xff255BCA),
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Center(
-                                child: Text(
-                                  "Okay",
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: width / 25.718),
-                                )),
-                          ),
-                        ),
-                        SizedBox(
-                          width: width / 34.15,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   detailspopup(name,
       fathermname,
@@ -4032,22 +3719,39 @@ class _Landing_ScreenState extends State<Landing_Screen>
 
 
   walletamontcheckfun()async{
-    print("userd id");
     print(FirebaseAuth.instance.currentUser!.uid);
-    var data=await FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).get();
-    Map<String ,dynamic>?value=data.data();
-    print(value!['userid']);
-    print(value!['walletamount']);
-    print("userWalletamount value0000000000000000000000000");
-    print(userWalletamount);
-    if(value['walletamount']<157){
-      print("Entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-      awesomeDialog("Wallet amount Less","Your Wallet amount is Low  Kindly Recharge Your Wallet ");
 
-    }
-    else{
-      print("Wallet amount graterthan 157");
-    }
+    // }
+
+    FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).snapshots().listen((event)
+    {
+      if(event['usertype']=="Individual"){
+        if(event['usageccount']==3){
+          return  awesomeDialog("Warning....!", "Exist Your Free Apply");
+        }
+      }
+      if(event['walletamount']<=157){
+        print("Entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        awesomeDialog("Wallet amount Less","Your Wallet amount is Low  Kindly Recharge Your Wallet ");
+      }
+      setState(() {
+        Walletamount=event['walletamount'];
+        usgaeCount=event['usageccount'];
+      });
+    });
+
+    FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("Notification").where("isviewed", isEqualTo: false)
+        .snapshots().listen((event) { 
+          setState(() {
+            notificationcount=event.docs.length;
+          });
+    });
+    
+    print("notificationcountttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+    print(notificationcount);
+    print(Walletamount);
+    print(usgaeCount);
   }
 
   awesomeDialog(title,description){

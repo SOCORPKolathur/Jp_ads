@@ -10,8 +10,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:jp_ads/const_file.dart';
-import 'package:jp_ads/demo.dart';
 import 'package:lottie/lottie.dart';
+
+import '../Landing_Screen/Landing_Screen.dart';
 
 
 
@@ -47,7 +48,6 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
   String  imageUrl3="";
   String  imageUrl4="";
   String  imageUrl5="";
-  bool Datasubmitted=false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -81,23 +81,15 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
 
   checkusagecount()async{
 
-  var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
-  if(document['usertype']=="Individual"){
-    if(document['usageccount']==3){
-      print(document["usageccount"]);
-      planExitpopup();
-    }
-    if(document['walletamount']<=157){
-
-      return  awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount");
-    }
-    else{
-      setState(() {
-        Datasubmitted=true;
-      });
-    }
+    var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
+    if(document['usertype']=="Individual"){
+      if(document['usageccount']==3){
+        return  awesomeDialog("Warning....!", "Exist Your Free Apply",2);
+      }
   }
-
+    if(document['walletamount']<=157){
+      return  awesomeDialog("Warning....!", 'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500',2);
+    }
   }
 
   final RegExp _inputPattern = RegExp(r'^\d{4}\s\d{4}\s\d{4}$');
@@ -755,13 +747,17 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                       setState(() {
                                                         _photo1 = File(value.path);
                                                       });
+                                                      if(_photo1!=null&&_photo5!=null){
+                                                        setState((){
+                                                          imgaeSelcted=false;
+                                                        });
+                                                      }
                                                       print(_photo1);
                                                       print("sssssssssssssssssssssssssssssssssssssssssssssss");
                                                       print(_photo1);
                                                       Navigator.pop(context);
                                                     }
                                                   });
-                                                  setState((){});
                                                 },
                                                 title:
                                                 Text("Camera",
@@ -782,9 +778,12 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     if (value != null) {
                                                       setState(() {
                                                         _photo1 = File(value.path);
-                                                        imgaeSelcted=false;
                                                       });
-                                                      setState((){});
+                                                      if(_photo1!=null&&_photo5!=null){
+                                                        setState((){
+                                                          imgaeSelcted=false;
+                                                        });
+                                                      }
                                                       Navigator.pop(context);
                                                     }
                                                   });
@@ -873,8 +872,13 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     if (value != null) {
                                                       setState(() {
                                                         _photo5 = File(value.path);
-                                                        imgaeSelcted=false;
+
                                                       });
+                                                      if(_photo1!=null&&_photo5!=null){
+                                                        setState((){
+                                                          imgaeSelcted=false;
+                                                        });
+                                                      }
                                                       print(_photo5);
                                                       print("sssssssssssssssssssssssssssssssssssssssssssssss");
                                                       print(_photo5);
@@ -902,9 +906,12 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     if (value != null) {
                                                       setState(() {
                                                         _photo5 = File(value.path);
-                                                        imgaeSelcted=false;
                                                       });
-                                                      setState((){});
+                                                      if(_photo1!=null&&_photo5!=null){
+                                                        setState((){
+                                                          imgaeSelcted=false;
+                                                        });
+                                                      }
                                                       Navigator.pop(context);
                                                     }
                                                   });
@@ -1066,13 +1073,9 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                       _photo2 = File(value.path);
                                                       imgaeSelcted=false;
                                                     });
-                                                    print(_photo2);
-                                                    print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                    print(_photo2);
                                                     Navigator.pop(context);
                                                   }
                                                 });
-                                                setState((){});
                                               },
                                               title:
                                               Text("Camera",
@@ -1095,7 +1098,6 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                       _photo2 = File(value.path);
                                                       imgaeSelcted=false;
                                                     });
-                                                    setState((){});
                                                     Navigator.pop(context);
                                                   }
                                                 });
@@ -1269,12 +1271,15 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                       setState(() {
                                                         _photo3 = File(value.path);
                                                       });
-                                                      print(_photo3);
-                                                      print("sssssssssssssssssssssssssssssssssssssssssssssss");
+
+                                                      if(_photo3!=null&&_photo4!=null){
+                                                        setState((){
+                                                          imgaeSelcted=false;
+                                                        });
+                                                      }
                                                       Navigator.pop(context);
                                                     }
                                                   });
-                                                  setState((){});
                                                 },
                                                 title:
                                                 Text("Camera",
@@ -1296,7 +1301,11 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                       setState(() {
                                                         _photo3 = File(value.path);
                                                       });
-                                                      setState((){});
+                                                      if(_photo3!=null&&_photo4!=null){
+                                                        setState((){
+                                                          imgaeSelcted=false;
+                                                        });
+                                                      }
                                                       Navigator.pop(context);
                                                     }
                                                   });
@@ -1382,15 +1391,15 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     if (value != null) {
                                                       setState(() {
                                                         _photo4 = File(value.path);
-                                                        imgaeSelcted=false;
                                                       });
-                                                      print(_photo4);
-                                                      print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                      print(_photo4);
+                                                      if(_photo3!=null&&_photo4!=null){
+                                                        setState((){
+                                                          imgaeSelcted=false;
+                                                        });
+                                                      }
                                                       Navigator.pop(context);
                                                     }
                                                   });
-                                                  setState((){});
                                                 },
                                                 title:
                                                 Text("Camera",
@@ -1411,14 +1420,16 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                     if (value != null) {
                                                       setState(() {
                                                         _photo4 = File(value.path);
-                                                        imgaeSelcted=false;
                                                       });
-
+                                                      if(_photo3!=null&&_photo4!=null){
+                                                        setState((){
+                                                          imgaeSelcted=false;
+                                                        });
+                                                      }
                                                       Navigator.pop(context);
 
                                                     }
                                                   });
-                                                  setState((){});
                                                 },
                                                 leading: Icon(Icons.browse_gallery),
                                                 title: Text("Gallery",
@@ -1518,8 +1529,8 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                           ],
                         ),
                       ):
-                      steppervalue==4? SizedBox(
-                          child:Column(
+                      steppervalue==4?
+                      SizedBox(child:Column(
                             children: [
                               Padding(
                                 padding:  EdgeInsets.symmetric(
@@ -1664,17 +1675,12 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
 
 
                             ],
-                          )
-                      ):
+                          )):
                       const SizedBox(),
                     );
                   },),
 
-
-
                   SizedBox(height: height/151.2),
-
-
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1689,6 +1695,29 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                             });
                           }
 
+                          if(steppervalue==0){
+                            setState(() {
+                              _photo1=null;
+                              _photo5=null;
+                              imgaeSelcted=false;
+                            });
+                          }
+                          else if(steppervalue==1){
+                            setState(() {
+                              _photo2=null;
+                              imgaeSelcted=false;
+                            });
+                          }
+                          else if(steppervalue==2){
+                            setState(() {
+                              _photo3=null;
+                              _photo4=null;
+                              imgaeSelcted=false;
+                            });
+                          }
+
+                          print(imgaeSelcted);
+                          print(steppervalue);
                         },
                         child: Center(
                           child:
@@ -1724,19 +1753,10 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                       steppervalue==4?
                       GestureDetector(
                         onTap: () async {
-                          if (_formKey.currentState!.validate()&&aadhaarontroller.text.length==14&&_photo1!=null&&_photo2!=null&&_photo3!=null&&_photo4!=null&&_photo5!=null)
-                          {
-                            if(Datasubmitted==true){
-                              setState(() {
-                                Loading=true;
-                              });
-                              firebasestroragefunctionphoto();
-                            }
-                            else{
-                              awesomeDialog("Warning", 'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500');
-                            }
-
-                          }
+                            setState(() {
+                              Loading=true;
+                            });
+                            firebasestroragefunctionphoto();
                         },
                         child: Center(
                           child:
@@ -1788,15 +1808,11 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                   });
 
                                 }
-
                                 }
-
-
                             }
                             else{
                               return
-                                photerrorDialog("Photo Are Invalid",
-                                    "Please Select the Image");
+                                photoerrorDialog("Photo Are Invalid", "Please Select the Image");
                             }
 
                         },
@@ -1865,10 +1881,12 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
     );
   }
 
-  awesomeDialog(title,description){
+  awesomeDialog(title,description,errortype){
     return AwesomeDialog(
+      dismissOnBackKeyPress: errortype==3?true:false,
+      dismissOnTouchOutside:errortype==3? true:false,
       context: context,
-      dialogType: DialogType.error,
+      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.info,
       animType: AnimType.rightSlide,
       title: title,
       desc: description,
@@ -1878,7 +1896,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
     )..show();
   }
 
-  photerrorDialog(title,description){
+  photoerrorDialog(title,description){
     return AwesomeDialog(
       context: context,
       dialogType: DialogType.error,
@@ -1892,46 +1910,46 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
 
   firebasestroragefunctionphoto() async {
     if(FirebaseWalletAmount>0){
+      print("11111111111111111111111111111111111111111111111111111111111111111111111111111");
       var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
-      var uploadTask = await ref.putFile(_photo1!).catchError((error) async {
-
-      });
+      var uploadTask = await ref.putFile(_photo1!);
       var image = await uploadTask.ref.getDownloadURL();
       setState(() {
         imageUrl=image;
       });
+      print("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
       var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
-      var uploadTask2 = await ref2.putFile(_photo2!).catchError((error) async {
-      });
+      var uploadTask2 = await ref2.putFile(_photo2!);
       var image2 = await uploadTask2.ref.getDownloadURL();
       setState(() {
         imageUrl2=image2;
       });
-      var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
-      var uploadTask3 = await ref3.putFile(_photo3!).catchError((error) async {
 
-      });
+      print("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333");
+      var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
+      var uploadTask3 = await ref3.putFile(_photo3!);
       var image3 = await uploadTask3.ref.getDownloadURL();
       setState(() {
         imageUrl3=image3;
       });
-      var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
-      var uploadTask4 = await ref4.putFile(_photo4!).catchError((error) async {
 
-      });
+      print("44444444444444444444444444444444444444444444444444444444444444444444444444444");
+      var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
+      var uploadTask4 = await ref4.putFile(_photo4!);
       var image4 = await uploadTask4.ref.getDownloadURL();
       setState(() {
         imageUrl4=image4;
       });
-      var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
-      var uploadTask5 = await ref5.putFile(_photo5!).catchError((error) async {
 
-      });
+      print("5555555555555555555555555555555555555555555555555555555555555555555555555555555");
+      var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
+      var uploadTask5 = await ref5.putFile(_photo5!);
       var image5 = await uploadTask5.ref.getDownloadURL();
       setState(() {
         imageUrl5=image5;
       });
 
+      print("6666666666666666666666666666666666666666666666666666666666666666666666666666666666");
       if(widget.UserType=="Individual"){
         //Total
         FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
@@ -1976,22 +1994,8 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
           "time":DateFormat('hh:mm a').format(DateTime.now()),
           "timestamp":DateTime.now().millisecondsSinceEpoch
         });
-        Succespopup();
-        Future.delayed(Duration(seconds: 1),(){
-          setState(() {
-            namecontroller.clear();
-            fathernamecontroller.clear();
-            dobcontroller.clear();
-            aadhaarontroller.clear();
-            selectedValuepantype='Select Pan Type';
-            selectedValuegender='Select Gender';
-            imageUrl='';
-            imageUrl2='';
-            imageUrl3='';
-            Loading=false;
-
-          });
-        });
+        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+        controllerclearfunction();
       }
       else{
         FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
@@ -2035,21 +2039,8 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
           "time":DateFormat('hh:mm a').format(DateTime.now()),
           "timestamp":DateTime.now().millisecondsSinceEpoch
         });
-        Succespopup();
-        Future.delayed(Duration(seconds: 1),(){
-          setState(() {
-            namecontroller.clear();
-            fathernamecontroller.clear();
-            dobcontroller.clear();
-            selectedValuepantype='Select Pan Type';
-            selectedValuegender='Select Gender';
-            imageUrl='';
-            imageUrl2='';
-            imageUrl3='';
-            Loading=false;
-
-          });
-        });
+        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+        controllerclearfunction();
       }
 
 
@@ -2060,228 +2051,6 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
   }
 
 
-  Succespopup() {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                   color: Colors.white
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: height/25.2,),
-
-                      SizedBox(
-                        height: height/7.56,
-                        width: width/3.60,
-                        child: Lottie.network(
-                            "https://assets8.lottiefiles.com/private_files/lf30_nsqfzxxx.json"),
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Text(
-                        "Submit Successfully....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      SizedBox(height: height/12.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff245BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff245BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
-  }
-
-  planExitpopup() {
-    setState((){
-      Loading=false;
-    });
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white
-
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height:height/25.2,),
-
-                      SizedBox(
-                        // height: 150,
-                        // width:width/2.4,
-                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Text(
-                        "Exist Your  Free Apply....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      SizedBox(height: height/12.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
-  }
 
   Datepickerfunction(ctx) async {
   DateTime? pickedDate = await showDatePicker(
@@ -2335,7 +2104,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
       });
       if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
        print(double.parse(widget.UserWalletamount.toString())-Total);
-        return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
+        return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",1);
       }
       else{
         if(double.parse(widget.UserWalletamount.toString())-Total>0){
@@ -2349,10 +2118,30 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
         }
       }
     }
-    else{
-    return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
-    }
 
+
+  }
+
+  controllerclearfunction(){
+    setState(() {
+      namecontroller.clear();
+      fathernamecontroller.clear();
+      dobcontroller.clear();
+      selectedValuepantype='Select Pan Type';
+      selectedValuegender='Select Gender';
+      imageUrl='';
+      imageUrl2='';
+      imageUrl3='';
+      imageUrl4='';
+      imageUrl5='';
+      _photo1=null;
+      _photo2=null;
+      _photo3=null;
+      _photo4=null;
+      _photo5=null;
+      Loading=false;
+
+    });
   }
 
 

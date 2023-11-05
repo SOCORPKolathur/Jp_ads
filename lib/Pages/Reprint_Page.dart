@@ -48,25 +48,23 @@ class _Reprint_PageState extends State<Reprint_Page> {
     // TODO: implement initState
     super.initState();
   }
+
+
   checkusagecount()async{
 
     var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
     if(document['usertype']=="Individual"){
       if(document['usageccount']==3){
-        print(document["usageccount"]);
-        planExitpopup();
-      }
-      if(document['walletamount']<=157){
-        return  awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount");
-      }
-      else{
-        setState(() {
-          Datasubmitted=true;
-        });
+        return  awesomeDialog("Warning....!", "Exist Your Free Apply",2);
       }
     }
-
+    if(document['walletamount']<=157){
+      return  awesomeDialog("Warning....!", 'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500',2);
+    }
   }
+
+
+
   final RegExp _inputPattern = RegExp(r'^\d{4}\s\d{4}\s\d{4}$');
   double normal_fees=0;
   double Gst=0;
@@ -975,23 +973,24 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                             ),
                                             child: ListTile(leading: Icon(Icons.camera),
                                               onTap: () async {
-
                                                 final picker = ImagePicker();
-
-                                                await picker.pickImage(source: ImageSource.camera).then((value) {
-
+                                                await picker.pickImage(source: ImageSource.camera)
+                                                    .then((value) {
                                                   if (value != null) {
                                                     setState(() {
                                                       _photo1 = File(value.path);
                                                     });
-
+                                                    if(_photo1!=null&&_photo5!=null){
+                                                      setState((){
+                                                        imgaeSelcted=false;
+                                                      });
+                                                    }
                                                     print(_photo1);
                                                     print("sssssssssssssssssssssssssssssssssssssssssssssss");
                                                     print(_photo1);
                                                     Navigator.pop(context);
                                                   }
                                                 });
-                                                setState((){});
                                               },
                                               title:
                                               Text("Camera",
@@ -1012,9 +1011,12 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                                   if (value != null) {
                                                     setState(() {
                                                       _photo1 = File(value.path);
-                                                      imgaeSelcted=false;
                                                     });
-                                                    setState((){});
+                                                    if(_photo1!=null&&_photo5!=null){
+                                                      setState((){
+                                                        imgaeSelcted=false;
+                                                      });
+                                                    }
                                                     Navigator.pop(context);
                                                   }
                                                 });
@@ -1103,8 +1105,13 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                                   if (value != null) {
                                                     setState(() {
                                                       _photo5 = File(value.path);
-                                                      imgaeSelcted=false;
+
                                                     });
+                                                    if(_photo1!=null&&_photo5!=null){
+                                                      setState((){
+                                                        imgaeSelcted=false;
+                                                      });
+                                                    }
                                                     print(_photo5);
                                                     print("sssssssssssssssssssssssssssssssssssssssssssssss");
                                                     print(_photo5);
@@ -1132,9 +1139,12 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                                   if (value != null) {
                                                     setState(() {
                                                       _photo5 = File(value.path);
-                                                      imgaeSelcted=false;
                                                     });
-                                                    setState((){});
+                                                    if(_photo1!=null&&_photo5!=null){
+                                                      setState((){
+                                                        imgaeSelcted=false;
+                                                      });
+                                                    }
                                                     Navigator.pop(context);
                                                   }
                                                 });
@@ -1296,13 +1306,9 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                                     _photo2 = File(value.path);
                                                     imgaeSelcted=false;
                                                   });
-                                                  print(_photo2);
-                                                  print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                  print(_photo2);
                                                   Navigator.pop(context);
                                                 }
                                               });
-                                              setState((){});
                                             },
                                             title:
                                             Text("Camera",
@@ -1325,7 +1331,6 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                                     _photo2 = File(value.path);
                                                     imgaeSelcted=false;
                                                   });
-                                                  setState((){});
                                                   Navigator.pop(context);
                                                 }
                                               });
@@ -1499,12 +1504,15 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                                     setState(() {
                                                       _photo3 = File(value.path);
                                                     });
-                                                    print(_photo3);
-                                                    print("sssssssssssssssssssssssssssssssssssssssssssssss");
+
+                                                    if(_photo3!=null&&_photo4!=null){
+                                                      setState((){
+                                                        imgaeSelcted=false;
+                                                      });
+                                                    }
                                                     Navigator.pop(context);
                                                   }
                                                 });
-                                                setState((){});
                                               },
                                               title:
                                               Text("Camera",
@@ -1526,7 +1534,11 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                                     setState(() {
                                                       _photo3 = File(value.path);
                                                     });
-                                                    setState((){});
+                                                    if(_photo3!=null&&_photo4!=null){
+                                                      setState((){
+                                                        imgaeSelcted=false;
+                                                      });
+                                                    }
                                                     Navigator.pop(context);
                                                   }
                                                 });
@@ -1612,15 +1624,15 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                                   if (value != null) {
                                                     setState(() {
                                                       _photo4 = File(value.path);
-                                                      imgaeSelcted=false;
                                                     });
-                                                    print(_photo4);
-                                                    print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                    print(_photo4);
+                                                    if(_photo3!=null&&_photo4!=null){
+                                                      setState((){
+                                                        imgaeSelcted=false;
+                                                      });
+                                                    }
                                                     Navigator.pop(context);
                                                   }
                                                 });
-                                                setState((){});
                                               },
                                               title:
                                               Text("Camera",
@@ -1641,14 +1653,16 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                                   if (value != null) {
                                                     setState(() {
                                                       _photo4 = File(value.path);
-                                                      imgaeSelcted=false;
                                                     });
-
+                                                    if(_photo3!=null&&_photo4!=null){
+                                                      setState((){
+                                                        imgaeSelcted=false;
+                                                      });
+                                                    }
                                                     Navigator.pop(context);
 
                                                   }
                                                 });
-                                                setState((){});
                                               },
                                               leading: Icon(Icons.browse_gallery),
                                               title: Text("Gallery",
@@ -1748,164 +1762,157 @@ class _Reprint_PageState extends State<Reprint_Page> {
                         ],
                       ),
                     ):
-                    steppervalue==4? SizedBox(
-                        child:Column(
-                          children: [
-                            Padding(
-                              padding:  EdgeInsets.symmetric(
-                                  vertical: height/94.5,
-                                  horizontal: width/45
-                              ),
-                              child: Container(
-                                height:height/2.52,
-                                width:width/1.090,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Color(0xffffe09f)
-                                ),
-                                padding: EdgeInsets.only(left: width/36.0,right: width/36.0,top: height/37.8,bottom: height/37.8),
-                                child: SingleChildScrollView(
-                                  physics: const BouncingScrollPhysics(),
-                                  child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-
-                                        Text("Total Amount",style: GoogleFonts.poppins(fontWeight:FontWeight.w600),),
-                                        Text("₹ ${Total.toString()}",
-                                          style: GoogleFonts.poppins(fontWeight:FontWeight.w600,
-                                            fontSize: width/16.363,
-
-                                          ),),
-
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              height:height/378,
-                                              width:width/1.8,
-                                              color: Colors.grey,
-                                            ),
-                                            Icon(Icons.arrow_forward_ios_rounded,color: Colors.grey,)
-
-                                          ],
-                                        ),
-
-                                        Text("Payment Now for new PAN Card Application",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),),
-
-                                        Row(
-                                          children: [
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/1.636,
-                                                child: Text("Normal Fees :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/4.5,
-
-                                                child: Text("₹ ${normal_fees.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/1.636,
-
-                                                child: Text("GST :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/4.5,
-
-                                                child: Text("₹ ${Gst.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-
-                                          ],
-                                        ),
-                                        Divider(color: Colors.black,),
-
-                                        Row(
-                                          children: [
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/1.636,
-
-                                                child: Text("Total Fees :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/4.5,
-
-                                                child: Text("₹ ${Total.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/1.636,
-
-                                                child: Text("You have wallet : (${widget.UserWalletamount.toString()}) ",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/4.5,
-
-                                                child: Text("₹ -${Total.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/1.636,
-
-                                                child: Text("Your wallet Balance :  ",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/4.5,
-
-                                                child: Text("₹ ${FirebaseWalletAmount.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-
-                                          ],
-                                        ),
-                                        Divider(color: Colors.black,),
-                                        Row(
-                                          children: [
-                                            Container(
-                                                height: height/37.8,
-                                                width: width/1.636,
-
-                                                child: Text("Payable amount :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-                                            SizedBox(
-                                                height: height/37.8,
-                                                width: width/4.5,
-                                                child: Text(
-
-                                                  widget.UserWalletamount!=0?
-                                                  "₹ ${Total.toString()}":"₹ 0.00",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-
-                                          ],
-                                        ),
-
-                                      ]),
-
-                                ),
-                              ),
+                    steppervalue==4?
+                    SizedBox(child:Column(
+                      children: [
+                        Padding(
+                          padding:  EdgeInsets.symmetric(
+                              vertical: height/94.5,
+                              horizontal: width/45
+                          ),
+                          child: Container(
+                            height:height/2.52,
+                            width:width/1.090,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Color(0xffffe09f)
                             ),
-                            SizedBox(height: height/25.2,),
+                            padding: EdgeInsets.only(left: width/36.0,right: width/36.0,top: height/37.8,bottom: height/37.8),
+                            child: SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+
+                                    Text("Total Amount",style: GoogleFonts.poppins(fontWeight:FontWeight.w600),),
+                                    Text("₹ ${Total.toString()}",
+                                      style: GoogleFonts.poppins(fontWeight:FontWeight.w600,
+                                        fontSize: width/16.363,
+
+                                      ),),
+
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height:height/378,
+                                          width:width/1.8,
+                                          color: Colors.grey,
+                                        ),
+                                        Icon(Icons.arrow_forward_ios_rounded,color: Colors.grey,)
+
+                                      ],
+                                    ),
+
+                                    Text("Payment Now for new PAN Card Application",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),),
+
+                                    Row(
+                                      children: [
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/1.636,
+                                            child: Text("Normal Fees :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/4.5,
+
+                                            child: Text("₹ ${normal_fees.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/1.636,
+
+                                            child: Text("GST :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/4.5,
+
+                                            child: Text("₹ ${Gst.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+
+                                      ],
+                                    ),
+                                    Divider(color: Colors.black,),
+
+                                    Row(
+                                      children: [
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/1.636,
+
+                                            child: Text("Total Fees :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/4.5,
+
+                                            child: Text("₹ ${Total.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/1.636,
+
+                                            child: Text("You have wallet : (${widget.UserWalletamount.toString()}) ",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/4.5,
+
+                                            child: Text("₹ -${Total.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/1.636,
+
+                                            child: Text("Your wallet Balance :  ",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/4.5,
+
+                                            child: Text("₹ ${FirebaseWalletAmount.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+
+                                      ],
+                                    ),
+                                    Divider(color: Colors.black,),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            height: height/37.8,
+                                            width: width/1.636,
+                                            child: Text("Payable amount :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                        SizedBox(
+                                            height: height/37.8,
+                                            width: width/4.5,
+                                            child: Text(
+                                              widget.UserWalletamount!=0?
+                                              "₹ ${Total.toString()}":"₹ 0.00",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+
+                                      ],
+                                    ),
+
+                                  ]),
+
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: height/25.2,),
 
 
-                          ],
-                        )
-                    ):
+                      ],
+                    )):
                     const SizedBox(),
                   ),
 
-
-
                   SizedBox(height: height/151.2),
-
-
 
                       Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1913,12 +1920,34 @@ class _Reprint_PageState extends State<Reprint_Page> {
                       steppervalue>0?
                       GestureDetector(
                         onTap: (){
+
                           if(steppervalue>0){
                             setState(() {
                               steppervalue--;
                               imgaeSelcted=false;
-                            });}
-                            
+                            });
+                          }
+                          if(steppervalue==0){
+                            setState(() {
+                              _photo1=null;
+                              _photo5=null;
+                              imgaeSelcted=false;
+                            });
+                          }
+                          else if(steppervalue==1){
+                            setState(() {
+                              _photo2=null;
+                              imgaeSelcted=false;
+                            });
+                          }
+                          else if(steppervalue==2){
+                            setState(() {
+                              _photo3=null;
+                              _photo4=null;
+                              imgaeSelcted=false;
+                            });
+                          }
+
                         },
                         child: Center(
                           child:
@@ -1954,20 +1983,10 @@ class _Reprint_PageState extends State<Reprint_Page> {
                       steppervalue==4?
                       GestureDetector(
                         onTap: () async {
-                          if (_formKey.currentState!.validate()&& selectedValuegender!="Select Gender"&&printPannumbercontroller.text.length==14
-                              &&printpincodecontroller.text.length==6&&printphonenumbercontroller.text.length==10&&_photo1!=null&&_photo2!=null&&_photo3!=null&&_photo4!=null
-                              &&_photo5!=null) {
-                            if(Datasubmitted==true){
-                              setState(() {
-                                Loading=true;
-                              });
-                              firebasestroragefunctionphoto();
-                            }
-                            else{
-                              awesomeDialog("Warning", 'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500');
-                            }
-
-                          }
+                          setState(() {
+                            Loading=true;
+                          });
+                          firebasestroragefunctionphoto();
                         },
                         child: Center(
                           child:
@@ -2001,6 +2020,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                           if(imgaeSelcted==false){
                             if (_formKey.currentState!.validate()&& selectedValuegender!="Select Gender"&&printPannumbercontroller.text.length==14
                                 &&printpincodecontroller.text.length==6&&printphonenumbercontroller.text.length==10) {
+
                               if (steppervalue < 4) {
                                 setState(() {
                                   steppervalue++;
@@ -2131,10 +2151,12 @@ class _Reprint_PageState extends State<Reprint_Page> {
   }
 
 
-  awesomeDialog(title,description){
+  awesomeDialog(title,description,errortype){
     return AwesomeDialog(
+      dismissOnBackKeyPress: errortype==3?true:false,
+      dismissOnTouchOutside:errortype==3? true:false,
       context: context,
-      dialogType: DialogType.error,
+      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.info,
       animType: AnimType.rightSlide,
       title: title,
       desc: description,
@@ -2256,7 +2278,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
           "time":DateFormat('hh:mm a').format(DateTime.now()),
           "timestamp":DateTime.now().millisecondsSinceEpoch
         });
-        Succespopup();
+        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
         clearcontrollers();
       }
       else{
@@ -2312,240 +2334,14 @@ class _Reprint_PageState extends State<Reprint_Page> {
           "time":DateFormat('hh:mm a').format(DateTime.now()),
           "timestamp":DateTime.now().millisecondsSinceEpoch
         });
-        Succespopup();
+        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
         clearcontrollers();
       }
 
     }
 
-
-
-
   }
 
-
-  Succespopup() {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: height/25.2,),
-
-                      SizedBox(
-                        height: height/7.56,
-                        width: width/3.60,
-                        child: Lottie.network(
-                            "https://assets8.lottiefiles.com/private_files/lf30_nsqfzxxx.json"),
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Text(
-                        "Submit Successfully....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      SizedBox(height: height/12.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff245BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff245BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
-  }
-
-  planExitpopup() {
-    setState((){
-      Loading=false;
-    });
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white
-
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height:height/25.2,),
-
-                      SizedBox(
-                        // height: 150,
-                        // width:width/2.4,
-                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Text(
-                        "Exist Your  Free Apply....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      SizedBox(height: height/12.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
-  }
 
 
   paymentfunction(){
@@ -2563,7 +2359,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
       });
       if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
         print(double.parse(widget.UserWalletamount.toString())-Total);
-        return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
+        return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",1);
       }
       else{
         if(double.parse(widget.UserWalletamount.toString())-Total>0){
@@ -2577,13 +2373,9 @@ class _Reprint_PageState extends State<Reprint_Page> {
         }
       }
     }
-    else{
-      return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
-    }
+
 
   }
-
-
 
 
 
@@ -2600,6 +2392,16 @@ class _Reprint_PageState extends State<Reprint_Page> {
        printpincodecontroller.clear();
        printphonenumbercontroller.clear();
       selectedValuegender='Select Gender';
+      imageUrl='';
+      imageUrl2='';
+      imageUrl3='';
+      imageUrl4='';
+      imageUrl5='';
+      _photo1=null;
+      _photo2=null;
+      _photo3=null;
+      _photo4=null;
+      _photo5=null;
     });
   }
 

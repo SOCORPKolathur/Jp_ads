@@ -84,25 +84,17 @@ class _Minor_PageState extends State<Minor_Page> {
     super.initState();
   }
 
-bool Datasubmitted=false;
   checkusagecount()async{
 
     var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
     if(document['usertype']=="Individual"){
       if(document['usageccount']==3){
-        print(document["usageccount"]);
-        planExitpopup();
-      }
-      if(document['walletamount']<=157){
-        return  awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount");
-      }
-      else{
-        setState(() {
-          Datasubmitted=true;
-        });
+        return  awesomeDialog("Warning....!", "Exist Your Free Apply",2);
       }
     }
-
+    if(document['walletamount']<=157){
+      return  awesomeDialog("Warning....!", 'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500',2);
+    }
   }
 
   final RegExp _inputPattern = RegExp(r'^\d{4}\s\d{4}\s\d{4}$');
@@ -577,7 +569,7 @@ bool Datasubmitted=false;
                                                       print("ageeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
                                                       if(duration.years<18){
-                                                        awesomeDialog("Your Are Minor","Kindly Apply to New Apply Pan card");
+                                                        awesomeDialog("Your Are Minor","Kindly Apply to New Apply Pan card",1);
                                                       }
                                                       else{
                                                         dobcontroller.text =formattedDate;
@@ -813,15 +805,19 @@ bool Datasubmitted=false;
                                                   child: ListTile(leading: Icon(Icons.camera),
                                                     onTap: () async {
                                                       final picker = ImagePicker();
-                                                      await picker.pickImage(source: ImageSource.camera)
-                                                          .then((value) {
+
+                                                      await picker.pickImage(source: ImageSource.camera).then((value) {
+
                                                         if (value != null) {
                                                           setState(() {
                                                             _photo1 = File(value.path);
                                                           });
-                                                          print(_photo1);
-                                                          print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                          print(_photo1);
+
+                                                          if(_photo1!=null&&_photo5!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
@@ -846,9 +842,12 @@ bool Datasubmitted=false;
                                                         if (value != null) {
                                                           setState(() {
                                                             _photo1 = File(value.path);
-                                                            imgaeSelcted=false;
                                                           });
-                                                          setState((){});
+                                                          if(_photo1!=null&&_photo5!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
@@ -937,11 +936,13 @@ bool Datasubmitted=false;
                                                         if (value != null) {
                                                           setState(() {
                                                             _photo5 = File(value.path);
-                                                            imgaeSelcted=false;
+
                                                           });
-                                                          print(_photo5);
-                                                          print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                          print(_photo5);
+                                                          if(_photo1!=null&&_photo5!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
@@ -966,9 +967,12 @@ bool Datasubmitted=false;
                                                         if (value != null) {
                                                           setState(() {
                                                             _photo5 = File(value.path);
-                                                            imgaeSelcted=false;
                                                           });
-                                                          setState((){});
+                                                          if(_photo1!=null&&_photo5!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
@@ -1130,13 +1134,10 @@ bool Datasubmitted=false;
                                                           _photo2 = File(value.path);
                                                           imgaeSelcted=false;
                                                         });
-                                                        print(_photo2);
-                                                        print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                        print(_photo2);
                                                         Navigator.pop(context);
                                                       }
                                                     });
-                                                    setState((){});
+
                                                   },
                                                   title:
                                                   Text("Camera",
@@ -1281,326 +1282,6 @@ bool Datasubmitted=false;
                                   padding:  EdgeInsets.only(left: width/14.4),
                                   child: Row(
                                     children: [
-                                      Text("4. Aadhaar Card Upload",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                            fontSize:width/28,
-                                            color: Colors.black),),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: height/47.25,),
-
-                                //front page
-                                Padding(
-                                  padding:  EdgeInsets.only(left: width/14.4),
-                                  child: Row(
-                                    children: [
-                                      Text("Front Side Of Aadhaar Card" ,style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                          fontSize:width/28,
-                                          color: Colors.black),),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: height/107.25,),
-                                GestureDetector(
-                                  onTap: (){
-                                    showDialog(context: context, builder: (context) {
-                                      return
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 220, bottom: 220),
-                                          child: AlertDialog(
-                                            title: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text("Please Select the Options", style: TextStyle(
-                                                    fontWeight: FontWeight.w700, fontSize: 15),),
-                                              ],
-                                            ),
-                                            content: Column(
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.grey.shade300,
-                                                      borderRadius: BorderRadius.circular(8)
-                                                  ),
-                                                  child: ListTile(leading: Icon(Icons.camera),
-                                                    onTap: () async {
-                                                      final picker = ImagePicker();
-                                                      await picker.pickImage(source: ImageSource.camera)
-                                                          .then((value) {
-                                                        if (value != null) {
-                                                          setState(() {
-                                                            _photo3 = File(value.path);
-                                                          });
-                                                          print(_photo3);
-                                                          print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                          Navigator.pop(context);
-                                                        }
-                                                      });
-                                                      setState((){});
-                                                    },
-                                                    title:
-                                                    Text("Camera",
-                                                      style: TextStyle(fontWeight: FontWeight.w700),),),
-                                                ),
-                                                SizedBox(height: 10),
-
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.grey.shade300,
-                                                      borderRadius: BorderRadius.circular(8)
-                                                  ),
-                                                  child: ListTile(
-                                                    onTap: () async {
-                                                      final picker = ImagePicker();
-                                                      await picker.pickImage(source: ImageSource.gallery)
-                                                          .then((value) {
-                                                        if (value != null) {
-                                                          setState(() {
-                                                            _photo3 = File(value.path);
-                                                          });
-                                                          setState((){});
-                                                          Navigator.pop(context);
-                                                        }
-                                                      });
-                                                    },
-                                                    leading: Icon(Icons.browse_gallery),
-                                                    title: Text("Gallery",
-                                                      style: TextStyle(fontWeight: FontWeight.w700),),),
-                                                ),
-
-                                              ],
-                                            ),
-                                          ),
-                                        );
-
-                                    },);
-                                  },
-                                  child: Container(
-                                    height: height/7.56,
-                                    width: width/1.125,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Color(0xffFFFFFF)
-                                    ),
-
-                                    child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-
-                                          _photo3==null? Image.asset(Uploaddocimg):Image.file(_photo3!,height: height/9.45,width: width/4.5,fit: BoxFit.cover,),
-
-                                          _photo3==null?
-                                          Text("Upload File",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                                fontSize:width/26,
-                                                color: Colors.black),):Text(""),
-
-
-                                        ]),
-                                  ),
-                                ),
-                                SizedBox(height: height/47.25,),
-
-                                ///back page
-                                Padding(
-                                  padding:  EdgeInsets.only(left: width/14.4),
-                                  child: Row(
-                                    children: [
-                                      Text("Back Side Of Aadhaar Card", style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                          fontSize:width/28,
-                                          color: Colors.black),),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: height/107.25,),
-                                GestureDetector(
-                                  onTap: (){
-                                    showDialog(context: context, builder: (context) {
-                                      return
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 220, bottom: 220),
-                                          child: AlertDialog(
-                                            title: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text("Please Select the Options", style: TextStyle(
-                                                    fontWeight: FontWeight.w700, fontSize: 15),),
-                                              ],
-                                            ),
-                                            content: Column(
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.grey.shade300,
-                                                      borderRadius: BorderRadius.circular(8)
-                                                  ),
-                                                  child: ListTile(leading: Icon(Icons.camera),
-                                                    onTap: () async {
-                                                      final picker = ImagePicker();
-                                                      await picker.pickImage(source: ImageSource.camera)
-                                                          .then((value) {
-                                                        if (value != null) {
-                                                          setState(() {
-                                                            _photo4 = File(value.path);
-                                                            imgaeSelcted=false;
-                                                          });
-                                                          print(_photo4);
-                                                          print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                          print(_photo4);
-                                                          Navigator.pop(context);
-                                                        }
-                                                      });
-                                                      setState((){});
-                                                    },
-                                                    title:
-                                                    Text("Camera",
-                                                      style: TextStyle(fontWeight: FontWeight.w700),),),
-                                                ),
-                                                SizedBox(height: 10),
-
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.grey.shade300,
-                                                      borderRadius: BorderRadius.circular(8)
-                                                  ),
-                                                  child: ListTile(
-                                                    onTap: () async {
-                                                      final picker = ImagePicker();
-                                                      await picker.pickImage(source: ImageSource.gallery)
-                                                          .then((value) {
-                                                        if (value != null) {
-                                                          setState(() {
-                                                            _photo4 = File(value.path);
-                                                            imgaeSelcted=false;
-                                                          });
-
-                                                          Navigator.pop(context);
-
-                                                        }
-                                                      });
-                                                      setState((){});
-                                                    },
-                                                    leading: Icon(Icons.browse_gallery),
-                                                    title: Text("Gallery",
-                                                      style: TextStyle(fontWeight: FontWeight.w700),),),
-                                                ),
-
-                                              ],
-                                            ),
-                                          ),
-                                        );
-
-                                    },);
-                                  },
-                                  child: Container(
-                                    height: height/7.56,
-                                    width: width/1.125,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Color(0xffFFFFFF)
-                                    ),
-
-                                    child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-
-                                          _photo4==null? Image.asset(Uploaddocimg):Image.file(_photo4!,height: height/9.45,width: width/4.5,fit: BoxFit.cover,),
-
-                                          _photo4==null?
-                                          Text("Upload File",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                                fontSize:width/26,
-                                                color: Colors.black),):Text(""),
-
-
-                                        ]),
-                                  ),
-                                ),
-                                SizedBox(height: height/47.25,),
-                                Container(
-                                  height: height/4.2,
-                                  width: width/1.125,
-                                  padding: EdgeInsets.symmetric(horizontal: width/36.0,vertical: height/75.6),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Color(0xffFFFFFF)
-                                  ),
-
-                                  child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text("! Note:",
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                              fontSize:width/26,
-                                              color: Colors.black),),
-                                        Divider(),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Icon(Icons.circle,size: width/24,),
-                                            SizedBox(width: width/72,),
-                                            SizedBox(
-                                              width: width/1.290,
-                                              child: Text("Images Should be clear and visible ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                                  fontSize:width/28,
-                                                  color: Colors.black)),
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(height: height/151.2,),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Icon(Icons.circle,size: width/24,),
-                                            SizedBox(width: width/72,),
-                                            SizedBox(
-                                              width: width/1.290,
-                                              child: Text("Please Correct the Edge to Upload Image",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                                  fontSize:width/28,
-                                                  color: Colors.black)),
-                                            )
-                                          ],
-                                        ),
-
-                                      ]),
-                                ),
-
-                                SizedBox(height: height/47.25,),
-
-
-
-                              ],
-                            ),
-                          ):
-                          steppervalue==3?
-                          SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-
-                                SizedBox(height: height/47.25,),
-
-                                Text("Upload Documents",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                      fontSize:width/22,
-                                      color: Colors.black),),
-                                SizedBox(height: height/47.25,),
-                                Padding(
-                                  padding:  EdgeInsets.only(left: width/14.4),
-                                  child: Row(
-                                    children: [
                                       Text("4.Aadhaar Card Upload",
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
@@ -1653,12 +1334,15 @@ bool Datasubmitted=false;
                                                           setState(() {
                                                             _photo3 = File(value.path);
                                                           });
-                                                          print(_photo3);
-                                                          print("sssssssssssssssssssssssssssssssssssssssssssssss");
+                                                          if(_photo3!=null&&_photo4!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
-                                                      setState((){});
+
                                                     },
                                                     title:
                                                     Text("Camera",
@@ -1680,7 +1364,11 @@ bool Datasubmitted=false;
                                                           setState(() {
                                                             _photo3 = File(value.path);
                                                           });
-                                                          setState((){});
+                                                          if(_photo3!=null&&_photo4!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
@@ -1766,11 +1454,12 @@ bool Datasubmitted=false;
                                                         if (value != null) {
                                                           setState(() {
                                                             _photo4 = File(value.path);
-                                                            imgaeSelcted=false;
                                                           });
-                                                          print(_photo4);
-                                                          print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                          print(_photo4);
+                                                          if(_photo3!=null&&_photo4!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
@@ -1795,9 +1484,12 @@ bool Datasubmitted=false;
                                                         if (value != null) {
                                                           setState(() {
                                                             _photo4 = File(value.path);
-                                                            imgaeSelcted=false;
                                                           });
-
+                                                          if(_photo3!=null&&_photo4!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
 
                                                         }
@@ -1921,7 +1613,7 @@ bool Datasubmitted=false;
                                   padding:  EdgeInsets.only(left: width/14.4),
                                   child: Row(
                                     children: [
-                                      Text("4.Parent Aadhaar Card Upload",
+                                      Text("4.Parents Aadhaar Card Upload",
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                             fontSize:width/28,
@@ -1973,8 +1665,11 @@ bool Datasubmitted=false;
                                                           setState(() {
                                                             _photo6 = File(value.path);
                                                           });
-                                                          print(_photo6);
-                                                          print("sssssssssssssssssssssssssssssssssssssssssssssss");
+                                                          if(_photo6!=null&&_photo7!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
@@ -2000,7 +1695,11 @@ bool Datasubmitted=false;
                                                           setState(() {
                                                             _photo6 = File(value.path);
                                                           });
-                                                          setState((){});
+                                                          if(_photo6!=null&&_photo7!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
@@ -2086,11 +1785,13 @@ bool Datasubmitted=false;
                                                         if (value != null) {
                                                           setState(() {
                                                             _photo7 = File(value.path);
-                                                            imgaeSelcted=false;
+
                                                           });
-                                                          print(_photo7);
-                                                          print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                          print(_photo7);
+                                                          if(_photo6!=null&&_photo7!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
                                                         }
                                                       });
@@ -2115,14 +1816,16 @@ bool Datasubmitted=false;
                                                         if (value != null) {
                                                           setState(() {
                                                             _photo7 = File(value.path);
-                                                            imgaeSelcted=false;
                                                           });
-
+                                                          if(_photo6!=null&&_photo7!=null){
+                                                            setState((){
+                                                              imgaeSelcted=false;
+                                                            });
+                                                          }
                                                           Navigator.pop(context);
 
                                                         }
                                                       });
-                                                      setState((){});
                                                     },
                                                     leading: Icon(Icons.browse_gallery),
                                                     title: Text("Gallery",
@@ -2394,7 +2097,36 @@ bool Datasubmitted=false;
                                 imgaeSelcted=false;
                               });
                             }
+                            if(steppervalue==0){
+                              setState(() {
+                                _photo1=null;
+                                _photo5=null;
+                                imgaeSelcted=false;
+                              });
+                            }
 
+                            else if(steppervalue==1){
+                              setState(() {
+                                _photo2=null;
+                                imgaeSelcted=false;
+                              });
+                            }
+                            else if(steppervalue==2){
+                              setState(() {
+                                _photo3=null;
+                                _photo4=null;
+                                imgaeSelcted=false;
+                              });
+                            }
+                            else if(steppervalue==3){
+                              setState(() {
+                                _photo6=null;
+                                _photo7=null;
+                                imgaeSelcted=false;
+                              });
+                            }
+
+                            print(steppervalue);
                           },
                           child: Center(
                             child:
@@ -2430,21 +2162,10 @@ bool Datasubmitted=false;
                         steppervalue==5?
                         GestureDetector(
                           onTap: () async {
-                            if (_formKey.currentState!.validate()&&aadhaarontroller.text.length==14&&_photo1!=null&&_photo2!=null&&_photo3!=null&&_photo4!=null&&_photo5!=null
-                                &&_photo6!=null
-                                &&_photo7!=null)
-                            {
-                              if(Datasubmitted==true){
-                                setState(() {
-                                  Loading=true;
-                                });
-                                firebasestroragefunctionphoto();
-                              }
-                              else{
-                                awesomeDialog("Warning", 'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500');
-                              }
-
-                            }
+                            setState(() {
+                              Loading=true;
+                            });
+                            firebasestroragefunctionphoto();
                           },
                           child: Center(
                             child:
@@ -2496,9 +2217,7 @@ bool Datasubmitted=false;
                                   });
 
                                 }
-
                               }
-
 
                             }
                             else{
@@ -2573,10 +2292,12 @@ bool Datasubmitted=false;
     );
   }
 
-  awesomeDialog(title,description){
+  awesomeDialog(title,description,errortype){
     return AwesomeDialog(
+      dismissOnBackKeyPress: errortype==3?true:false,
+      dismissOnTouchOutside:errortype==3? true:false,
       context: context,
-      dialogType: DialogType.error,
+      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.info,
       animType: AnimType.rightSlide,
       title: title,
       desc: description,
@@ -2601,60 +2322,47 @@ bool Datasubmitted=false;
   firebasestroragefunctionphoto() async {
     if(FirebaseWalletAmount>0){
       var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
-      var uploadTask = await ref.putFile(_photo1!).catchError((error) async {
-
-      });
+      var uploadTask = await ref.putFile(_photo1!);
       var image = await uploadTask.ref.getDownloadURL();
       setState(() {
         imageUrl=image;
       });
 
       var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
-      var uploadTask2 = await ref2.putFile(_photo2!).catchError((error) async {
-      });
+      var uploadTask2 = await ref2.putFile(_photo2!);
       var image2 = await uploadTask2.ref.getDownloadURL();
       setState(() {
         imageUrl2=image2;
       });
 
       var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
-      var uploadTask3 = await ref3.putFile(_photo3!).catchError((error) async {
-
-      });
+      var uploadTask3 = await ref3.putFile(_photo3!);
       var image3 = await uploadTask3.ref.getDownloadURL();
       setState(() {
         imageUrl3=image3;
       });
 
       var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
-      var uploadTask4 = await ref4.putFile(_photo4!).catchError((error) async {
-
-      });
+      var uploadTask4 = await ref4.putFile(_photo4!);
       var image4 = await uploadTask4.ref.getDownloadURL();
       setState(() {
         imageUrl4=image4;
       });
 
       var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
-      var uploadTask5 = await ref5.putFile(_photo5!).catchError((error) async {
-
-      });
+      var uploadTask5 = await ref5.putFile(_photo5!);
       var image5 = await uploadTask5.ref.getDownloadURL();
       setState(() {
         imageUrl5=image5;
       });
       var ref6 = FirebaseStorage.instance.ref().child('Images').child("$_photo6.jpg");
-      var uploadTask6 = await ref6.putFile(_photo5!).catchError((error) async {
-
-      });
+      var uploadTask6 = await ref6.putFile(_photo5!);
       var image6 = await uploadTask6.ref.getDownloadURL();
       setState(() {
         imageUrl6=image6;
       });
       var ref7 = FirebaseStorage.instance.ref().child('Images').child("$_photo7.jpg");
-      var uploadTask7 = await ref7.putFile(_photo7!).catchError((error) async {
-
-      });
+      var uploadTask7 = await ref7.putFile(_photo7!);
       var image7 = await uploadTask7.ref.getDownloadURL();
       setState(() {
         imageUrl7=image7;
@@ -2709,22 +2417,12 @@ bool Datasubmitted=false;
           "time":DateFormat('hh:mm a').format(DateTime.now()),
           "timestamp":DateTime.now().millisecondsSinceEpoch
         });
-        Succespopup();
-        Future.delayed(Duration(seconds: 1),(){
-          setState(() {
-            namecontroller.clear();
-            fathernamecontroller.clear();
-            dobcontroller.clear();
-            aadhaarontroller.clear();
-            selectedValuepantype='Select Pan Type';
-            selectedValuegender='Select Gender';
-            imageUrl='';
-            imageUrl2='';
-            imageUrl3='';
-            Loading=false;
 
-          });
-        });
+
+        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+        clearcontroller();
+
+
       }
       else{
         FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
@@ -2772,21 +2470,8 @@ bool Datasubmitted=false;
           "time":DateFormat('hh:mm a').format(DateTime.now()),
           "timestamp":DateTime.now().millisecondsSinceEpoch
         });
-        Succespopup();
-        Future.delayed(Duration(seconds: 1),(){
-          setState(() {
-            namecontroller.clear();
-            fathernamecontroller.clear();
-            dobcontroller.clear();
-            selectedValuepantype='Select Pan Type';
-            selectedValuegender='Select Gender';
-            imageUrl='';
-            imageUrl2='';
-            imageUrl3='';
-            Loading=false;
-
-          });
-        });
+        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+        clearcontroller();
       }
 
     }
@@ -2794,228 +2479,38 @@ bool Datasubmitted=false;
 
   }
 
-  Succespopup() {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: height/25.2,),
 
-                      SizedBox(
-                        height: height/7.56,
-                        width: width/3.60,
-                        child: Lottie.network(
-                            "https://assets8.lottiefiles.com/private_files/lf30_nsqfzxxx.json"),
-                      ),
-                      SizedBox(height: height/75.6,),
 
-                      Text(
-                        "Submit Successfully....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      SizedBox(height: height/12.6,),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff245BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff245BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
-  }
-
-  planExitpopup() {
-    setState((){
+  clearcontroller(){
+    setState(() {
+      namecontroller.clear();
+      fathernamecontroller.clear();
+      dobcontroller.clear();
+      aadhaarontroller.clear();
+      selectedValuepantype='Select Pan Type';
+      selectedValuegender='Select Gender';
+      imageUrl='';
+      imageUrl2='';
+      imageUrl3='';
+      imageUrl4='';
+      imageUrl5='';
+      imageUrl6='';
+      imageUrl7='';
+      _photo1=null;
+      _photo2=null;
+      _photo3=null;
+      _photo4=null;
+      _photo5=null;
+      _photo6=null;
+      _photo7=null;
       Loading=false;
+
     });
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white
-
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height:height/25.2,),
-
-                      SizedBox(
-                        // height: 150,
-                        // width:width/2.4,
-                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Text(
-                        "Exist Your  Free Apply....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      SizedBox(height: height/12.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
   }
+
+
 
   paymentfunction(){
     setState(() {
@@ -3032,7 +2527,7 @@ bool Datasubmitted=false;
       });
       if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
         print(double.parse(widget.UserWalletamount.toString())-Total);
-        return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
+        return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",1);
       }
       else{
         if(double.parse(widget.UserWalletamount.toString())-Total>0){
@@ -3046,13 +2541,9 @@ bool Datasubmitted=false;
         }
       }
     }
-    else{
-      return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
-    }
+
 
   }
-
-
 
 
 

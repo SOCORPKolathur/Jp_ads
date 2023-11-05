@@ -9,8 +9,9 @@ _BannerSliderState createState() => _BannerSliderState();
 }
 
 class _BannerSliderState extends State<BannerSlider> {
-  int _index = 0;
+
   int _dataLength = 1;
+  int _index = 0;
 
   @override
   void initState() {

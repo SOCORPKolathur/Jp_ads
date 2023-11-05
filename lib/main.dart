@@ -5,9 +5,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jp_ads/Authendication/LogIn_Page.dart';
-import 'package:jp_ads/Authendication/Payment_Page.dart';
 import 'package:jp_ads/Landing_Screen/Landing_Screen.dart';
-import 'package:jp_ads/Splash_screen/Splah_Screen.dart';
+import 'package:jp_ads/demo.dart';
 import 'package:jp_ads/firebase_options.dart';
 
 
@@ -37,7 +36,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FirebaseAuth.instance.currentUser==null?LogIn_Page():const Landing_Screen()
+      home:
+      FirebaseAuth.instance.currentUser==null?LogIn_Page():const Landing_Screen()
     );
   }
 }

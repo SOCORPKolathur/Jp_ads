@@ -63,7 +63,6 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
   bool Loading=false;
   bool imgaeSelcted=false;
-  bool Datasubmitted=false;
   File ?_photo1;
   File ?_photo2;
   File ?_photo3;
@@ -81,9 +80,6 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
   @override
   void initState() {
     checkusagecount();
-  setState(() {
-    Selectedradiovalue.clear();
-  });
     // TODO: implement initState
     super.initState();
   }
@@ -96,19 +92,12 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
     var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
     if(document['usertype']=="Individual"){
       if(document['usageccount']==3){
-        print(document["usageccount"]);
-        planExitpopup();
-      }
-      if(document['walletamount']<=157){
-        return  awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount");
-      }
-      else{
-        setState(() {
-          Datasubmitted=true;
-        });
+        return  awesomeDialog("Warning....!", "Exist Your Free Apply",2);
       }
     }
-
+    if(document['walletamount']<=157){
+      return  awesomeDialog("Warning....!", 'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500',2);
+    }
   }
 
 
@@ -477,8 +466,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                            if(value!.isEmpty){
                                              return 'Field is required';
                                            }
-                                           else if(value!.isNotEmpty){
-                                             if(value!.length!=14){
+                                           else if(value.isNotEmpty){
+                                             if(value.length!=14){
                                                return "Fill the Aadhaar Number Correctly";
                                              }
                                            }
@@ -1453,9 +1442,11 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                      _photo1 = File(value.path);
                                                    });
 
-                                                   print(_photo1);
-                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                   print(_photo1);
+                                                   if(_photo1!=null&&_photo5!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
@@ -1480,9 +1471,12 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                  if (value != null) {
                                                    setState(() {
                                                      _photo1 = File(value.path);
-                                                     imgaeSelcted=false;
                                                    });
-                                                   setState((){});
+                                                   if(_photo1!=null&&_photo5!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
@@ -1571,11 +1565,13 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                  if (value != null) {
                                                    setState(() {
                                                      _photo5 = File(value.path);
-                                                     imgaeSelcted=false;
+
                                                    });
-                                                   print(_photo5);
-                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                   print(_photo5);
+                                                   if(_photo1!=null&&_photo5!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
@@ -1600,9 +1596,12 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                  if (value != null) {
                                                    setState(() {
                                                      _photo5 = File(value.path);
-                                                     imgaeSelcted=false;
                                                    });
-                                                   setState((){});
+                                                   if(_photo1!=null&&_photo5!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
@@ -1764,13 +1763,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                    _photo2 = File(value.path);
                                                    imgaeSelcted=false;
                                                  });
-                                                 print(_photo2);
-                                                 print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                 print(_photo2);
                                                  Navigator.pop(context);
                                                }
                                              });
-                                             setState((){});
+
                                            },
                                            title:
                                            Text("Camera",
@@ -1967,12 +1963,15 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                    setState(() {
                                                      _photo3 = File(value.path);
                                                    });
-                                                   print(_photo3);
-                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
+                                                   if(_photo3!=null&&_photo4!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
-                                               setState((){});
+
                                              },
                                              title:
                                              Text("Camera",
@@ -1994,7 +1993,11 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                    setState(() {
                                                      _photo3 = File(value.path);
                                                    });
-                                                   setState((){});
+                                                   if(_photo3!=null&&_photo4!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
@@ -2080,11 +2083,12 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                  if (value != null) {
                                                    setState(() {
                                                      _photo4 = File(value.path);
-                                                     imgaeSelcted=false;
                                                    });
-                                                   print(_photo4);
-                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                   print(_photo4);
+                                                   if(_photo3!=null&&_photo4!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
@@ -2109,9 +2113,12 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                  if (value != null) {
                                                    setState(() {
                                                      _photo4 = File(value.path);
-                                                     imgaeSelcted=false;
                                                    });
-
+                                                   if(_photo3!=null&&_photo4!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
 
                                                  }
@@ -2287,8 +2294,11 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                    setState(() {
                                                      _photo6 = File(value.path);
                                                    });
-                                                   print(_photo6);
-                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
+                                                   if(_photo6!=null&&_photo7!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
@@ -2314,7 +2324,11 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                    setState(() {
                                                      _photo6 = File(value.path);
                                                    });
-                                                   setState((){});
+                                                   if(_photo6!=null&&_photo7!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
@@ -2400,11 +2414,13 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                  if (value != null) {
                                                    setState(() {
                                                      _photo7 = File(value.path);
-                                                     imgaeSelcted=false;
+
                                                    });
-                                                   print(_photo7);
-                                                   print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                   print(_photo7);
+                                                   if(_photo6!=null&&_photo7!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
                                                  }
                                                });
@@ -2429,14 +2445,16 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                  if (value != null) {
                                                    setState(() {
                                                      _photo7 = File(value.path);
-                                                     imgaeSelcted=false;
                                                    });
-
+                                                   if(_photo6!=null&&_photo7!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
                                                    Navigator.pop(context);
 
                                                  }
                                                });
-                                               setState((){});
                                              },
                                              leading: Icon(Icons.browse_gallery),
                                              title: Text("Gallery",
@@ -2707,6 +2725,33 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                              imgaeSelcted=false;
                            });
                          }
+                         if(steppervalue==0){
+                           setState(() {
+                             _photo1=null;
+                             _photo5=null;
+                             imgaeSelcted=false;
+                           });
+                         }
+                         else if(steppervalue==1){
+                           setState(() {
+                             _photo2=null;
+                             imgaeSelcted=false;
+                           });
+                         }
+                         else if(steppervalue==2){
+                           setState(() {
+                             _photo3=null;
+                             _photo4=null;
+                             imgaeSelcted=false;
+                           });
+                         }
+                         else if(steppervalue==3){
+                           setState(() {
+                             _photo6=null;
+                             _photo7=null;
+                             imgaeSelcted=false;
+                           });
+                         }
                        },
                        child: Center(
                          child:
@@ -2742,28 +2787,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                      steppervalue==5?
                      GestureDetector(
                        onTap: ()  {
-                         print("Clikerddddddddddddddddddddddddddd");
-                         if (_formKey.currentState!.validate()&&Selectedradiovalue.isNotEmpty
-                             &&corerctpincodecontroller.text.length==6&&corerctphonenumbercontroller.length==10
-                             &&_photo1!=null&&_photo2!=null&&_photo3!=null&&_photo4!=null&&_photo5!=null&&_photo6!=null&&_photo7!=null)
-                         {
-                           print("helloe++++++++++++");
-                           if(Datasubmitted==true){
-                             setState(() {
-                               Loading=true;
-                             });
-                             firebasestroragefunctionphoto();
-                           }
-                           else{
-                             print("Else Funxction");
-                             awesomeDialog("Warning", 'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500');
-                           }
-
-                         }
-                         else{
-                           print("Exiteddd");
-                         }
-
+                         setState(() {
+                           Loading=true;
+                         });
+                         firebasestroragefunctionphoto();
                        },
                        child: Center(
                          child:
@@ -2919,14 +2946,31 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
         photoradiobutton=0;
         signatureradiobutton=0;
         selectedValuegender='Select Gender';
+        Selectedradiovalue.clear();
        Loading=false;
+       _photo1=null;
+       _photo2=null;
+       _photo3=null;
+       _photo4=null;
+       _photo5=null;
+       _photo6=null;
+       _photo7=null;
+       imageUrl="";
+       imageUrl2="";
+       imageUrl3="";
+       imageUrl4="";
+       imageUrl5="";
+       imageUrl6="";
+       imageUrl7="";
     });
   }
 
-  awesomeDialog(title,description){
+  awesomeDialog(title,description,errortype){
     return AwesomeDialog(
+      dismissOnBackKeyPress: errortype==3?true:false,
+      dismissOnTouchOutside:errortype==3? true:false,
       context: context,
-      dialogType: DialogType.error,
+      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.info,
       animType: AnimType.rightSlide,
       title: title,
       desc: description,
@@ -2963,25 +3007,21 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
   firebasestroragefunctionphoto() async {
     if(FirebaseWalletAmount>0){
       var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
-      var uploadTask = await ref.putFile(_photo1!).catchError((error) async {
-      });
+      var uploadTask = await ref.putFile(_photo1!);
       var image = await uploadTask.ref.getDownloadURL();
       setState(() {
         imageUrl=image;
       });
 
       var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
-      var uploadTask2 = await ref2.putFile(_photo2!).catchError((error) async {
-      });
+      var uploadTask2 = await ref2.putFile(_photo2!);
       var image2 = await uploadTask2.ref.getDownloadURL();
       setState(() {
         imageUrl2=image2;
       });
 
       var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
-      var uploadTask3 = await ref3.putFile(_photo3!).catchError((error) async {
-
-      });
+      var uploadTask3 = await ref3.putFile(_photo3!);
       var image3 = await uploadTask3.ref.getDownloadURL();
       setState(() {
         imageUrl3=image3;
@@ -2989,35 +3029,27 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
 
       var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
-      var uploadTask4 = await ref4.putFile(_photo4!).catchError((error) async {
-
-      });
+      var uploadTask4 = await ref4.putFile(_photo4!);
       var image4 = await uploadTask4.ref.getDownloadURL();
       setState(() {
         imageUrl4=image4;
       });
 
       var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
-      var uploadTask5 = await ref5.putFile(_photo5!).catchError((error) async {
-
-      });
+      var uploadTask5 = await ref5.putFile(_photo5!);
       var image5 = await uploadTask5.ref.getDownloadURL();
       setState(() {
         imageUrl5=image5;
       });
 
       var ref6 = FirebaseStorage.instance.ref().child('Images').child("$_photo6.jpg");
-      var uploadTask6 = await ref6.putFile(_photo6!).catchError((error) async {
-
-      });
+      var uploadTask6 = await ref6.putFile(_photo6!);
       var image6 = await uploadTask6.ref.getDownloadURL();
       setState(() {
         imageUrl6=image6;
       });
       var ref7 = FirebaseStorage.instance.ref().child('Images').child("$_photo7.jpg");
-      var uploadTask7 = await ref7.putFile(_photo7!).catchError((error) async {
-
-      });
+      var uploadTask7 = await ref7.putFile(_photo7!);
       var image7 = await uploadTask7.ref.getDownloadURL();
       setState(() {
         imageUrl7=image7;
@@ -3082,7 +3114,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
             "time":DateFormat('hh:mm a').format(DateTime.now()),
             "timestamp":DateTime.now().millisecondsSinceEpoch
           });
-          Succespopup();
+          awesomeDialog("Success", "Submitted Your Data Successfully", 3);
           clearcontrollers();
       }
       else{
@@ -3144,242 +3176,15 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
           "timestamp":DateTime.now().millisecondsSinceEpoch
         });
 
-        Succespopup();
+        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
         clearcontrollers();
       }
 
     }
 
 
-
-
-
-
   }
 
-  Succespopup() {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: height/25.2,),
-
-                      SizedBox(
-                        height: height/7.56,
-                        width: width/3.60,
-                        child: Lottie.network(
-                            "https://assets8.lottiefiles.com/private_files/lf30_nsqfzxxx.json"),
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Text(
-                        "Submit Successfully....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      SizedBox(height: height/12.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff245BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff245BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
-  }
-
-  planExitpopup() {
-    setState((){
-      Loading=false;
-    });
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    showDialog(
-
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white
-
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height:height/25.2,),
-
-                      SizedBox(
-                        // height: 150,
-                        // width:width/2.4,
-                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Text(
-                        "Exist Your  Free Apply....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      SizedBox(height: height/12.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
-  }
 
   Datepickerfunction(ctx) async {
     DateTime? pickedDate = await showDatePicker(
@@ -3417,8 +3222,6 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
     }
   }
 
-
-
   paymentfunction(){
     setState(() {
       FirebaseWalletAmount=0;
@@ -3434,7 +3237,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
       });
       if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
         print(double.parse(widget.UserWalletamount.toString())-Total);
-        return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
+        return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",1);
       }
       else{
         if(double.parse(widget.UserWalletamount.toString())-Total>0){
@@ -3448,12 +3251,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
         }
       }
     }
-    else{
-      return awesomeDialog("Low Wallet Amount", "PLease Recharge Wallet Amount");
-    }
+
 
   }
-
-
 
 }
