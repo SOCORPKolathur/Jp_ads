@@ -61,85 +61,155 @@ class _Notification_PageState extends State<Notification_Page> {
 
              var Notification=snapshot.data!.docs[index];
 
-           return Padding(
-             padding:  EdgeInsets.symmetric(
-               vertical: height/94.5,
-               horizontal: width/45
-             ),
-             child: Material(
-               borderRadius: BorderRadius.circular(8),
-               color: Colors.white54.withOpacity(0.9),
-               elevation: 10,
-               shadowColor: Colors.black12,
-               child: Container(
-                 padding:  EdgeInsets.symmetric(
-                   horizontal: width/90,
-                   vertical: height/189
-                 ),
-               decoration: BoxDecoration(
-                 borderRadius: BorderRadius.circular(8),
-                 color: Colors.white54.withOpacity(0.9),
+           return
+             Container(
+               margin: EdgeInsets.only(bottom: height/378,top: height/378),
+               padding:  EdgeInsets.symmetric(
+                 horizontal: width/90,
+                 vertical: height/179
                ),
-                 child: ListTile(
-                   onTap: (){
-                     Updatethestatusfunc(Notification.id);
-                   },
-                   style: ListTileStyle.drawer,
-                   title: Row(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       SizedBox(
-                         width:width/1.58,
+             decoration: BoxDecoration(
+               border: Border(
+                 bottom: BorderSide(
+                   color: Colors.black
+                 )
+               ),
+               color: Colors.white54.withOpacity(0.9),
+             ),
+               child: ListTile(
+                 onTap: (){
+                   Updatethestatusfunc(Notification.id);
+                 },
+                 title:SizedBox(
 
-                         child: Text(Notification['title'].toString(),style: GoogleFonts.poppins(fontWeight: FontWeight.w600,
-                             fontSize: width/30,
-                             color: const Color(0xff8C8994)),),
-                       ),
-                       Stack(alignment: Alignment.topRight,
-                         children: [
-                           Column(
-                             children: [
-                               Text(Notification['date'].toString(),style: GoogleFonts.poppins(fontWeight: FontWeight.w600,
-                                   fontSize: width/30,
-                                   color: const Color(0xff8C8994)),),
-                               Text(Notification['time'].toString(),style: GoogleFonts.poppins(fontWeight: FontWeight.w600,
-                                   fontSize: width/30,
-                                   color: const Color(0xff8C8994)),),
-                             ],
-                             crossAxisAlignment: CrossAxisAlignment.start,
+                   height:height/37.8,
+                   width: width / .6,
+                   child:
+                   Padding(
+                     padding:  EdgeInsets.only(left:width/180),
+                     child: Text(
+                       "${Notification['title']}",
+                       style: GoogleFonts
+                           .poppins(
+                           color: Colors
+                               .black,
+                           textStyle: TextStyle(overflow: TextOverflow.ellipsis),
+                           fontSize:
+                           width/24,
+                           fontWeight:
+                           FontWeight
+                               .w600),
+                     ),
+                   ),
+                 ),
+                 subtitle:Column(
+                   children: [
+                     Row(
+                       children: [
+
+                         SizedBox(
+                           width: width / 1.5,
+                           child: Text(
+                             " ${Notification["content"]}",
+                             style: GoogleFonts
+                                 .poppins(
+                                 color: Colors
+                                     .black54,textStyle: TextStyle(overflow: TextOverflow.ellipsis),
+                                 fontSize:
+                                 width/32.0,
+                                 fontWeight:
+                                 FontWeight
+                                     .w600),
+
                            ),
-                           Notification['isviewed']==false? Container(
-                             decoration: BoxDecoration(
-                               borderRadius: BorderRadius.circular(width/3.60),
-                               color: Colors.indigo
+                         ),
+
+                       ],
+                     ),
+                     Padding(
+                       padding:  EdgeInsets.only(left:width/160),
+                       child: Row(
+                         children: [
+
+                           SizedBox(
+                             height:height/50.4,
+                             width: width /
+                                 5.8,
+
+                             child: Text(
+                               "${Notification["date"]}",
+                               style: GoogleFonts
+                                   .poppins(
+                                   color: Colors
+                                       .black54,textStyle: TextStyle(overflow: TextOverflow.ellipsis),
+                                   fontSize:
+                                   width/36.0,
+                                   fontWeight:
+                                   FontWeight
+                                       .w600),
 
                              ),
-                             child: Padding(
-                               padding:  EdgeInsets.only(left: 4,right: 4),
-                               child: Center(child: Text("New",style: GoogleFonts.poppins(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w700),)),
+                           ),
+
+                           SizedBox(
+                             height:height/50.4,
+                             width: width /
+                                 4.6,
+
+                             child: Text(
+                               "- ${Notification["time"]}",
+                               style: GoogleFonts
+                                   .poppins(
+                                   color: Colors
+                                       .black54,
+                                   fontSize:
+                                   width/36.0,
+                                   fontWeight:
+                                   FontWeight
+                                       .w600),
                              ),
-                           ):const SizedBox()
+                           ),
                          ],
+                       ),
+                     ),
+                   ],
+                 ),
+                 trailing:Notification["isviewed"]==false? Container(
+                   height: height /
+                       33.48,
+                   width:
+                   width / 8.0,
+                   //   "Outstanding", "Excellent", "Good","Satisfactory", "Focus Needed"
+                   decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(5),
+                       color: Colors.green),
+                   child: Row(
+                     mainAxisAlignment:
+                     MainAxisAlignment
+                         .spaceEvenly,
+                     children: [
+
+                       Text(
+                         "New",
+                         style: GoogleFonts
+                             .poppins(
+                             color: Colors
+                                 .white,
+                             fontSize:
+                             width/27.69,
+                             fontWeight:
+                             FontWeight
+                                 .w600),
                        ),
                      ],
                    ),
-                   subtitle:
-                   SizedBox(
+                 ):SizedBox(),
 
-                     height: height/22.6,
-                     width: width/1.44,
-                     child: Text("Content : ${Notification['content'].toString()}",
-                       style: GoogleFonts.poppins(fontWeight: FontWeight.w600,
-                         textStyle: const TextStyle(
-                             overflow: TextOverflow.ellipsis
-                         ),
-                         fontSize: width/30,
-                         color: const Color(0xff8C8994)),),
-                   ),
-                 ),
+
+
+
                ),
-             ),
-           );
+             );
          },);
        },
      ),

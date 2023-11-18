@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:age_calculator/age_calculator.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 
+import '../Landing_Screen/Landing_Screen.dart';
 import '../const_file.dart';
+import 'Add walletAmount Page.dart';
+import 'Pandcard_apply_Page.dart';
 
 class Minor_Page extends StatefulWidget {
   String ?Userdocid;
@@ -55,6 +60,7 @@ class _Minor_PageState extends State<Minor_Page> {
   int day=0;
 
 
+
   final _formKey = GlobalKey<FormState>();
 
   int steppervalue=0;
@@ -89,7 +95,7 @@ class _Minor_PageState extends State<Minor_Page> {
     var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
     if(document['usertype']=="Individual"){
       if(document['usageccount']==3){
-        return  awesomeDialog("Warning....!", "Exist Your Free Apply",2);
+        return  awesomeDialog("Warning....!", "Exist Your Free Apply",4);
       }
     }
     if(document['walletamount']<=157){
@@ -568,8 +574,8 @@ class _Minor_PageState extends State<Minor_Page> {
                                                         print('Your age is $duration');// Your age is Years: 24, Months: 0, Days: 3
                                                       print("ageeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
-                                                      if(duration.years<18){
-                                                        awesomeDialog("Your Are Minor","Kindly Apply to New Apply Pan card",1);
+                                                      if(duration.years>19){
+                                                        awesomeDialog("Your Are Major","Kindly Apply to New Apply Pan card",1);
                                                       }
                                                       else{
                                                         dobcontroller.text =formattedDate;
@@ -822,6 +828,7 @@ class _Minor_PageState extends State<Minor_Page> {
                                                         }
                                                       });
                                                       setState((){});
+
                                                     },
                                                     title:
                                                     Text("Camera",
@@ -2158,13 +2165,10 @@ class _Minor_PageState extends State<Minor_Page> {
                           height: height/21.6,
                           width: width/4.5,),
                         SizedBox(width: width/7.2,),
-
                         steppervalue==5?
                         GestureDetector(
                           onTap: () async {
-                            setState(() {
-                              Loading=true;
-                            });
+
                             firebasestroragefunctionphoto();
                           },
                           child: Center(
@@ -2297,11 +2301,28 @@ class _Minor_PageState extends State<Minor_Page> {
       dismissOnBackKeyPress: errortype==3?true:false,
       dismissOnTouchOutside:errortype==3? true:false,
       context: context,
-      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.info,
+      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.error,
       animType: AnimType.rightSlide,
       title: title,
       desc: description,
       btnOkOnPress: () {
+        print(errortype);
+        errortype==1?
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                Pandcard_apply_Page(
+                    Usagecount:widget.Usagecount,
+                    Userdocid:widget.Userdocid,
+                    UserType: widget.UserType,
+                    UserWalletamount: widget.UserWalletamount
+                ),)):
+        errortype==2?
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                addwallet_Amount_Page(widget.Userdocid,widget.UserType))): "";
+
         Navigator.pop(context);
       },
     )..show();
@@ -2319,168 +2340,187 @@ class _Minor_PageState extends State<Minor_Page> {
     )..show();
   }
 
+
+  String generateRandomString(int len) {
+    var r = Random();
+    const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
+        .join();
+  }
+
   firebasestroragefunctionphoto() async {
-    if(FirebaseWalletAmount>0){
-      var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
-      var uploadTask = await ref.putFile(_photo1!);
-      var image = await uploadTask.ref.getDownloadURL();
-      setState(() {
-        imageUrl=image;
-      });
 
-      var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
-      var uploadTask2 = await ref2.putFile(_photo2!);
-      var image2 = await uploadTask2.ref.getDownloadURL();
-      setState(() {
-        imageUrl2=image2;
-      });
-
-      var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
-      var uploadTask3 = await ref3.putFile(_photo3!);
-      var image3 = await uploadTask3.ref.getDownloadURL();
-      setState(() {
-        imageUrl3=image3;
-      });
-
-      var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
-      var uploadTask4 = await ref4.putFile(_photo4!);
-      var image4 = await uploadTask4.ref.getDownloadURL();
-      setState(() {
-        imageUrl4=image4;
-      });
-
-      var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
-      var uploadTask5 = await ref5.putFile(_photo5!);
-      var image5 = await uploadTask5.ref.getDownloadURL();
-      setState(() {
-        imageUrl5=image5;
-      });
-      var ref6 = FirebaseStorage.instance.ref().child('Images').child("$_photo6.jpg");
-      var uploadTask6 = await ref6.putFile(_photo5!);
-      var image6 = await uploadTask6.ref.getDownloadURL();
-      setState(() {
-        imageUrl6=image6;
-      });
-      var ref7 = FirebaseStorage.instance.ref().child('Images').child("$_photo7.jpg");
-      var uploadTask7 = await ref7.putFile(_photo7!);
-      var image7 = await uploadTask7.ref.getDownloadURL();
-      setState(() {
-        imageUrl7=image7;
-      });
-
-      if(widget.UserType=="Individual"){
-        //Total
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-          "usageccount":FieldValue.increment(1),
-          "walletamount":FieldValue.increment(-Total),
+    if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
+      return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",2);
+    }
+    else{
+      if(double.parse(widget.UserWalletamount.toString())-Total>0){
+        setState(() {
+          Loading=true;
         });
+          var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
+          var uploadTask = await ref.putFile(_photo1!);
+          var image = await uploadTask.ref.getDownloadURL();
+          setState(() {
+            imageUrl=image;
+          });
 
-        FirebaseFirestore.instance.collection("Minor_New_applied").doc().set({
-          "name":namecontroller.text,
-          "pantype":selectedValuepantype,
-          "father name":fathernamecontroller.text,
-          "aadhar no":aadhaarontroller.text,
-          "dob":dobcontroller.text,
-          "gender":selectedValuegender,
-          "photo":imageUrl,
-          "photo2":imageUrl5,
-          "updatestatus":"Applied",
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
-          "aadharpicture2":imageUrl4,
-          "parentaadhaar1":imageUrl6,
-          "parentaadhaar2":imageUrl7,
-          "usertype":widget.UserType,
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
+          var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
+          var uploadTask2 = await ref2.putFile(_photo2!);
+          var image2 = await uploadTask2.ref.getDownloadURL();
+          setState(() {
+            imageUrl2=image2;
+          });
 
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").
-        doc().set({
-          "name":namecontroller.text,
-          "pantype":selectedValuepantype,
-          "father name":fathernamecontroller.text,
-          "aadhar no":aadhaarontroller.text,
-          "dob":dobcontroller.text,
-          "gender":selectedValuegender,
-          "photo":imageUrl,
-          "photo2":imageUrl5,
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
-          "aadharpicture2":imageUrl4,
-          "parentaadhaar1":imageUrl6,
-          "parentaadhaar2":imageUrl7,
-          "updatestatus":"",
-          "Type":"Applied",
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
+          var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
+          var uploadTask3 = await ref3.putFile(_photo3!);
+          var image3 = await uploadTask3.ref.getDownloadURL();
+          setState(() {
+            imageUrl3=image3;
+          });
 
+          var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
+          var uploadTask4 = await ref4.putFile(_photo4!);
+          var image4 = await uploadTask4.ref.getDownloadURL();
+          setState(() {
+            imageUrl4=image4;
+          });
 
-        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
-        clearcontroller();
+          var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
+          var uploadTask5 = await ref5.putFile(_photo5!);
+          var image5 = await uploadTask5.ref.getDownloadURL();
+          setState(() {
+            imageUrl5=image5;
+          });
+          var ref6 = FirebaseStorage.instance.ref().child('Images').child("$_photo6.jpg");
+          var uploadTask6 = await ref6.putFile(_photo5!);
+          var image6 = await uploadTask6.ref.getDownloadURL();
+          setState(() {
+            imageUrl6=image6;
+          });
+          var ref7 = FirebaseStorage.instance.ref().child('Images').child("$_photo7.jpg");
+          var uploadTask7 = await ref7.putFile(_photo7!);
+          var image7 = await uploadTask7.ref.getDownloadURL();
+          setState(() {
+            imageUrl7=image7;
+          });
 
+          String documentid=generateRandomString(16);
 
-      }
-      else{
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-          "usageccount":FieldValue.increment(1),
-          "walletamount":FieldValue.increment(-Total),
-        });
-        FirebaseFirestore.instance.collection("Minor_New_applied").doc().set({
-          "name":namecontroller.text,
-          "pantype":selectedValuepantype,
-          "father name":fathernamecontroller.text,
-          "aadhar no":aadhaarontroller.text,
-          "dob":dobcontroller.text,
-          "gender":selectedValuegender,
-          "photo":imageUrl,
-          "photo2":imageUrl5,
-          "updatestatus":"Applied",
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
-          "aadharpicture2":imageUrl4,
-          "parentaadhaar1":imageUrl6,
-          "parentaadhaar2":imageUrl7,
-          "usertype":widget.UserType,
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc()
-            .set({
-          "name":namecontroller.text,
-          "pantype":selectedValuepantype,
-          "father name":fathernamecontroller.text,
-          "aadhar no":aadhaarontroller.text,
-          "dob":dobcontroller.text,
-          "gender":selectedValuegender,
-          "photo":imageUrl,
-          "photo2":imageUrl5,
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
-          "aadharpicture2":imageUrl4,
-          "parentaadhaar1":imageUrl6,
-          "parentaadhaar2":imageUrl7,
-          "updatestatus":"",
-          "Type":"Applied",
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
-        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
-        clearcontroller();
-      }
+          if(widget.UserType=="Individual"){
+            //Total
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+              "usageccount":FieldValue.increment(1),
+              "walletamount":FieldValue.increment(-Total),
+            });
+
+            FirebaseFirestore.instance.collection("Minor_New_applied").doc(documentid).set({
+              "name":namecontroller.text,
+              "pantype":selectedValuepantype,
+              "father name":fathernamecontroller.text,
+              "aadhar no":aadhaarontroller.text,
+              "dob":dobcontroller.text,
+              "gender":selectedValuegender,
+              "photo":imageUrl,
+              "photo2":imageUrl5,
+              "updatestatus":"",
+              "signpicture":imageUrl2,
+              "aadharpicture":imageUrl3,
+              "aadharpicture2":imageUrl4,
+              "parentaadhaar1":imageUrl6,
+              "parentaadhaar2":imageUrl7,
+              "usertype":widget.UserType,
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").
+            doc(documentid).set({
+              "name":namecontroller.text,
+              "pantype":selectedValuepantype,
+              "father name":fathernamecontroller.text,
+              "aadhar no":aadhaarontroller.text,
+              "dob":dobcontroller.text,
+              "gender":selectedValuegender,
+              "photo":imageUrl,
+              "photo2":imageUrl5,
+              "signpicture":imageUrl2,
+              "aadharpicture":imageUrl3,
+              "aadharpicture2":imageUrl4,
+              "parentaadhaar1":imageUrl6,
+              "parentaadhaar2":imageUrl7,
+              "updatestatus":"",
+              "Type":"Minor",
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+
+            awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+            clearcontroller();
+
+          }
+          else{
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+              "usageccount":FieldValue.increment(1),
+              "walletamount":FieldValue.increment(-Total),
+            });
+            FirebaseFirestore.instance.collection("Minor_New_applied").doc(documentid).set({
+              "name":namecontroller.text,
+              "pantype":selectedValuepantype,
+              "father name":fathernamecontroller.text,
+              "aadhar no":aadhaarontroller.text,
+              "dob":dobcontroller.text,
+              "gender":selectedValuegender,
+              "photo":imageUrl,
+              "photo2":imageUrl5,
+              "updatestatus":"",
+              "signpicture":imageUrl2,
+              "aadharpicture":imageUrl3,
+              "aadharpicture2":imageUrl4,
+              "parentaadhaar1":imageUrl6,
+              "parentaadhaar2":imageUrl7,
+              "usertype":widget.UserType,
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc(documentid)
+                .set({
+              "name":namecontroller.text,
+              "pantype":selectedValuepantype,
+              "father name":fathernamecontroller.text,
+              "aadhar no":aadhaarontroller.text,
+              "dob":dobcontroller.text,
+              "gender":selectedValuegender,
+              "photo":imageUrl,
+              "photo2":imageUrl5,
+              "signpicture":imageUrl2,
+              "aadharpicture":imageUrl3,
+              "aadharpicture2":imageUrl4,
+              "parentaadhaar1":imageUrl6,
+              "parentaadhaar2":imageUrl7,
+              "updatestatus":"",
+              "Type":"Minor",
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+            awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+            clearcontroller();
+          }
+
+        }
 
     }
 
 
   }
-
-
-
 
 
   clearcontroller(){
@@ -2510,6 +2550,19 @@ class _Minor_PageState extends State<Minor_Page> {
     });
   }
 
+  // void Scandocument() async {
+  //   List<String> pictures;
+  //   try {
+  //     pictures = await CunningDocumentScanner.getPictures(true) ?? [];
+  //     if (!mounted) return;
+  //     setState(() {
+  //       _pictures = pictures;
+  //     });
+  //   } catch (exception) {
+  //     // Handle exception here
+  //   }
+  // }
+
 
 
   paymentfunction(){
@@ -2525,26 +2578,20 @@ class _Minor_PageState extends State<Minor_Page> {
         Gst=(18/100)*normal_fees;
         Total=normal_fees+Gst;
       });
-      if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
+      if(double.parse(widget.UserWalletamount.toString())-Total>0){
         print(double.parse(widget.UserWalletamount.toString())-Total);
-        return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",1);
+        print("else Functionsssssssss");
+        setState(() {
+          FirebaseWalletAmount=double.parse(widget.UserWalletamount.toString())-Total;
+        });
+        print("FirebaseWalletAmount");
+        print(FirebaseWalletAmount);
       }
-      else{
-        if(double.parse(widget.UserWalletamount.toString())-Total>0){
-          print(double.parse(widget.UserWalletamount.toString())-Total);
-          print("else Functionsssssssss");
-          setState(() {
-            FirebaseWalletAmount=double.parse(widget.UserWalletamount.toString())-Total;
-          });
-          print("FirebaseWalletAmount");
-          print(FirebaseWalletAmount);
-        }
-      }
+
+
     }
 
 
   }
-
-
 
 }

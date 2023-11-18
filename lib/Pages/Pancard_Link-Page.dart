@@ -33,7 +33,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
     if(document['usertype']=="Individual"){
       if(document['usageccount']==3){
         print(document["usageccount"]);
-        planExitpopup();
+        awesomeDialog("Limit Exits","Exist Your  Free Apply Thank You....",);
       }
       if(document['walletamount']<=157){
         return  awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount");
@@ -281,7 +281,7 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
         });
       }
       else{
-        planExitpopup();
+        awesomeDialog("Limit Exits","Exist Your  Free Apply Thank You....",);
       }
     }
 
@@ -298,118 +298,11 @@ class _Pancard_Link_PageState extends State<Pancard_Link_Page> {
 
   }
 
-  planExitpopup() {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white
-
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height:height/25.2,),
-
-                      SizedBox(
-                        // height: 150,
-                        // width:width/2.4,
-                        child: Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/6.3,width: width/3),
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Text(
-                        "Exist Your  Free Apply....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      SizedBox(height: height/12.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height:height/21.6,
-                              width:width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff255BCA),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
-  }
   awesomeDialog(title,description){
     return AwesomeDialog(
       context: context,
+      dismissOnTouchOutside: false,
       dialogType: DialogType.error,
       animType: AnimType.rightSlide,
       title: title,
