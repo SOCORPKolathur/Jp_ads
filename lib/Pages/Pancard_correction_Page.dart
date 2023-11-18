@@ -1,5 +1,6 @@
 
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +13,10 @@ import 'package:jp_ads/const_file.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';
+
+import '../Landing_Screen/Landing_Screen.dart';
+import 'Add walletAmount Page.dart';
+import 'Pandcard_apply_Page.dart';
 
 class Pancard_correction_Page extends StatefulWidget {
   String ?Userdocid;
@@ -92,7 +97,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
     var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
     if(document['usertype']=="Individual"){
       if(document['usageccount']==3){
-        return  awesomeDialog("Warning....!", "Exist Your Free Apply",2);
+        return  awesomeDialog("Warning....!", "Exist Your Free Apply",4);
       }
     }
     if(document['walletamount']<=157){
@@ -1323,7 +1328,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                  child: Column(
                                    crossAxisAlignment: CrossAxisAlignment.start,
                                    children: [
-                                     Text("Phone Number(Optionally) *",
+                                     Text("Phone Number (Optionally)",
                                        textAlign: TextAlign.center,
                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                            fontSize:width/22,
@@ -1911,7 +1916,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            padding:  EdgeInsets.only(left: width/14.4),
                            child: Row(
                              children: [
-                               Text("4.Aadhaar Card Upload",
+                               Text("4.Pan Card Upload",
                                  textAlign: TextAlign.center,
                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                      fontSize:width/28,
@@ -1926,7 +1931,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            padding:  EdgeInsets.only(left: width/14.4),
                            child: Row(
                              children: [
-                               Text("Front Side Of Aadhaar Card" ,style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                               Text("Front Side Of Pan Card" ,style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                    fontSize:width/28,
                                    color: Colors.black),),
                              ],
@@ -2047,7 +2052,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            padding:  EdgeInsets.only(left: width/14.4),
                            child: Row(
                              children: [
-                               Text("Back Side Of Aadhaar Card", style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                               Text("Back Side Of Pan Card", style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                    fontSize:width/28,
                                    color: Colors.black),),
                              ],
@@ -2242,7 +2247,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            padding:  EdgeInsets.only(left: width/14.4),
                            child: Row(
                              children: [
-                               Text("4.Existing Aadhaar Card Upload",
+                               Text("4.Existing Pan Card Upload",
                                  textAlign: TextAlign.center,
                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                      fontSize:width/28,
@@ -2257,7 +2262,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            padding:  EdgeInsets.only(left: width/14.4),
                            child: Row(
                              children: [
-                               Text("Front Side Of Aadhaar Card" ,style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                               Text("Front Side Of Pan Card" ,style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                    fontSize:width/28,
                                    color: Colors.black),),
                              ],
@@ -2378,7 +2383,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            padding:  EdgeInsets.only(left: width/14.4),
                            child: Row(
                              children: [
-                               Text("Back Side Of Aadhaar Card", style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                               Text("Back Side Of Pan Card", style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                    fontSize:width/28,
                                    color: Colors.black),),
                              ],
@@ -2787,9 +2792,6 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                      steppervalue==5?
                      GestureDetector(
                        onTap: ()  {
-                         setState(() {
-                           Loading=true;
-                         });
                          firebasestroragefunctionphoto();
                        },
                        child: Center(
@@ -2965,17 +2967,26 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
     });
   }
 
+
+
   awesomeDialog(title,description,errortype){
     return AwesomeDialog(
       dismissOnBackKeyPress: errortype==3?true:false,
       dismissOnTouchOutside:errortype==3? true:false,
       context: context,
-      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.info,
+      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.error,
       animType: AnimType.rightSlide,
       title: title,
       desc: description,
       btnOkOnPress: () {
+        errortype==2?
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                addwallet_Amount_Page(widget.Userdocid,widget.UserType))): "";
+
         Navigator.pop(context);
+
       },
     )..show();
   }
@@ -2992,6 +3003,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
     )..show();
   }
 
+
   photerrorDialog(title,description){
     return AwesomeDialog(
       context: context,
@@ -3004,183 +3016,208 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
     )..show();
   }
 
+  String generateRandomString(int len) {
+    var r = Random();
+    const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
+        .join();
+  }
   firebasestroragefunctionphoto() async {
-    if(FirebaseWalletAmount>0){
-      var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
-      var uploadTask = await ref.putFile(_photo1!);
-      var image = await uploadTask.ref.getDownloadURL();
-      setState(() {
-        imageUrl=image;
-      });
 
-      var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
-      var uploadTask2 = await ref2.putFile(_photo2!);
-      var image2 = await uploadTask2.ref.getDownloadURL();
-      setState(() {
-        imageUrl2=image2;
-      });
-
-      var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
-      var uploadTask3 = await ref3.putFile(_photo3!);
-      var image3 = await uploadTask3.ref.getDownloadURL();
-      setState(() {
-        imageUrl3=image3;
-      });
-
-
-      var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
-      var uploadTask4 = await ref4.putFile(_photo4!);
-      var image4 = await uploadTask4.ref.getDownloadURL();
-      setState(() {
-        imageUrl4=image4;
-      });
-
-      var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
-      var uploadTask5 = await ref5.putFile(_photo5!);
-      var image5 = await uploadTask5.ref.getDownloadURL();
-      setState(() {
-        imageUrl5=image5;
-      });
-
-      var ref6 = FirebaseStorage.instance.ref().child('Images').child("$_photo6.jpg");
-      var uploadTask6 = await ref6.putFile(_photo6!);
-      var image6 = await uploadTask6.ref.getDownloadURL();
-      setState(() {
-        imageUrl6=image6;
-      });
-      var ref7 = FirebaseStorage.instance.ref().child('Images').child("$_photo7.jpg");
-      var uploadTask7 = await ref7.putFile(_photo7!);
-      var image7 = await uploadTask7.ref.getDownloadURL();
-      setState(() {
-        imageUrl7=image7;
-      });
-
-      if(widget.UserType=="Individual"){
-          FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-            "usageccount":FieldValue.increment(1),
-            "walletamount":FieldValue.increment(-Total),
-          });
-          FirebaseFirestore.instance.collection("Correction_cards").doc().set({
-            "pancardno":Pannumbercontroller.text,
-            "aadhaarcardno":aadhaarontroller.text,
-            "correctionupdate":Selectedradiovalue,
-            "Crtname":corerctnamecontroller.text,
-            "crtfathername":corerctfathernamecontroller.text,
-            "crtdate_of_birth":corerctdobcontroller.text,
-            "crgender":selectedValuegender,
-            "crtnameandbuildsno":corerctnameandvillagecontroller.text,
-            "crtnadddress":corerctaddresscontroller.text,
-            "crtdistrict":corerctdistrictcontroller.text,
-            "crtstate":corerctstatecontroller.text,
-            "crtpincode":corerctpincodecontroller.text,
-            "crtphonenumber":corerctphonenumbercontroller.text,
-            "usertype":widget.UserType,
-            "crtphoto":imageUrl,
-            "crtsignpicture":imageUrl2,
-            "crtaadharpicture":imageUrl3,
-            "crtaadharpicture2":imageUrl4,
-            "crtphoto2":imageUrl5,
-            "existingpancard1":imageUrl6,
-            "existingpancard2":imageUrl7,
-            "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-            "time":DateFormat('hh:mm a').format(DateTime.now()),
-            "timestamp":DateTime.now().millisecondsSinceEpoch
-          });
-
-          FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
-            "pancardno":Pannumbercontroller.text,
-            "aadhaarcardno":aadhaarontroller.text,
-            "correctionupdate":Selectedradiovalue,
-            "Crtname":corerctnamecontroller.text,
-            "crtfathername":corerctfathernamecontroller.text,
-            "crtdate_of_birth":corerctdobcontroller.text,
-            "crgender":selectedValuegender,
-            "crtnameandbuildsno":corerctnameandvillagecontroller.text,
-            "crtnadddress":corerctaddresscontroller.text,
-            "crtdistrict":corerctdistrictcontroller.text,
-            "crtstate":corerctstatecontroller.text,
-            "crtpincode":corerctpincodecontroller.text,
-            "crtphonenumber":corerctphonenumbercontroller.text,
-            "updatestatus":"",
-            "Type":"Correction",
-            "crtphoto":imageUrl,
-            "crtsignpicture":imageUrl2,
-            "crtaadharpicture":imageUrl3,
-            "crtaadharpicture2":imageUrl4,
-            "crtphoto2":imageUrl5,
-            "existingpancard1":imageUrl6,
-            "existingpancard2":imageUrl7,
-            "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-            "time":DateFormat('hh:mm a').format(DateTime.now()),
-            "timestamp":DateTime.now().millisecondsSinceEpoch
-          });
-          awesomeDialog("Success", "Submitted Your Data Successfully", 3);
-          clearcontrollers();
-      }
-      else{
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-          "usageccount":FieldValue.increment(1),
-          "walletamount":FieldValue.increment(-Total),
-        });
-        FirebaseFirestore.instance.collection("Correction_cards").doc().set({
-          "pancardno":Pannumbercontroller.text,
-          "aadhaarcardno":aadhaarontroller.text,
-          "correctionupdate":Selectedradiovalue,
-          "Crtname":corerctnamecontroller.text,
-          "crtfathername":corerctfathernamecontroller.text,
-          "crtdate_of_birth":corerctdobcontroller.text,
-          "crgender":selectedValuegender,
-          "crtnameandbuildsno":corerctnameandvillagecontroller.text,
-          "crtnadddress":corerctaddresscontroller.text,
-          "crtdistrict":corerctdistrictcontroller.text,
-          "crtstate":corerctstatecontroller.text,
-          "crtpincode":corerctpincodecontroller.text,
-          "usertype":widget.UserType,
-          "crtphoto":imageUrl,
-          "crtsignpicture":imageUrl2,
-          "crtaadharpicture":imageUrl3,
-          "crtaadharpicture2":imageUrl4,
-          "crtphoto2":imageUrl5,
-          "existingpancard1":imageUrl6,
-          "existingpancard2":imageUrl7,
-          "crtphonenumber":corerctphonenumbercontroller.text,
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc().set({
-          "pancardno":Pannumbercontroller.text,
-          "aadhaarcardno":aadhaarontroller.text,
-          "correctionupdate":Selectedradiovalue,
-          "Crtname":corerctnamecontroller.text,
-          "crtfathername":corerctfathernamecontroller.text,
-          "crtdate_of_birth":corerctdobcontroller.text,
-          "crgender":selectedValuegender,
-          "crtnameandbuildsno":corerctnameandvillagecontroller.text,
-          "crtnadddress":corerctaddresscontroller.text,
-          "crtdistrict":corerctdistrictcontroller.text,
-          "crtstate":corerctstatecontroller.text,
-          "crtpincode":corerctpincodecontroller.text,
-          "crtphoto":imageUrl,
-          "crtsignpicture":imageUrl2,
-          "crtaadharpicture":imageUrl3,
-          "crtaadharpicture2":imageUrl4,
-          "crtphoto2":imageUrl5,
-          "existingpancard1":imageUrl6,
-          "existingpancard2":imageUrl7,
-          "updatestatus":"",
-          "Type":"Correction",
-          "crtphonenumber":corerctphonenumbercontroller.text,
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
-
-        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
-        clearcontrollers();
-      }
-
+    if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
+      print(double.parse(widget.UserWalletamount.toString())-Total);
+      return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",2);
     }
+    else{
+      if(double.parse(widget.UserWalletamount.toString())-Total>0){
+        setState(() {
+          Loading=true;
+        });
+          var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
+          var uploadTask = await ref.putFile(_photo1!);
+          var image = await uploadTask.ref.getDownloadURL();
+          setState(() {
+            imageUrl=image;
+          });
+
+          var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
+          var uploadTask2 = await ref2.putFile(_photo2!);
+          var image2 = await uploadTask2.ref.getDownloadURL();
+          setState(() {
+            imageUrl2=image2;
+          });
+
+          var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
+          var uploadTask3 = await ref3.putFile(_photo3!);
+          var image3 = await uploadTask3.ref.getDownloadURL();
+          setState(() {
+            imageUrl3=image3;
+          });
+
+
+          var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
+          var uploadTask4 = await ref4.putFile(_photo4!);
+          var image4 = await uploadTask4.ref.getDownloadURL();
+          setState(() {
+            imageUrl4=image4;
+          });
+
+          var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
+          var uploadTask5 = await ref5.putFile(_photo5!);
+          var image5 = await uploadTask5.ref.getDownloadURL();
+          setState(() {
+            imageUrl5=image5;
+          });
+
+          var ref6 = FirebaseStorage.instance.ref().child('Images').child("$_photo6.jpg");
+          var uploadTask6 = await ref6.putFile(_photo6!);
+          var image6 = await uploadTask6.ref.getDownloadURL();
+          setState(() {
+            imageUrl6=image6;
+          });
+          var ref7 = FirebaseStorage.instance.ref().child('Images').child("$_photo7.jpg");
+          var uploadTask7 = await ref7.putFile(_photo7!);
+          var image7 = await uploadTask7.ref.getDownloadURL();
+          setState(() {
+            imageUrl7=image7;
+          });
+
+        String documentid=generateRandomString(16);
+
+          if(widget.UserType=="Individual"){
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+              "usageccount":FieldValue.increment(1),
+              "walletamount":FieldValue.increment(-Total),
+            });
+            FirebaseFirestore.instance.collection("Correction_cards").doc(documentid).set({
+              "pancardno":Pannumbercontroller.text,
+              "aadhaarcardno":aadhaarontroller.text,
+              "correctionupdate":Selectedradiovalue,
+              "Crtname":corerctnamecontroller.text,
+              "crtfathername":corerctfathernamecontroller.text,
+              "crtdate_of_birth":corerctdobcontroller.text,
+              "crgender":selectedValuegender,
+              "crtnameandbuildsno":corerctnameandvillagecontroller.text,
+              "crtnadddress":corerctaddresscontroller.text,
+              "crtdistrict":corerctdistrictcontroller.text,
+              "crtstate":corerctstatecontroller.text,
+              "crtpincode":corerctpincodecontroller.text,
+              "crtphonenumber":corerctphonenumbercontroller.text,
+              "usertype":widget.UserType,
+              "crtphoto":imageUrl,
+              "crtsignpicture":imageUrl2,
+              "crtaadharpicture":imageUrl3,
+              "crtaadharpicture2":imageUrl4,
+              "crtphoto2":imageUrl5,
+              "existingpancard1":imageUrl6,
+              "existingpancard2":imageUrl7,
+              "updatestatus":"",
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc(documentid).set({
+              "pancardno":Pannumbercontroller.text,
+              "aadhaarcardno":aadhaarontroller.text,
+              "correctionupdate":Selectedradiovalue,
+              "Crtname":corerctnamecontroller.text,
+              "crtfathername":corerctfathernamecontroller.text,
+              "crtdate_of_birth":corerctdobcontroller.text,
+              "crgender":selectedValuegender,
+              "crtnameandbuildsno":corerctnameandvillagecontroller.text,
+              "crtnadddress":corerctaddresscontroller.text,
+              "crtdistrict":corerctdistrictcontroller.text,
+              "crtstate":corerctstatecontroller.text,
+              "crtpincode":corerctpincodecontroller.text,
+              "crtphonenumber":corerctphonenumbercontroller.text,
+              "updatestatus":"",
+              "Type":"Correction",
+              "crtphoto":imageUrl,
+              "crtsignpicture":imageUrl2,
+              "crtaadharpicture":imageUrl3,
+              "crtaadharpicture2":imageUrl4,
+              "crtphoto2":imageUrl5,
+              "existingpancard1":imageUrl6,
+              "existingpancard2":imageUrl7,
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+            awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+            clearcontrollers();
+          }
+          else{
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+              "usageccount":FieldValue.increment(1),
+              "walletamount":FieldValue.increment(-Total),
+            });
+            FirebaseFirestore.instance.collection("Correction_cards").doc(documentid).set({
+              "pancardno":Pannumbercontroller.text,
+              "aadhaarcardno":aadhaarontroller.text,
+              "correctionupdate":Selectedradiovalue,
+              "Crtname":corerctnamecontroller.text,
+              "crtfathername":corerctfathernamecontroller.text,
+              "crtdate_of_birth":corerctdobcontroller.text,
+              "crgender":selectedValuegender,
+              "crtnameandbuildsno":corerctnameandvillagecontroller.text,
+              "crtnadddress":corerctaddresscontroller.text,
+              "crtdistrict":corerctdistrictcontroller.text,
+              "crtstate":corerctstatecontroller.text,
+              "crtpincode":corerctpincodecontroller.text,
+              "usertype":widget.UserType,
+              "crtphoto":imageUrl,
+              "crtsignpicture":imageUrl2,
+              "crtaadharpicture":imageUrl3,
+              "crtaadharpicture2":imageUrl4,
+              "crtphoto2":imageUrl5,
+              "existingpancard1":imageUrl6,
+              "existingpancard2":imageUrl7,
+              "updatestatus":"",
+              "crtphonenumber":corerctphonenumbercontroller.text,
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc(documentid).set({
+              "pancardno":Pannumbercontroller.text,
+              "aadhaarcardno":aadhaarontroller.text,
+              "correctionupdate":Selectedradiovalue,
+              "Crtname":corerctnamecontroller.text,
+              "crtfathername":corerctfathernamecontroller.text,
+              "crtdate_of_birth":corerctdobcontroller.text,
+              "crgender":selectedValuegender,
+              "crtnameandbuildsno":corerctnameandvillagecontroller.text,
+              "crtnadddress":corerctaddresscontroller.text,
+              "crtdistrict":corerctdistrictcontroller.text,
+              "crtstate":corerctstatecontroller.text,
+              "crtpincode":corerctpincodecontroller.text,
+              "crtphoto":imageUrl,
+              "crtsignpicture":imageUrl2,
+              "crtaadharpicture":imageUrl3,
+              "crtaadharpicture2":imageUrl4,
+              "crtphoto2":imageUrl5,
+              "existingpancard1":imageUrl6,
+              "existingpancard2":imageUrl7,
+              "updatestatus":"",
+              "Type":"Correction",
+              "crtphonenumber":corerctphonenumbercontroller.text,
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+            awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+            clearcontrollers();
+          }
+
+        }
+    }
+
+
 
 
   }
@@ -3235,21 +3272,17 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
         Gst=(18/100)*normal_fees;
         Total=normal_fees+Gst;
       });
-      if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
+      if(double.parse(widget.UserWalletamount.toString())-Total>0){
         print(double.parse(widget.UserWalletamount.toString())-Total);
-        return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",1);
+        print("else Functionsssssssss");
+        setState(() {
+          FirebaseWalletAmount=double.parse(widget.UserWalletamount.toString())-Total;
+        });
+        print("FirebaseWalletAmount");
+        print(FirebaseWalletAmount);
       }
-      else{
-        if(double.parse(widget.UserWalletamount.toString())-Total>0){
-          print(double.parse(widget.UserWalletamount.toString())-Total);
-          print("else Functionsssssssss");
-          setState(() {
-            FirebaseWalletAmount=double.parse(widget.UserWalletamount.toString())-Total;
-          });
-          print("FirebaseWalletAmount");
-          print(FirebaseWalletAmount);
-        }
-      }
+
+
     }
 
 

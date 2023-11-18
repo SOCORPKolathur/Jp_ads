@@ -37,9 +37,11 @@ class _Landing_ScreenState extends State<Landing_Screen>
   int selectTabIndex = 0;
 
   String userDocid="";
-  int Walletamount=0;
+  double Walletamount=0;
   int notificationcount=0;
   int usgaeCount=0;
+  String Type="";
+
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
@@ -812,7 +814,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                               3.60)),
                                                   child: Center(
                                                       child: Image.asset(
-                                                        pancardapplyicon,
+                                                        findpancardimg,
                                                         fit: BoxFit.cover,
                                                       )),
                                                 ),
@@ -845,7 +847,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   width: width / 7.2,
                                                   //   margin: EdgeInsets.only(left:width/96.0),
                                                   decoration: BoxDecoration(
-                                                      //color: const Color(0xffD3D8E2),
+                                                      color: const Color(0xffD3D8E2),
                                                       borderRadius:
                                                       BorderRadius
                                                           .circular(
@@ -853,8 +855,10 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                               3.60)),
                                                   child: Center(
                                                       child: Image.asset(
-                                                        pancardapplyicon,
+                                                        infoimg,
                                                         fit: BoxFit.cover,
+                                                        height:height/21.7,
+                                                        width:width/12,
                                                       )
                                                   ),
                                                 ),
@@ -878,7 +882,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
 
                                           GestureDetector(
                                             onTap: () {
-
+                                              Helppopup();
                                             },
                                             child: Column(
                                               children: [
@@ -886,18 +890,24 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                   height: height / 15.12,
                                                   width: width / 7.2,
                                                   decoration: BoxDecoration(
-                                                   ///   color: const Color(0xffD3D8E2),
+                                                     color: const Color(0xffD3D8E2),
                                                       borderRadius:
                                                       BorderRadius
                                                           .circular(
                                                           width /
                                                               3.60)),
+                                                  child: Center(
+                                                      child: Image.asset(
+                                                        faqimg,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                  ),
                                                 ),
                                                 SizedBox(
                                                   height: height / 75.6,
                                                 ),
                                                 Text(
-                                                  "",
+                                                  "Help",
                                                   textAlign:
                                                   TextAlign.center,
                                                   style: GoogleFonts.poppins(
@@ -2396,8 +2406,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          addwallet_Amount_Page(
-                                              userdata.id),
+                                          addwallet_Amount_Page(userdata.id,Type),
                                     ));
                               },
                               child: Container(
@@ -2443,7 +2452,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                               left: width / 30,
                               right: width / 30),
                           child: SizedBox(
-                            height: height / 1.575,
+                            height: height / 1.10,
                             child: Column(
                               crossAxisAlignment:
                               CrossAxisAlignment.start,
@@ -2849,7 +2858,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                         child: Center(
                                             child:
                                             Image.asset(
-                                              newpancardicon,
+                                              pancardapplyicon,
                                               fit: BoxFit.cover,
                                             )),
                                       ),
@@ -2903,7 +2912,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                         child: Center(
                                             child:
                                             Image.asset(
-                                              newpancardicon,
+                                              findpancardimg,
                                               fit: BoxFit.cover,
                                             )),
                                       ),
@@ -2926,7 +2935,98 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 20),
+
+                                GestureDetector(
+                                  onTap: () {
+
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height:
+                                        height / 15.12,
+                                        width: width / 7.2,
+                                        decoration: BoxDecoration(
+                                            color: const Color(
+                                                0xffD3D8E2),
+                                            borderRadius:
+                                            BorderRadius
+                                                .circular(
+                                                100)),
+                                        child: Center(
+                                            child:
+                                            Image.asset(
+                                              infoimg,
+                                              fit: BoxFit.cover,
+                                              height:height/21.7,
+                                                width:width/12,
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: width / 15.6,
+                                      ),
+                                      Text(
+                                        "FAQ",
+                                        textAlign:
+                                        TextAlign.center,
+                                        style: GoogleFonts.poppins(
+                                            fontWeight:
+                                            FontWeight
+                                                .w500,
+                                            fontSize:
+                                            width / 22,
+                                            color: const Color(
+                                                0xff00194A)),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                GestureDetector(
+                                  onTap: () {
+
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height:
+                                        height / 15.12,
+                                        width: width / 7.2,
+                                        decoration: BoxDecoration(
+                                            color: const Color(
+                                                0xffD3D8E2),
+                                            borderRadius:
+                                            BorderRadius
+                                                .circular(
+                                                100)),
+                                        child: Center(
+                                            child:
+                                            Image.asset(
+                                              faqimg,
+                                              fit: BoxFit.cover,
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: width / 15.6,
+                                      ),
+                                      Text(
+                                        "Help",
+                                        textAlign:
+                                        TextAlign.center,
+                                        style: GoogleFonts.poppins(
+                                            fontWeight:
+                                            FontWeight
+                                                .w500,
+                                            fontSize:
+                                            width / 22,
+                                            color: const Color(
+                                                0xff00194A)),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                 SizedBox(height: height/37.8),
                               ],
                             ),
                           ),
@@ -3095,8 +3195,7 @@ class _Landing_ScreenState extends State<Landing_Screen>
                               ),
                             ),
                             Text(
-                              "Wallet Balance : ₹ ${Walletamount
-                                  .toString()}",
+                              "Wallet Balance : ₹ ${Walletamount.toString()}",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500,
@@ -3692,6 +3791,65 @@ class _Landing_ScreenState extends State<Landing_Screen>
     );
   }
 
+
+  Helppopup() {
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+              left: width / 18,
+              right: width / 18,
+              top: height / 2.8,
+              bottom: height / 2.8),
+          child: Material(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white54.withOpacity(0.9),
+            elevation: 10,
+            child: AnimatedContainer(
+              duration: Duration(seconds: 1),
+              curve: Curves.easeIn,
+              height: height / 1.89,
+              width: width / 1.125,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.white54.withOpacity(0.9),
+              ),
+              padding: EdgeInsets.all(20),
+             child: Column(
+               children: [
+                 Text("Help...",style: GoogleFonts.poppins(fontSize: 12,fontWeight: FontWeight.w700),),
+
+                 ListTile(
+                   leading: Icon(Icons.email),
+                   title: Text("Email : ${EmailID}",style: GoogleFonts.poppins(fontSize: 12,fontWeight: FontWeight.w700),),
+                 ),
+                 Type!="Individual"?
+                 ListTile(
+                   leading: Icon(Icons.phone),
+                   title: Text("Phone : ${Phoneno}",style: GoogleFonts.poppins(fontSize: 12,fontWeight: FontWeight.w700),),
+                 ):SizedBox(),
+
+
+
+               ],
+             ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   notificationcountdisablefun(Userdocid)async{
     print(Userdocid);
     print("Userdocid");
@@ -3719,23 +3877,38 @@ class _Landing_ScreenState extends State<Landing_Screen>
 
 
   walletamontcheckfun()async{
+    print("User documentssssssssssssssssss");
     print(FirebaseAuth.instance.currentUser!.uid);
+    var getdata= await  FirebaseFirestore.instance.collection("Users").
+    doc(FirebaseAuth.instance.currentUser!.uid).get();
+    Map<String ,dynamic>?values=getdata.data();
+    setState(() {
+       Type=values!['usertype'];
+      // Walletamount=double.parse(values!['walletamount']);
+       usgaeCount=values!['usageccount'];
+       userDocid=values!['userid'];
 
-    // }
+    });
+    print(userDocid);
+    print(Walletamount);
+    print(usgaeCount);
+    print("ddddddddddddddddddddddddddddddddddddddddddddddddd");
 
-    FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).snapshots().listen((event)
+    FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).
+    snapshots().listen((event)
     {
       if(event['usertype']=="Individual"){
         if(event['usageccount']==3){
-          return  awesomeDialog("Warning....!", "Exist Your Free Apply");
+          return  awesomeDialog("Warning....!", "Exist Your Free Apply",1);
         }
       }
       if(event['walletamount']<=157){
         print("Entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        awesomeDialog("Wallet amount Less","Your Wallet amount is Low  Kindly Recharge Your Wallet ");
+        awesomeDialog("Wallet amount Less","Your Wallet amount is Low  Kindly Recharge Your Wallet ",2);
       }
       setState(() {
-        Walletamount=event['walletamount'];
+        Type=event['usertype'];
+        Walletamount=event!['walletamount'].toDouble();
         usgaeCount=event['usageccount'];
       });
     });
@@ -3747,24 +3920,36 @@ class _Landing_ScreenState extends State<Landing_Screen>
             notificationcount=event.docs.length;
           });
     });
+
+
     
     print("notificationcountttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
     print(notificationcount);
     print(Walletamount);
     print(usgaeCount);
+    print(Type);
+    print("initfunctionsssssssssssssssssssssssss----------------------------------------------11111");
   }
 
-  awesomeDialog(title,description){
+  awesomeDialog(title,description,errortype){
     return AwesomeDialog(
       context: context,
       dialogType: DialogType.error,
       animType: AnimType.rightSlide,
       title: title,
       desc: description,
-      btnOkOnPress: () {},
+      btnOkOnPress: () {
+
+        print(errortype);
+        print(userDocid);
+        print("Document Set the valueeeeee");
+        errortype==2?
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                addwallet_Amount_Page(userDocid,Type))):"";
+      },
     )..show();
   }
-
-
 
 }

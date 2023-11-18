@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +12,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:jp_ads/const_file.dart';
 import 'package:lottie/lottie.dart';
+
+import '../Landing_Screen/Landing_Screen.dart';
+import 'Add walletAmount Page.dart';
 
 class Reprint_Page extends StatefulWidget {
   String ?Userdocid;
@@ -55,7 +59,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
     var document=await FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).get();
     if(document['usertype']=="Individual"){
       if(document['usageccount']==3){
-        return  awesomeDialog("Warning....!", "Exist Your Free Apply",2);
+        return  awesomeDialog("Warning....!", "Exist Your Free Apply",4);
       }
     }
     if(document['walletamount']<=157){
@@ -95,7 +99,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
         backgroundColor: Color(0xffF2F6FF),
         elevation: 0,
         toolbarHeight: height/10.8,
-        title: Text("Reprint PAN Card",
+        title: Text("Lost/Missing PAN Card",
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
               fontSize:width/22,
@@ -1983,9 +1987,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                       steppervalue==4?
                       GestureDetector(
                         onTap: () async {
-                          setState(() {
-                            Loading=true;
-                          });
+
                           firebasestroragefunctionphoto();
                         },
                         child: Center(
@@ -2156,12 +2158,17 @@ class _Reprint_PageState extends State<Reprint_Page> {
       dismissOnBackKeyPress: errortype==3?true:false,
       dismissOnTouchOutside:errortype==3? true:false,
       context: context,
-      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.info,
+      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.error,
       animType: AnimType.rightSlide,
       title: title,
       desc: description,
       btnOkOnPress: () {
-        Navigator.pop(context);
+        errortype==2?
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                addwallet_Amount_Page(widget.Userdocid,widget.UserType))):Navigator.pop(context);
+
       },
     )..show();
   }
@@ -2178,167 +2185,191 @@ class _Reprint_PageState extends State<Reprint_Page> {
     )..show();
   }
 
+
+  String generateRandomString(int len) {
+    var r = Random();
+    const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
+        .join();
+  }
   firebasestroragefunctionphoto() async {
-    if(FirebaseWalletAmount>0){
-      var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
-      var uploadTask = await ref.putFile(_photo1!).catchError((error) async {
 
-      });
-      var image = await uploadTask.ref.getDownloadURL();
-      setState(() {
-        imageUrl=image;
-      });
-
-      var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
-      var uploadTask2 = await ref2.putFile(_photo2!).catchError((error) async {
-      });
-      var image2 = await uploadTask2.ref.getDownloadURL();
-      setState(() {
-        imageUrl2=image2;
-      });
-
-
-      var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
-      var uploadTask3 = await ref3.putFile(_photo3!).catchError((error) async {
-
-      });
-      var image3 = await uploadTask3.ref.getDownloadURL();
-      setState(() {
-        imageUrl3=image3;
-      });
-
-      var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
-      var uploadTask4 = await ref4.putFile(_photo4!).catchError((error) async {
-
-      });
-      var image4 = await uploadTask4.ref.getDownloadURL();
-      setState(() {
-        imageUrl4=image4;
-      });
-
-      var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
-      var uploadTask5 = await ref5.putFile(_photo5!).catchError((error) async {
-
-      });
-      var image5 = await uploadTask5.ref.getDownloadURL();
-      setState(() {
-        imageUrl5=image5;
-      });
-
-
-      if(widget.UserType=="Individual"){
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-          "usageccount":FieldValue.increment(1),
-          "walletamount":FieldValue.increment(-Total),
-        });
-
-        FirebaseFirestore.instance.collection("Reprint_document").doc().set({
-          "name":printnamecontroller.text,
-          "fathername":printfathernamecontroller.text,
-          "dob":printdobcontroller.text,
-          "gender":selectedValuegender,
-          "village/town":printnameandvillagecontroller.text,
-          "postoffice":printpostofficecontroller.text,
-          "district":printdistrictcontroller.text,
-          "state":printstatecontroller.text,
-          "pincode":printpincodecontroller.text,
-          "phoneno":printphonenumbercontroller.text,
-          "Type":"Reprint",
-          "usertype":widget.UserType,
-          "photo":imageUrl,
-          "photo2":imageUrl5,
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
-          "aadharpicture2":imageUrl4,
-          "panno":printPannumbercontroller.text,
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
-        FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Reprint_document").doc().set({
-          "name":printnamecontroller.text,
-          "fathername":printfathernamecontroller.text,
-          "dob":printdobcontroller.text,
-          "gender":selectedValuegender,
-          "village/town":printnameandvillagecontroller.text,
-          "postoffice":printpostofficecontroller.text,
-          "district":printdistrictcontroller.text,
-          "state":printstatecontroller.text,
-          "pincode":printpincodecontroller.text,
-          "phoneno":printphonenumbercontroller.text,
-          "Type":"Reprint",
-          "photo":imageUrl,
-          "photo2":imageUrl5,
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
-          "aadharpicture2":imageUrl4,
-          "usertype":widget.UserType,
-          "panno":printPannumbercontroller.text,
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
-        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
-        clearcontrollers();
-      }
-      else{
-        FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
-          "usageccount":FieldValue.increment(1),
-          "walletamount":FieldValue.increment(-Total),
-        });
-
-        FirebaseFirestore.instance.collection("Reprint_document").doc().set({
-          "name":printnamecontroller.text,
-          "fathername":printfathernamecontroller.text,
-          "dob":printdobcontroller.text,
-          "gender":selectedValuegender,
-          "village/town":printnameandvillagecontroller.text,
-          "postoffice":printpostofficecontroller.text,
-          "district":printdistrictcontroller.text,
-          "state":printstatecontroller.text,
-          "pincode":printpincodecontroller.text,
-          "phoneno":printphonenumbercontroller.text,
-          "Type":"Reprint",
-          "usertype":widget.UserType,
-          "photo":imageUrl,
-          "photo2":imageUrl5,
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
-          "aadharpicture2":imageUrl4,
-          "panno":printPannumbercontroller.text,
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
-        FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Reprint_document")
-            .doc().set({
-          "name":printnamecontroller.text,
-          "fathername":printfathernamecontroller.text,
-          "dob":printdobcontroller.text,
-          "gender":selectedValuegender,
-          "village/town":printnameandvillagecontroller.text,
-          "postoffice":printpostofficecontroller.text,
-          "district":printdistrictcontroller.text,
-          "state":printstatecontroller.text,
-          "pincode":printpincodecontroller.text,
-          "phoneno":printphonenumbercontroller.text,
-          "Type":"Reprint",
-          "usertype":widget.UserType,
-          "photo":imageUrl,
-          "photo2":imageUrl5,
-          "signpicture":imageUrl2,
-          "aadharpicture":imageUrl3,
-          "aadharpicture2":imageUrl4,
-          "panno":printPannumbercontroller.text,
-          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          "time":DateFormat('hh:mm a').format(DateTime.now()),
-          "timestamp":DateTime.now().millisecondsSinceEpoch
-        });
-        awesomeDialog("Success", "Submitted Your Data Successfully", 3);
-        clearcontrollers();
-      }
-
+    if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
+      print(double.parse(widget.UserWalletamount.toString())-Total);
+      return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",2);
     }
+    else{
+      if(double.parse(widget.UserWalletamount.toString())-Total>0){
+        setState(() {
+          Loading=true;
+        });
+          var ref = FirebaseStorage.instance.ref().child('Images').child("$_photo1.jpg");
+          var uploadTask = await ref.putFile(_photo1!).catchError((error) async {
+          });
+          var image = await uploadTask.ref.getDownloadURL();
+          setState(() {
+            imageUrl=image;
+          });
+
+          var ref2 = FirebaseStorage.instance.ref().child('Images').child("$_photo2.jpg");
+          var uploadTask2 = await ref2.putFile(_photo2!).catchError((error) async {
+          });
+          var image2 = await uploadTask2.ref.getDownloadURL();
+          setState(() {
+            imageUrl2=image2;
+          });
+
+
+          var ref3 = FirebaseStorage.instance.ref().child('Images').child("$_photo3.jpg");
+          var uploadTask3 = await ref3.putFile(_photo3!).catchError((error) async {
+
+          });
+          var image3 = await uploadTask3.ref.getDownloadURL();
+          setState(() {
+            imageUrl3=image3;
+          });
+
+          var ref4 = FirebaseStorage.instance.ref().child('Images').child("$_photo4.jpg");
+          var uploadTask4 = await ref4.putFile(_photo4!).catchError((error) async {
+
+          });
+          var image4 = await uploadTask4.ref.getDownloadURL();
+          setState(() {
+            imageUrl4=image4;
+          });
+
+          var ref5 = FirebaseStorage.instance.ref().child('Images').child("$_photo5.jpg");
+          var uploadTask5 = await ref5.putFile(_photo5!).catchError((error) async {
+          });
+          var image5 = await uploadTask5.ref.getDownloadURL();
+          setState(() {
+            imageUrl5=image5;
+          });
+        String documentid=generateRandomString(16);
+          if(widget.UserType=="Individual"){
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+              "usageccount":FieldValue.increment(1),
+              "walletamount":FieldValue.increment(-Total),
+            });
+
+            FirebaseFirestore.instance.collection("Reprint_document").doc(documentid).set({
+              "name":printnamecontroller.text,
+              "fathername":printfathernamecontroller.text,
+              "dob":printdobcontroller.text,
+              "gender":selectedValuegender,
+              "village_town":printnameandvillagecontroller.text,
+              "postoffice":printpostofficecontroller.text,
+              "district":printdistrictcontroller.text,
+              "state":printstatecontroller.text,
+              "pincode":printpincodecontroller.text,
+              "phoneno":printphonenumbercontroller.text,
+              "Type":"Lost Pan card",
+              "usertype":widget.UserType,
+              "photo":imageUrl,
+              "photo2":imageUrl5,
+              "signpicture":imageUrl2,
+              "aadharpicture":imageUrl3,
+              "aadharpicture2":imageUrl4,
+              "updatestatus":"",
+              "panno":printPannumbercontroller.text,
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+            FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Reprint_document").doc(documentid).set({
+              "name":printnamecontroller.text,
+              "fathername":printfathernamecontroller.text,
+              "dob":printdobcontroller.text,
+              "gender":selectedValuegender,
+              "village_town":printnameandvillagecontroller.text,
+              "postoffice":printpostofficecontroller.text,
+              "district":printdistrictcontroller.text,
+              "state":printstatecontroller.text,
+              "pincode":printpincodecontroller.text,
+              "phoneno":printphonenumbercontroller.text,
+              "Type":"Lost Pan card",
+              "photo":imageUrl,
+              "photo2":imageUrl5,
+              "signpicture":imageUrl2,
+              "aadharpicture":imageUrl3,
+              "aadharpicture2":imageUrl4,
+              "usertype":widget.UserType,
+              "updatestatus":"",
+              "panno":printPannumbercontroller.text,
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+            });
+            awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+            clearcontrollers();
+          }
+          else{
+            FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
+              "usageccount":FieldValue.increment(1),
+              "walletamount":FieldValue.increment(-Total),
+            });
+
+            FirebaseFirestore.instance.collection("Reprint_document").doc(documentid).set({
+              "name":printnamecontroller.text,
+              "fathername":printfathernamecontroller.text,
+              "dob":printdobcontroller.text,
+              "gender":selectedValuegender,
+              "village_town":printnameandvillagecontroller.text,
+              "postoffice":printpostofficecontroller.text,
+              "district":printdistrictcontroller.text,
+              "state":printstatecontroller.text,
+              "pincode":printpincodecontroller.text,
+              "phoneno":printphonenumbercontroller.text,
+              "Type":"Lost Pan card",
+              "usertype":widget.UserType,
+              "photo":imageUrl,
+              "photo2":imageUrl5,
+              "signpicture":imageUrl2,
+              "aadharpicture":imageUrl3,
+              "aadharpicture2":imageUrl4,
+              "panno":printPannumbercontroller.text,
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+              "updatestatus":"",
+            });
+            FirebaseFirestore.instance.collection("Users").doc(widget.Userdocid).collection("Reprint_document")
+                .doc(documentid).set({
+              "name":printnamecontroller.text,
+              "fathername":printfathernamecontroller.text,
+              "dob":printdobcontroller.text,
+              "gender":selectedValuegender,
+              "village_town":printnameandvillagecontroller.text,
+              "postoffice":printpostofficecontroller.text,
+              "district":printdistrictcontroller.text,
+              "state":printstatecontroller.text,
+              "pincode":printpincodecontroller.text,
+              "phoneno":printphonenumbercontroller.text,
+              "Type":"Lost Pan card",
+              "usertype":widget.UserType,
+              "photo":imageUrl,
+              "photo2":imageUrl5,
+              "signpicture":imageUrl2,
+              "aadharpicture":imageUrl3,
+              "aadharpicture2":imageUrl4,
+              "panno":printPannumbercontroller.text,
+              "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              "time":DateFormat('hh:mm a').format(DateTime.now()),
+              "timestamp":DateTime.now().millisecondsSinceEpoch,
+              "count":true,
+              "updatestatus":"",
+            });
+            awesomeDialog("Success", "Submitted Your Data Successfully", 3);
+            clearcontrollers();
+          }
+        }
+    }
+
+
+
 
   }
 
@@ -2357,21 +2388,17 @@ class _Reprint_PageState extends State<Reprint_Page> {
         Gst=(18/100)*normal_fees;
         Total=normal_fees+Gst;
       });
-      if((double.parse(widget.UserWalletamount.toString())-Total).isNegative){
+      if(double.parse(widget.UserWalletamount.toString())-Total>0){
         print(double.parse(widget.UserWalletamount.toString())-Total);
-        return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",1);
+        print("else Functionsssssssss");
+        setState(() {
+          FirebaseWalletAmount=double.parse(widget.UserWalletamount.toString())-Total;
+        });
+        print("FirebaseWalletAmount");
+        print(FirebaseWalletAmount);
       }
-      else{
-        if(double.parse(widget.UserWalletamount.toString())-Total>0){
-          print(double.parse(widget.UserWalletamount.toString())-Total);
-          print("else Functionsssssssss");
-          setState(() {
-            FirebaseWalletAmount=double.parse(widget.UserWalletamount.toString())-Total;
-          });
-          print("FirebaseWalletAmount");
-          print(FirebaseWalletAmount);
-        }
-      }
+
+
     }
 
 
@@ -2392,6 +2419,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
        printpincodecontroller.clear();
        printphonenumbercontroller.clear();
       selectedValuegender='Select Gender';
+      Loading=false;
       imageUrl='';
       imageUrl2='';
       imageUrl3='';

@@ -8,6 +8,10 @@ String userprofileicon="assets/profile 1.png";
 String Homeicon="assets/icon_home_active.png";
 String walleticon="assets/icons8-wallet-100 (1) 1.png";
 String Uploaddocimg='assets/icon_upload_file.png';
+String findpancardimg='assets/Findcard.png';
+String faqimg='assets/FAQ.png';
+String pdfImage='assets/PdfImage.png';
+String infoimg='assets/info icon.png';
 
 String Referencevc_icon="assets/referebce vc icon.png";
 String Form_Icon="assets/form icon.png";
@@ -40,3 +44,6 @@ String Fathercondtiontxt="(Husband name not accept for pan card .Father or mothe
 ///lottie file Variables
 String Errrorlottie="assets/Error animation (2).json";
 String Loading="assets/Loading animation.json";
+
+String EmailID="jpadsmdu@gmail.com";
+String Phoneno="7358 015 015";

@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,8 @@ import '../const_file.dart';
 
 class addwallet_Amount_Page extends StatefulWidget {
   String? Userid;
-  addwallet_Amount_Page(this.Userid);
+  String? UserType;
+  addwallet_Amount_Page(this.Userid,this.UserType);
 
   @override
   State<addwallet_Amount_Page> createState() => _addwallet_Amount_PageState();
@@ -244,7 +246,8 @@ class _addwallet_Amount_PageState extends State<addwallet_Amount_Page> {
                                   Walletamountfunction();
                                 }
                                 else{
-                                  lesspaymenterrorpopup();
+                                  //Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500
+                                  awesomeDialog("Balance is Low","Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500",1);
                                 }
 
 
@@ -375,12 +378,23 @@ class _addwallet_Amount_PageState extends State<addwallet_Amount_Page> {
       "Amount":Walletamountcontroller.text,
       "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
       "time":DateFormat('hh:mm a').format(DateTime.now()),
+      "userType":widget.UserType,
+      "timestamp":DateTime.now().millisecondsSinceEpoch
+    });
+    FirebaseFirestore.instance.collection("Wallet_Transcation").doc().set({
+      "name":Usernamecontroller.text,
+      "Phoneno":Phonecontroller.text,
+      "Amount":Walletamountcontroller.text,
+      "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+      "time":DateFormat('hh:mm a').format(DateTime.now()),
+      "userType":widget.UserType,
       "timestamp":DateTime.now().millisecondsSinceEpoch
     });
     FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
       "walletamount":FieldValue.increment(double.parse(Walletamountcontroller.text))
     });
-    Succespopup();
+    awesomeDialog("Success", "Add in Your Wallet Amount Successfully",3);
+
     setState(() {
       Usernamecontroller.clear();
       Phonecontroller.clear();
@@ -388,230 +402,29 @@ class _addwallet_Amount_PageState extends State<addwallet_Amount_Page> {
       Loading=false;
     });
 
+
   }
 
-  Succespopup() {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    showDialog(
+  awesomeDialog(title,description,errortype){
+    return AwesomeDialog(
+      dismissOnBackKeyPress: errortype==3?true:false,
+      dismissOnTouchOutside:errortype==3? true:false,
       context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xff245BCA),
-                          Color(0xff245BCA),
-                        ]
-                    )
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: height/25.2,),
+      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.error,
+      animType: AnimType.rightSlide,
+      title: title,
+      desc: description,
+      btnOkOnPress: () {
+        setState(() {
+          Loading=false;
+        });
+        Navigator.pop(context);
 
-                      SizedBox(
-                        height: height/7.56,
-                        width: width/3.60,
-                        child: Lottie.network(
-                            "https://assets8.lottiefiles.com/private_files/lf30_nsqfzxxx.json"),
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Text(
-                        "Submit Successfully....",
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 25.613,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white),
-                      ),
-                      SizedBox(height: height/12.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //cancel button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          ),
-
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/21.6,
-                              width: width/4.5,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width / 34.15,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
       },
-    );
+    )..show();
   }
 
-  lesspaymenterrorpopup() {
-    setState(() {
-      Loading=false;
-    });
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return
-          Padding(
-            padding: EdgeInsets.only(
-                left: width / 8.268,
-                right: width / 8.845,
-                top: height / 3.5,
-                bottom: height / 3.5),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),
-                    color: Colors.white
-                ),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
 
-                      SizedBox(height: height/75.2,),
-                      Text(
-                        'Warning.....!',
-                        style: GoogleFonts.poppins(
-                            fontSize: width / 23.613,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                      Row(
-
-                        children: [
-                          SizedBox(width:width/4.5),
-                          Lottie.asset(Errrorlottie,fit: BoxFit.cover,height: height/7.3,width: width/6),
-                        ],
-                      ),
-                      SizedBox(height: height/75.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width:width/1.525,
-                            child:
-                            Text(
-                              'Your Balance is Low Kindly Recharge Wallet Minimum Recharge Rs: 500',
-                              style: GoogleFonts.poppins(
-                                  fontSize: width / 28.613,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: height/22.6,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //okay button
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: height/19.6,
-                              width: width/4.2,
-                              decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Color(0xff245BCA),
-                                        Color(0xff245BCA),
-                                      ]
-                                  ),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                  child: Text(
-                                    "Okay",
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: width / 25.718),
-                                  )),
-                            ),
-                          ),
-
-                        ],
-                      )
-
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-      },
-    );
-  }
 
 }
