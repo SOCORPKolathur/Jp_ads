@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jp_ads/Pages/Applied_Histroy.dart';
 import 'package:jp_ads/Pages/Find_Pancard.dart';
@@ -15,6 +16,7 @@ import 'package:jp_ads/const_file.dart';
 import 'package:jp_ads/Pages/Add walletAmount Page.dart';
 import 'package:lottie/lottie.dart';
 
+import '../Authendication/LogIn_Page.dart';
 import '../Pages/Form_Page.dart';
 import '../Pages/Minor_Page.dart';
 import '../Pages/Referance_Video_Page.dart';
@@ -168,7 +170,6 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                           foregroundImage: NetworkImage(
                                               userdata["picture"]
                                                   .toString())),
-
                                       GestureDetector(
                                           onTap: () {
 
@@ -208,7 +209,6 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                               )
                                             ],
                                           )),
-                                    
                                     ],
                                   ),
                                 ),
@@ -3026,6 +3026,50 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                   ),
                                 ),
 
+
+                                GestureDetector(
+                                  onTap: () {
+                                    signOutPopUp();
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height:
+                                        height / 15.12,
+                                        width: width / 7.2,
+                                        decoration: BoxDecoration(
+                                            color: const Color(
+                                                0xffD3D8E2),
+                                            borderRadius:
+                                            BorderRadius
+                                                .circular(
+                                                100)),
+                                        child: Center(
+                                            child:
+                                           Icon(Icons.logout,color:Color(0xfffcc419)))
+
+                                        ,
+                                      ),
+                                      SizedBox(
+                                        width: width / 15.6,
+                                      ),
+                                      Text(
+                                        "Logout",
+                                        textAlign:
+                                        TextAlign.center,
+                                        style: GoogleFonts.poppins(
+                                            fontWeight:
+                                            FontWeight
+                                                .w500,
+                                            fontSize:
+                                            width / 22,
+                                            color: const Color(
+                                                0xff00194A)),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
                                  SizedBox(height: height/37.8),
                               ],
                             ),
@@ -3950,6 +3994,71 @@ class _Landing_ScreenState extends State<Landing_Screen>
                 addwallet_Amount_Page(userDocid,Type))):"";
       },
     )..show();
+  }
+
+
+  signOutPopUp(){
+
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
+
+    return showDialog(context: context, builder: (context) {
+      return Padding(
+        padding:  EdgeInsets.only(top:height/4.2,bottom: height/4.2),
+        child: AlertDialog(
+          title: Text("Are You Sure Want To Logout ",style: GoogleFonts.poppins(
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+            fontSize: width/23.225
+          ),
+          ),
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                height:height/4.2,
+                width: width/2,
+                child:SvgPicture.asset(userLogoutSvg),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      _signOut();
+                    },
+                    child: Container(
+                      height: height/18.9,
+                      width:width/4.5,
+                      decoration: BoxDecoration(
+                        color: Color(0xff245BCA),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Center(
+                        child: Text("Okay",style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600
+                        ),),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+
+        ),
+      );
+    },);
+  }
+
+  _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>  LogIn_Page(),
+        ));
   }
 
 }

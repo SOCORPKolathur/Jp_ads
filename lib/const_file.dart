@@ -47,3 +47,5 @@ String Loading="assets/Loading animation.json";
 
 String EmailID="jpadsmdu@gmail.com";
 String Phoneno="7358 015 015";
+String userLogoutSvg="assets/Logout img.svg";
+

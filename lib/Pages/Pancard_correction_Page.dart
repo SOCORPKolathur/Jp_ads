@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -8,12 +9,13 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jp_ads/const_file.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';
-
+import 'package:http/http.dart'as http;
 import '../Landing_Screen/Landing_Screen.dart';
 import 'Add walletAmount Page.dart';
 import 'Pandcard_apply_Page.dart';
@@ -1439,14 +1441,43 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                            child: ListTile(leading: Icon(Icons.camera),
                                              onTap: () async {
                                                final picker = ImagePicker();
-
-                                               await picker.pickImage(source: ImageSource.camera).then((value) {
-
+                                               await picker.pickImage(source: ImageSource.camera)
+                                                   .then((value) async {
                                                  if (value != null) {
-                                                   setState(() {
-                                                     _photo1 = File(value.path);
-                                                   });
-
+                                                   final croppedFile = await ImageCropper().cropImage(
+                                                     sourcePath: value!.path,
+                                                     compressFormat: ImageCompressFormat.jpg,
+                                                     compressQuality: 100,
+                                                     uiSettings: [
+                                                       AndroidUiSettings(
+                                                           toolbarTitle: 'Cropper',
+                                                           toolbarColor: Color(0xff245BCA),
+                                                           toolbarWidgetColor: Colors.white,
+                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                           lockAspectRatio: false),
+                                                       IOSUiSettings(
+                                                         title: 'Cropper',
+                                                       ),
+                                                       WebUiSettings(
+                                                         context: context,
+                                                         presentStyle: CropperPresentStyle.dialog,
+                                                         boundary: const CroppieBoundary(
+                                                           width: 520,
+                                                           height: 520,
+                                                         ),
+                                                         viewPort:
+                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                         enableExif: true,
+                                                         enableZoom: true,
+                                                         showZoomer: true,
+                                                       ),
+                                                     ],
+                                                   );
+                                                   if (croppedFile != null) {
+                                                     setState(() {
+                                                       _photo1 = File(croppedFile.path);
+                                                     });
+                                                   }
                                                    if(_photo1!=null&&_photo5!=null){
                                                      setState((){
                                                        imgaeSelcted=false;
@@ -1566,12 +1597,42 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                              onTap: () async {
                                                final picker = ImagePicker();
                                                await picker.pickImage(source: ImageSource.camera)
-                                                   .then((value) {
+                                                   .then((value) async {
                                                  if (value != null) {
-                                                   setState(() {
-                                                     _photo5 = File(value.path);
-
-                                                   });
+                                                   final croppedFile = await ImageCropper().cropImage(
+                                                     sourcePath: value!.path,
+                                                     compressFormat: ImageCompressFormat.jpg,
+                                                     compressQuality: 100,
+                                                     uiSettings: [
+                                                       AndroidUiSettings(
+                                                           toolbarTitle: 'Cropper',
+                                                           toolbarColor: Color(0xff245BCA),
+                                                           toolbarWidgetColor: Colors.white,
+                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                           lockAspectRatio: false),
+                                                       IOSUiSettings(
+                                                         title: 'Cropper',
+                                                       ),
+                                                       WebUiSettings(
+                                                         context: context,
+                                                         presentStyle: CropperPresentStyle.dialog,
+                                                         boundary: const CroppieBoundary(
+                                                           width: 520,
+                                                           height: 520,
+                                                         ),
+                                                         viewPort:
+                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                         enableExif: true,
+                                                         enableZoom: true,
+                                                         showZoomer: true,
+                                                       ),
+                                                     ],
+                                                   );
+                                                   if (croppedFile != null) {
+                                                     setState(() {
+                                                       _photo5= File(croppedFile.path);
+                                                     });
+                                                   }
                                                    if(_photo1!=null&&_photo5!=null){
                                                      setState((){
                                                        imgaeSelcted=false;
@@ -1762,16 +1823,47 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                            onTap: () async {
                                              final picker = ImagePicker();
                                              await picker.pickImage(source: ImageSource.camera)
-                                                 .then((value) {
+                                                 .then((value) async {
                                                if (value != null) {
-                                                 setState(() {
-                                                   _photo2 = File(value.path);
-                                                   imgaeSelcted=false;
-                                                 });
+                                                 final croppedFile = await ImageCropper().cropImage(
+                                                   sourcePath: value!.path,
+                                                   compressFormat: ImageCompressFormat.jpg,
+                                                   compressQuality: 100,
+                                                   uiSettings: [
+                                                     AndroidUiSettings(
+                                                         toolbarTitle: 'Cropper',
+                                                         toolbarColor: Color(0xff245BCA),
+                                                         toolbarWidgetColor: Colors.white,
+                                                         initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                         lockAspectRatio: false),
+                                                     IOSUiSettings(
+                                                       title: 'Cropper',
+                                                     ),
+                                                     WebUiSettings(
+                                                       context: context,
+                                                       presentStyle: CropperPresentStyle.dialog,
+                                                       boundary: const CroppieBoundary(
+                                                         width: 520,
+                                                         height: 520,
+                                                       ),
+                                                       viewPort:
+                                                       const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                       enableExif: true,
+                                                       enableZoom: true,
+                                                       showZoomer: true,
+                                                     ),
+                                                   ],
+                                                 );
+                                                 if (croppedFile != null) {
+                                                   setState(() {
+                                                     _photo2 = File(croppedFile.path);
+                                                     imgaeSelcted=false;
+                                                   });
+                                                 }
                                                  Navigator.pop(context);
                                                }
                                              });
-
+                                             setState((){});
                                            },
                                            title:
                                            Text("Camera",
@@ -1963,11 +2055,42 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                              onTap: () async {
                                                final picker = ImagePicker();
                                                await picker.pickImage(source: ImageSource.camera)
-                                                   .then((value) {
+                                                   .then((value) async {
                                                  if (value != null) {
-                                                   setState(() {
-                                                     _photo3 = File(value.path);
-                                                   });
+                                                   final croppedFile = await ImageCropper().cropImage(
+                                                     sourcePath: value!.path,
+                                                     compressFormat: ImageCompressFormat.jpg,
+                                                     compressQuality: 100,
+                                                     uiSettings: [
+                                                       AndroidUiSettings(
+                                                           toolbarTitle: 'Cropper',
+                                                           toolbarColor: Color(0xff245BCA),
+                                                           toolbarWidgetColor: Colors.white,
+                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                           lockAspectRatio: false),
+                                                       IOSUiSettings(
+                                                         title: 'Cropper',
+                                                       ),
+                                                       WebUiSettings(
+                                                         context: context,
+                                                         presentStyle: CropperPresentStyle.dialog,
+                                                         boundary: const CroppieBoundary(
+                                                           width: 520,
+                                                           height: 520,
+                                                         ),
+                                                         viewPort:
+                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                         enableExif: true,
+                                                         enableZoom: true,
+                                                         showZoomer: true,
+                                                       ),
+                                                     ],
+                                                   );
+                                                   if (croppedFile != null) {
+                                                     setState(() {
+                                                       _photo3 = File(croppedFile.path);
+                                                     });
+                                                   }
                                                    if(_photo3!=null&&_photo4!=null){
                                                      setState((){
                                                        imgaeSelcted=false;
@@ -1976,7 +2099,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                    Navigator.pop(context);
                                                  }
                                                });
-
+                                               setState((){});
                                              },
                                              title:
                                              Text("Camera",
@@ -2084,11 +2207,42 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                              onTap: () async {
                                                final picker = ImagePicker();
                                                await picker.pickImage(source: ImageSource.camera)
-                                                   .then((value) {
+                                                   .then((value) async {
                                                  if (value != null) {
-                                                   setState(() {
-                                                     _photo4 = File(value.path);
-                                                   });
+                                                   final croppedFile = await ImageCropper().cropImage(
+                                                     sourcePath: value!.path,
+                                                     compressFormat: ImageCompressFormat.jpg,
+                                                     compressQuality: 100,
+                                                     uiSettings: [
+                                                       AndroidUiSettings(
+                                                           toolbarTitle: 'Cropper',
+                                                           toolbarColor: Color(0xff245BCA),
+                                                           toolbarWidgetColor: Colors.white,
+                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                           lockAspectRatio: false),
+                                                       IOSUiSettings(
+                                                         title: 'Cropper',
+                                                       ),
+                                                       WebUiSettings(
+                                                         context: context,
+                                                         presentStyle: CropperPresentStyle.dialog,
+                                                         boundary: const CroppieBoundary(
+                                                           width: 520,
+                                                           height: 520,
+                                                         ),
+                                                         viewPort:
+                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                         enableExif: true,
+                                                         enableZoom: true,
+                                                         showZoomer: true,
+                                                       ),
+                                                     ],
+                                                   );
+                                                   if (croppedFile != null) {
+                                                     setState(() {
+                                                       _photo4 = File(croppedFile.path);
+                                                     });
+                                                   }
                                                    if(_photo3!=null&&_photo4!=null){
                                                      setState((){
                                                        imgaeSelcted=false;
@@ -2294,11 +2448,42 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                              onTap: () async {
                                                final picker = ImagePicker();
                                                await picker.pickImage(source: ImageSource.camera)
-                                                   .then((value) {
+                                                   .then((value) async {
                                                  if (value != null) {
-                                                   setState(() {
-                                                     _photo6 = File(value.path);
-                                                   });
+                                                   final croppedFile = await ImageCropper().cropImage(
+                                                     sourcePath: value!.path,
+                                                     compressFormat: ImageCompressFormat.jpg,
+                                                     compressQuality: 100,
+                                                     uiSettings: [
+                                                       AndroidUiSettings(
+                                                           toolbarTitle: 'Cropper',
+                                                           toolbarColor: Color(0xff245BCA),
+                                                           toolbarWidgetColor: Colors.white,
+                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                           lockAspectRatio: false),
+                                                       IOSUiSettings(
+                                                         title: 'Cropper',
+                                                       ),
+                                                       WebUiSettings(
+                                                         context: context,
+                                                         presentStyle: CropperPresentStyle.dialog,
+                                                         boundary: const CroppieBoundary(
+                                                           width: 520,
+                                                           height: 520,
+                                                         ),
+                                                         viewPort:
+                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                         enableExif: true,
+                                                         enableZoom: true,
+                                                         showZoomer: true,
+                                                       ),
+                                                     ],
+                                                   );
+                                                   if (croppedFile != null) {
+                                                     setState(() {
+                                                       _photo6 = File(croppedFile.path);
+                                                     });
+                                                   }
                                                    if(_photo6!=null&&_photo7!=null){
                                                      setState((){
                                                        imgaeSelcted=false;
@@ -2415,12 +2600,42 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                              onTap: () async {
                                                final picker = ImagePicker();
                                                await picker.pickImage(source: ImageSource.camera)
-                                                   .then((value) {
+                                                   .then((value) async {
                                                  if (value != null) {
-                                                   setState(() {
-                                                     _photo7 = File(value.path);
-
-                                                   });
+                                                   final croppedFile = await ImageCropper().cropImage(
+                                                     sourcePath: value!.path,
+                                                     compressFormat: ImageCompressFormat.jpg,
+                                                     compressQuality: 100,
+                                                     uiSettings: [
+                                                       AndroidUiSettings(
+                                                           toolbarTitle: 'Cropper',
+                                                           toolbarColor: Color(0xff245BCA),
+                                                           toolbarWidgetColor: Colors.white,
+                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                           lockAspectRatio: false),
+                                                       IOSUiSettings(
+                                                         title: 'Cropper',
+                                                       ),
+                                                       WebUiSettings(
+                                                         context: context,
+                                                         presentStyle: CropperPresentStyle.dialog,
+                                                         boundary: const CroppieBoundary(
+                                                           width: 520,
+                                                           height: 520,
+                                                         ),
+                                                         viewPort:
+                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                         enableExif: true,
+                                                         enableZoom: true,
+                                                         showZoomer: true,
+                                                       ),
+                                                     ],
+                                                   );
+                                                   if (croppedFile != null) {
+                                                     setState(() {
+                                                       _photo7 = File(croppedFile.path);
+                                                     });
+                                                   }
                                                    if(_photo6!=null&&_photo7!=null){
                                                      setState((){
                                                        imgaeSelcted=false;
@@ -3029,6 +3244,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
       return awesomeDialog("Low Wallet Amount", "Please Recharge Wallet Amount",2);
     }
     else{
+
       if(double.parse(widget.UserWalletamount.toString())-Total>0){
         setState(() {
           Loading=true;
@@ -3085,6 +3301,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
         String documentid=generateRandomString(16);
 
           if(widget.UserType=="Individual"){
+
             FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
               "usageccount":FieldValue.increment(1),
               "walletamount":FieldValue.increment(-Total),
@@ -3117,7 +3334,6 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
               "timestamp":DateTime.now().millisecondsSinceEpoch,
               "count":true,
             });
-
             FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).collection("Histroy").doc(documentid).set({
               "pancardno":Pannumbercontroller.text,
               "aadhaarcardno":aadhaarontroller.text,
@@ -3148,8 +3364,10 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
             });
             awesomeDialog("Success", "Submitted Your Data Successfully", 3);
             clearcontrollers();
+
           }
           else{
+
             FirebaseFirestore.instance..collection("Users").doc(widget.Userdocid).update({
               "usageccount":FieldValue.increment(1),
               "walletamount":FieldValue.increment(-Total),
@@ -3212,7 +3430,23 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
             });
             awesomeDialog("Success", "Submitted Your Data Successfully", 3);
             clearcontrollers();
+
           }
+
+        var sendnotification=await FirebaseFirestore.instance.collection("admin_token").get();
+        for(int k=0;k<sendnotification.docs.length;k++){
+          sendPushMessagefirebase( sendnotification.docs[k]['token'], widget.UserType.toString(),  "Correction Pan card");
+        }
+        FirebaseFirestore.instance.collection("AdminNotification").doc().set({
+          "title":"Correction",
+          "time":DateFormat('hh:mm a').format(DateTime.now()),
+          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+          "content":"Correction Pan Card",
+          "timestamp":DateTime.now().millisecondsSinceEpoch,
+          "isviewed":false,
+          "notifytype":widget.UserType
+        });
+
 
         }
     }
@@ -3222,6 +3456,38 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
 
   }
 
+  sendPushMessagefirebase(String token, String body, String title) async {
+    bool isSended = false;
+    try {
+      var response = await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+          'key=AAAAq3zlWIY:APA91bH9tz5y88MvJqqGI2FPCW_VQM5wL5ipvNdRMF7xHPGTZC5hEUXnbXSULjQLoD6M5I00TtwyNo7tXa69XMjTJNKAL6FlHwgn4LbP_NTfJS3yfA8PCNU9hY_3MRM3d-Tsdb8htpks',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{'body': body, 'title': title},
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': 'done'
+            },
+            "to": token,
+          },
+        ),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isSended = true;
+      } else {
+        isSended = false;
+      }
+    } catch (e) {
+    }
+    return isSended;
+  }
 
   Datepickerfunction(ctx) async {
     DateTime? pickedDate = await showDatePicker(
@@ -3234,19 +3500,12 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
           return Theme(
             data: ThemeData(
               primarySwatch: Colors.grey,
-              splashColor: Colors.black,
+
               textTheme: TextTheme(
                 subtitle1: TextStyle(color: Colors.black),
                 button: TextStyle(color: Colors.black),
               ),
               hintColor: Colors.black,
-              colorScheme: ColorScheme.light(
-                  primary: Color(0xff245BCA),
-                  onSecondary: Colors.black,
-                  onPrimary: Colors.white,
-                  surface: Colors.black,
-                  onSurface: Colors.black,
-                  secondary: Colors.black),
               dialogBackgroundColor: Colors.white,
             ),
             child: child ??Text(""),

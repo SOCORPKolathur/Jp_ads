@@ -1,4 +1,7 @@
 
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +10,9 @@ import 'package:jp_ads/Landing_Screen/Landing_Screen.dart';
 
 class Payment_Page extends StatefulWidget {
   String ? Type;
-   Payment_Page({this.Type});
+  String ? Username;
+  String ? Userphone;
+   Payment_Page({this.Type,this.Username,this.Userphone});
 
   @override
   State<Payment_Page> createState() => _Payment_PageState();
@@ -18,6 +23,18 @@ class _Payment_PageState extends State<Payment_Page> {
   TextEditingController Usernamecontroller=TextEditingController();
   TextEditingController Phonecontroller=TextEditingController();
   TextEditingController amountcontroller=TextEditingController();
+  
+  
+  @override
+  void initState() {
+    setState(() {
+      Usernamecontroller.text=widget.Username.toString();
+      Phonecontroller.text=widget.Userphone.toString();
+      amountcontroller.text="2000";
+    });
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,29 +68,29 @@ class _Payment_PageState extends State<Payment_Page> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-        //  StepperPage(),
-           SizedBox(height:height/37.8,),
-          Text("Payment Form",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                fontSize:width/22,
-                color: Colors.black),),
-          SizedBox( height: height/37.8,),
-          Padding(
-            padding:  EdgeInsets.symmetric(
-              vertical: height/94.5,
-              horizontal: width/45
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Color(0xffffe09f)
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+          //  StepperPage(),
+             SizedBox(height:height/37.8,),
+            Text("Payment Form",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                  fontSize:width/22,
+                  color: Colors.black),),
+            SizedBox( height: height/37.8,),
+            Padding(
+              padding:  EdgeInsets.symmetric(
+                vertical: height/94.5,
+                horizontal: width/45
               ),
-              padding: EdgeInsets.only(left: width/36.0,right: width/36.0,top: height/37.8,bottom: height/37.8),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Color(0xffffe09f)
+                ),
+                padding: EdgeInsets.only(left: width/36.0,right: width/36.0,top: height/37.8,bottom: height/37.8),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -105,10 +122,9 @@ class _Payment_PageState extends State<Payment_Page> {
                                     fontSize:width/22,
                                     color: Colors.black),
                                 controller: Usernamecontroller,
-                                maxLength: 10,
                                 maxLines: 1,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                                  FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
                                 ],
                                 decoration: InputDecoration(
                                     counterText: "",
@@ -150,6 +166,7 @@ class _Payment_PageState extends State<Payment_Page> {
                                   )
                               ),
                               child: TextFormField(
+                                readOnly: true,
                                 style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                     fontSize:width/22,
                                     color: Colors.black),
@@ -218,8 +235,10 @@ class _Payment_PageState extends State<Payment_Page> {
                                     hintStyle: GoogleFonts.poppins()
                                 ),
                                 validator: (value) => value!.isEmpty ? 'Field is required' : null,
-                                onChanged: (_){
-                                  // _formKey.currentState!.validate();
+                                onChanged: (value){
+                                  if(double.parse(value.toString())<2000){
+                                    awesomeDialog("Error","Minimum Amounto is Rs-2000",1);
+                                  }
                                 },
                               ),
                             )
@@ -232,7 +251,13 @@ class _Payment_PageState extends State<Payment_Page> {
 
                       GestureDetector(
                         onTap: (){
-                          Paymentdunction();
+
+                          if(double.parse(amountcontroller.text)<2000){
+                            awesomeDialog("Error","Minimum Amounto is Rs-2000",1);
+                          }
+                          else{
+                            Paymentdunction();
+                          }
                         },
                         child: Center(
                           child:
@@ -264,75 +289,35 @@ class _Payment_PageState extends State<Payment_Page> {
                     ]),
               ),
             ),
-          ),
 
-          Container(
-            height: height/4.2,
-            width: width/1.125,
-            padding: EdgeInsets.symmetric(
-              horizontal: width/36.0,
-              vertical: height/75.6
-            ),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Color(0xffFFFFFF)
-            ),
 
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text("! Note:",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                        fontSize:width/26,
-                        color: Colors.black),),
-                  Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(Icons.circle,size: width/24,),
-                      SizedBox(width: width/72,),
-                      SizedBox(
-                        width: width/1.290,
-                        child: Text("Signature Should be clear and visible ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                            fontSize:width/28,
-                            color: Colors.black)),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: height/151.2,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(Icons.circle,size: width/24,),
-                      SizedBox(width: width/72,),
-                      SizedBox(
-                        width: width/1.290,
-                        child: Text("Signature Should be written only in blue ink pen ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                            fontSize:width/28,
-                            color: Colors.black)),
-                      )
-                    ],
-                  ),
 
-                ]),
-          ),
-
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Paymentdunction(){
-    // FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
-    //   "payment":true,
-    // });
+    FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
+      "payment":true,
+      "walletamount":double.parse(amountcontroller.text),
+    });
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>const  Landing_Screen(),));
 
   }
 
-
+  awesomeDialog(title,description,errortype){
+    return AwesomeDialog(
+      dismissOnBackKeyPress: errortype==3?true:false,
+      dismissOnTouchOutside:errortype==3? true:false,
+      context: context,
+      dialogType:errortype==1? DialogType.error:errortype==2?DialogType.warning:errortype==3?DialogType.success:DialogType.error,
+      animType: AnimType.rightSlide,
+      title: title,
+      desc: description,
+      btnOkOnPress: () {
+      },
+    )..show();
+  }
 }

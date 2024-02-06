@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 
 
 
@@ -34,16 +33,16 @@ class _printingState extends State<printing> {
         body: SingleChildScrollView(
             child: Column(
               children: [
-                ElevatedButton(
+              /*  ElevatedButton(
                     onPressed: onPressed, child: const Text("Add Pictures")),
-                for (var picture in _pictures) Image.file(File(picture))
+                for (var picture in _pictures) Image.file(File(picture))*/
               ],
             )),
       ),
     );
   }
 
-  void onPressed() async {
+ /* void onPressed() async {
     List<String> pictures;
     try {
       pictures = await CunningDocumentScanner.getPictures(true) ?? [];
@@ -54,5 +53,5 @@ class _printingState extends State<printing> {
     } catch (exception) {
       // Handle exception here
     }
-  }
+  }*/
 }

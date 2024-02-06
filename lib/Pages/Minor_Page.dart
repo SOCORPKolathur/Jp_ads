@@ -1,15 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
+import 'package:http/http.dart'as http;
 import 'package:age_calculator/age_calculator.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
@@ -59,7 +60,7 @@ class _Minor_PageState extends State<Minor_Page> {
   int month=0;
   int day=0;
 
-
+List <String> _pictures=[];
 
   final _formKey = GlobalKey<FormState>();
 
@@ -810,14 +811,50 @@ class _Minor_PageState extends State<Minor_Page> {
                                                   ),
                                                   child: ListTile(leading: Icon(Icons.camera),
                                                     onTap: () async {
+
+
                                                       final picker = ImagePicker();
 
-                                                      await picker.pickImage(source: ImageSource.camera).then((value) {
+                                                      await picker.pickImage(source: ImageSource.camera).then((value) async {
 
                                                         if (value != null) {
-                                                          setState(() {
-                                                            _photo1 = File(value.path);
-                                                          });
+                                                              final croppedFile = await ImageCropper().cropImage(
+                                                                sourcePath: value!.path,
+                                                                compressFormat: ImageCompressFormat.jpg,
+                                                                compressQuality: 100,
+                                                                uiSettings: [
+                                                                  AndroidUiSettings(
+                                                                      toolbarTitle: 'Cropper',
+                                                                      toolbarColor: Color(0xff245BCA),
+                                                                      toolbarWidgetColor: Colors.white,
+                                                                      initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                                      lockAspectRatio: false),
+                                                                  IOSUiSettings(
+                                                                    title: 'Cropper',
+                                                                  ),
+                                                                  WebUiSettings(
+                                                                    context: context,
+                                                                    presentStyle: CropperPresentStyle.dialog,
+                                                                    boundary: const CroppieBoundary(
+                                                                      width: 520,
+                                                                      height: 520,
+                                                                    ),
+                                                                    viewPort:
+                                                                    const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                                    enableExif: true,
+                                                                    enableZoom: true,
+                                                                    showZoomer: true,
+                                                                  ),
+                                                                ],
+                                                              );
+                                                              if (croppedFile != null) {
+                                                                setState(() {
+                                                                  _photo1 = File(croppedFile.path);
+                                                                });
+                                                              }
+                                                          // setState(() {
+                                                          //   _photo1 = File(value.path);
+                                                          // });
 
                                                           if(_photo1!=null&&_photo5!=null){
                                                             setState((){
@@ -939,12 +976,42 @@ class _Minor_PageState extends State<Minor_Page> {
                                                     onTap: () async {
                                                       final picker = ImagePicker();
                                                       await picker.pickImage(source: ImageSource.camera)
-                                                          .then((value) {
+                                                          .then((value) async {
                                                         if (value != null) {
-                                                          setState(() {
-                                                            _photo5 = File(value.path);
-
-                                                          });
+                                                          final croppedFile = await ImageCropper().cropImage(
+                                                            sourcePath: value!.path,
+                                                            compressFormat: ImageCompressFormat.jpg,
+                                                            compressQuality: 100,
+                                                            uiSettings: [
+                                                              AndroidUiSettings(
+                                                                  toolbarTitle: 'Cropper',
+                                                                  toolbarColor: Color(0xff245BCA),
+                                                                  toolbarWidgetColor: Colors.white,
+                                                                  initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                                  lockAspectRatio: false),
+                                                              IOSUiSettings(
+                                                                title: 'Cropper',
+                                                              ),
+                                                              WebUiSettings(
+                                                                context: context,
+                                                                presentStyle: CropperPresentStyle.dialog,
+                                                                boundary: const CroppieBoundary(
+                                                                  width: 520,
+                                                                  height: 520,
+                                                                ),
+                                                                viewPort:
+                                                                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                                enableExif: true,
+                                                                enableZoom: true,
+                                                                showZoomer: true,
+                                                              ),
+                                                            ],
+                                                          );
+                                                          if (croppedFile != null) {
+                                                            setState(() {
+                                                              _photo5 = File(croppedFile.path);
+                                                            });
+                                                          }
                                                           if(_photo1!=null&&_photo5!=null){
                                                             setState((){
                                                               imgaeSelcted=false;
@@ -1135,13 +1202,45 @@ class _Minor_PageState extends State<Minor_Page> {
                                                   onTap: () async {
                                                     final picker = ImagePicker();
                                                     await picker.pickImage(source: ImageSource.camera)
-                                                        .then((value) {
+                                                        .then((value) async {
+
                                                       if (value != null) {
-                                                        setState(() {
-                                                          _photo2 = File(value.path);
-                                                          imgaeSelcted=false;
-                                                        });
-                                                        Navigator.pop(context);
+                                                        final croppedFile = await ImageCropper().cropImage(
+                                                          sourcePath: value!.path,
+                                                          compressFormat: ImageCompressFormat.jpg,
+                                                          compressQuality: 100,
+                                                          uiSettings: [
+                                                            AndroidUiSettings(
+                                                                toolbarTitle: 'Cropper',
+                                                                toolbarColor: Color(0xff245BCA),
+                                                                toolbarWidgetColor: Colors.white,
+                                                                initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                                lockAspectRatio: false),
+                                                            IOSUiSettings(
+                                                              title: 'Cropper',
+                                                            ),
+                                                            WebUiSettings(
+                                                              context: context,
+                                                              presentStyle: CropperPresentStyle.dialog,
+                                                              boundary: const CroppieBoundary(
+                                                                width: 520,
+                                                                height: 520,
+                                                              ),
+                                                              viewPort:
+                                                              const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                              enableExif: true,
+                                                              enableZoom: true,
+                                                              showZoomer: true,
+                                                            ),
+                                                          ],
+                                                        );
+                                                        if (croppedFile != null) {
+                                                          setState(() {
+                                                            _photo2 = File(croppedFile.path);
+                                                            imgaeSelcted=false;
+                                                          });
+                                                          Navigator.pop(context);
+                                                        }
                                                       }
                                                     });
 
@@ -1327,6 +1426,7 @@ class _Minor_PageState extends State<Minor_Page> {
                                             ),
                                             content: Column(
                                               children: [
+
                                                 Container(
                                                   decoration: BoxDecoration(
                                                       color: Colors.grey.shade300,
@@ -1336,11 +1436,42 @@ class _Minor_PageState extends State<Minor_Page> {
                                                     onTap: () async {
                                                       final picker = ImagePicker();
                                                       await picker.pickImage(source: ImageSource.camera)
-                                                          .then((value) {
+                                                          .then((value) async {
                                                         if (value != null) {
-                                                          setState(() {
-                                                            _photo3 = File(value.path);
-                                                          });
+                                                          final croppedFile = await ImageCropper().cropImage(
+                                                            sourcePath: value!.path,
+                                                            compressFormat: ImageCompressFormat.jpg,
+                                                            compressQuality: 100,
+                                                            uiSettings: [
+                                                              AndroidUiSettings(
+                                                                  toolbarTitle: 'Cropper',
+                                                                  toolbarColor: Color(0xff245BCA),
+                                                                  toolbarWidgetColor: Colors.white,
+                                                                  initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                                  lockAspectRatio: false),
+                                                              IOSUiSettings(
+                                                                title: 'Cropper',
+                                                              ),
+                                                              WebUiSettings(
+                                                                context: context,
+                                                                presentStyle: CropperPresentStyle.dialog,
+                                                                boundary: const CroppieBoundary(
+                                                                  width: 520,
+                                                                  height: 520,
+                                                                ),
+                                                                viewPort:
+                                                                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                                enableExif: true,
+                                                                enableZoom: true,
+                                                                showZoomer: true,
+                                                              ),
+                                                            ],
+                                                          );
+                                                          if (croppedFile != null) {
+                                                            setState(() {
+                                                              _photo3 = File(croppedFile.path);
+                                                            });
+                                                          }
                                                           if(_photo3!=null&&_photo4!=null){
                                                             setState((){
                                                               imgaeSelcted=false;
@@ -1349,12 +1480,13 @@ class _Minor_PageState extends State<Minor_Page> {
                                                           Navigator.pop(context);
                                                         }
                                                       });
-
+                                                      setState((){});
                                                     },
                                                     title:
                                                     Text("Camera",
                                                       style: TextStyle(fontWeight: FontWeight.w700),),),
                                                 ),
+
                                                 SizedBox(height: 10),
 
                                                 Container(
@@ -1457,11 +1589,42 @@ class _Minor_PageState extends State<Minor_Page> {
                                                     onTap: () async {
                                                       final picker = ImagePicker();
                                                       await picker.pickImage(source: ImageSource.camera)
-                                                          .then((value) {
+                                                          .then((value) async {
                                                         if (value != null) {
-                                                          setState(() {
-                                                            _photo4 = File(value.path);
-                                                          });
+                                                          final croppedFile = await ImageCropper().cropImage(
+                                                            sourcePath: value!.path,
+                                                            compressFormat: ImageCompressFormat.jpg,
+                                                            compressQuality: 100,
+                                                            uiSettings: [
+                                                              AndroidUiSettings(
+                                                                  toolbarTitle: 'Cropper',
+                                                                  toolbarColor: Color(0xff245BCA),
+                                                                  toolbarWidgetColor: Colors.white,
+                                                                  initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                                  lockAspectRatio: false),
+                                                              IOSUiSettings(
+                                                                title: 'Cropper',
+                                                              ),
+                                                              WebUiSettings(
+                                                                context: context,
+                                                                presentStyle: CropperPresentStyle.dialog,
+                                                                boundary: const CroppieBoundary(
+                                                                  width: 520,
+                                                                  height: 520,
+                                                                ),
+                                                                viewPort:
+                                                                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                                enableExif: true,
+                                                                enableZoom: true,
+                                                                showZoomer: true,
+                                                              ),
+                                                            ],
+                                                          );
+                                                          if (croppedFile != null) {
+                                                            setState(() {
+                                                              _photo4 = File(croppedFile.path);
+                                                            });
+                                                          }
                                                           if(_photo3!=null&&_photo4!=null){
                                                             setState((){
                                                               imgaeSelcted=false;
@@ -1667,11 +1830,42 @@ class _Minor_PageState extends State<Minor_Page> {
                                                     onTap: () async {
                                                       final picker = ImagePicker();
                                                       await picker.pickImage(source: ImageSource.camera)
-                                                          .then((value) {
+                                                          .then((value) async {
                                                         if (value != null) {
-                                                          setState(() {
-                                                            _photo6 = File(value.path);
-                                                          });
+                                                          final croppedFile = await ImageCropper().cropImage(
+                                                            sourcePath: value!.path,
+                                                            compressFormat: ImageCompressFormat.jpg,
+                                                            compressQuality: 100,
+                                                            uiSettings: [
+                                                              AndroidUiSettings(
+                                                                  toolbarTitle: 'Cropper',
+                                                                  toolbarColor: Color(0xff245BCA),
+                                                                  toolbarWidgetColor: Colors.white,
+                                                                  initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                                  lockAspectRatio: false),
+                                                              IOSUiSettings(
+                                                                title: 'Cropper',
+                                                              ),
+                                                              WebUiSettings(
+                                                                context: context,
+                                                                presentStyle: CropperPresentStyle.dialog,
+                                                                boundary: const CroppieBoundary(
+                                                                  width: 520,
+                                                                  height: 520,
+                                                                ),
+                                                                viewPort:
+                                                                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                                enableExif: true,
+                                                                enableZoom: true,
+                                                                showZoomer: true,
+                                                              ),
+                                                            ],
+                                                          );
+                                                          if (croppedFile != null) {
+                                                            setState(() {
+                                                              _photo6 = File(croppedFile.path);
+                                                            });
+                                                          }
                                                           if(_photo6!=null&&_photo7!=null){
                                                             setState((){
                                                               imgaeSelcted=false;
@@ -1788,12 +1982,42 @@ class _Minor_PageState extends State<Minor_Page> {
                                                     onTap: () async {
                                                       final picker = ImagePicker();
                                                       await picker.pickImage(source: ImageSource.camera)
-                                                          .then((value) {
+                                                          .then((value) async {
                                                         if (value != null) {
-                                                          setState(() {
-                                                            _photo7 = File(value.path);
-
-                                                          });
+                                                          final croppedFile = await ImageCropper().cropImage(
+                                                            sourcePath: value!.path,
+                                                            compressFormat: ImageCompressFormat.jpg,
+                                                            compressQuality: 100,
+                                                            uiSettings: [
+                                                              AndroidUiSettings(
+                                                                  toolbarTitle: 'Cropper',
+                                                                  toolbarColor: Color(0xff245BCA),
+                                                                  toolbarWidgetColor: Colors.white,
+                                                                  initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                                  lockAspectRatio: false),
+                                                              IOSUiSettings(
+                                                                title: 'Cropper',
+                                                              ),
+                                                              WebUiSettings(
+                                                                context: context,
+                                                                presentStyle: CropperPresentStyle.dialog,
+                                                                boundary: const CroppieBoundary(
+                                                                  width: 520,
+                                                                  height: 520,
+                                                                ),
+                                                                viewPort:
+                                                                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                                enableExif: true,
+                                                                enableZoom: true,
+                                                                showZoomer: true,
+                                                              ),
+                                                            ],
+                                                          );
+                                                          if (croppedFile != null) {
+                                                            setState(() {
+                                                              _photo7 = File(croppedFile.path);
+                                                            });
+                                                          }
                                                           if(_photo6!=null&&_photo7!=null){
                                                             setState((){
                                                               imgaeSelcted=false;
@@ -2515,6 +2739,21 @@ class _Minor_PageState extends State<Minor_Page> {
             clearcontroller();
           }
 
+        var sendnotification=await FirebaseFirestore.instance.collection("admin_token").get();
+        for(int k=0;k<sendnotification.docs.length;k++){
+          sendPushMessagefirebase( sendnotification.docs[k]['token'], widget.UserType.toString(),  "Minor Apply Pan card");
+        }
+        FirebaseFirestore.instance.collection("AdminNotification").doc().set({
+          "title":"Minor Pan card",
+          "time":DateFormat('hh:mm a').format(DateTime.now()),
+          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+          "content":"Minor Pan Card",
+          "timestamp":DateTime.now().millisecondsSinceEpoch,
+          "isviewed":false,
+          "notifytype":widget.UserType
+        });
+
+
         }
 
     }
@@ -2522,6 +2761,38 @@ class _Minor_PageState extends State<Minor_Page> {
 
   }
 
+  sendPushMessagefirebase(String token, String body, String title) async {
+    bool isSended = false;
+    try {
+      var response = await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+          'key=AAAAq3zlWIY:APA91bH9tz5y88MvJqqGI2FPCW_VQM5wL5ipvNdRMF7xHPGTZC5hEUXnbXSULjQLoD6M5I00TtwyNo7tXa69XMjTJNKAL6FlHwgn4LbP_NTfJS3yfA8PCNU9hY_3MRM3d-Tsdb8htpks',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{'body': body, 'title': title},
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': 'done'
+            },
+            "to": token,
+          },
+        ),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isSended = true;
+      } else {
+        isSended = false;
+      }
+    } catch (e) {
+    }
+    return isSended;
+  }
 
   clearcontroller(){
     setState(() {
@@ -2550,18 +2821,18 @@ class _Minor_PageState extends State<Minor_Page> {
     });
   }
 
-  // void Scandocument() async {
-  //   List<String> pictures;
-  //   try {
-  //     pictures = await CunningDocumentScanner.getPictures(true) ?? [];
-  //     if (!mounted) return;
-  //     setState(() {
-  //       _pictures = pictures;
-  //     });
-  //   } catch (exception) {
-  //     // Handle exception here
-  //   }
-  // }
+  /*void Scandocument() async {
+    List<String> pictures;
+    try {
+      pictures = await CunningDocumentScanner.getPictures(true) ?? [];
+      if (!mounted) return;
+      setState(() {
+        _pictures = pictures;
+      });
+    } catch (exception) {
+      // Handle exception here
+    }
+  }*/
 
 
 

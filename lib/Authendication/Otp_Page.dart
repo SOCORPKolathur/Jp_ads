@@ -140,7 +140,7 @@ class _Otp_PageState extends State<Otp_Page> {
                           setState(() {
                             Loading=true;
                           });
-                      if(PinValue!=""){
+                          if(PinValue!=""){
                         try{
                           FirebaseAuth.instance.signInWithCredential(
                               PhoneAuthProvider.credential(
@@ -231,6 +231,9 @@ class _Otp_PageState extends State<Otp_Page> {
         verificationCompleted:(PhoneAuthCredential credential)async{
           await FirebaseAuth.instance.signInWithCredential(credential).then((value)async{
             if(value.user!=null){
+
+
+              print("Valueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
               userdatacreatefunction();
 
             }
@@ -278,7 +281,11 @@ class _Otp_PageState extends State<Otp_Page> {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Landing_Screen(),));
     }
     if(widget.UserType=="Distributor"){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Payment_Page(Type:widget.UserType),));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Payment_Page(
+          Type:widget.UserType,
+        Username: widget.Username,
+        Userphone: widget.phonenumber,
+      ),));
 
     }
     setState(() {

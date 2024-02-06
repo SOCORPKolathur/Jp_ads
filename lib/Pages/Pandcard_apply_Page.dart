@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -8,10 +9,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:jp_ads/const_file.dart';
-
+import 'package:http/http.dart'as http;
 import '../Landing_Screen/Landing_Screen.dart';
 import 'Add walletAmount Page.dart';
 
@@ -744,22 +746,51 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                 onTap: () async {
                                                   final picker = ImagePicker();
                                                   await picker.pickImage(source: ImageSource.camera)
-                                                      .then((value) {
+                                                      .then((value) async {
                                                     if (value != null) {
-                                                      setState(() {
-                                                        _photo1 = File(value.path);
-                                                      });
+                                                      final croppedFile = await ImageCropper().cropImage(
+                                                        sourcePath: value!.path,
+                                                        compressFormat: ImageCompressFormat.jpg,
+                                                        compressQuality: 100,
+                                                        uiSettings: [
+                                                          AndroidUiSettings(
+                                                              toolbarTitle: 'Cropper',
+                                                              toolbarColor: Color(0xff245BCA),
+                                                              toolbarWidgetColor: Colors.white,
+                                                              initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                              lockAspectRatio: false),
+                                                          IOSUiSettings(
+                                                            title: 'Cropper',
+                                                          ),
+                                                          WebUiSettings(
+                                                            context: context,
+                                                            presentStyle: CropperPresentStyle.dialog,
+                                                            boundary: const CroppieBoundary(
+                                                              width: 520,
+                                                              height: 520,
+                                                            ),
+                                                            viewPort:
+                                                            const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                            enableExif: true,
+                                                            enableZoom: true,
+                                                            showZoomer: true,
+                                                          ),
+                                                        ],
+                                                      );
+                                                      if (croppedFile != null) {
+                                                        setState(() {
+                                                          _photo1 = File(croppedFile.path);
+                                                        });
+                                                      }
                                                       if(_photo1!=null&&_photo5!=null){
                                                         setState((){
                                                           imgaeSelcted=false;
                                                         });
                                                       }
-                                                      print(_photo1);
-                                                      print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                      print(_photo1);
                                                       Navigator.pop(context);
                                                     }
                                                   });
+                                                  setState((){});
                                                 },
                                                 title:
                                                 Text("Camera",
@@ -870,20 +901,47 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                 onTap: () async {
                                                   final picker = ImagePicker();
                                                   await picker.pickImage(source: ImageSource.camera)
-                                                      .then((value) {
+                                                      .then((value) async {
                                                     if (value != null) {
-                                                      setState(() {
-                                                        _photo5 = File(value.path);
-
-                                                      });
+                                                      final croppedFile = await ImageCropper().cropImage(
+                                                        sourcePath: value!.path,
+                                                        compressFormat: ImageCompressFormat.jpg,
+                                                        compressQuality: 100,
+                                                        uiSettings: [
+                                                          AndroidUiSettings(
+                                                              toolbarTitle: 'Cropper',
+                                                              toolbarColor: Color(0xff245BCA),
+                                                              toolbarWidgetColor: Colors.white,
+                                                              initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                              lockAspectRatio: false),
+                                                          IOSUiSettings(
+                                                            title: 'Cropper',
+                                                          ),
+                                                          WebUiSettings(
+                                                            context: context,
+                                                            presentStyle: CropperPresentStyle.dialog,
+                                                            boundary: const CroppieBoundary(
+                                                              width: 520,
+                                                              height: 520,
+                                                            ),
+                                                            viewPort:
+                                                            const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                            enableExif: true,
+                                                            enableZoom: true,
+                                                            showZoomer: true,
+                                                          ),
+                                                        ],
+                                                      );
+                                                      if (croppedFile != null) {
+                                                        setState(() {
+                                                          _photo5 = File(croppedFile.path);
+                                                        });
+                                                      }
                                                       if(_photo1!=null&&_photo5!=null){
                                                         setState((){
                                                           imgaeSelcted=false;
                                                         });
                                                       }
-                                                      print(_photo5);
-                                                      print("sssssssssssssssssssssssssssssssssssssssssssssss");
-                                                      print(_photo5);
                                                       Navigator.pop(context);
                                                     }
                                                   });
@@ -1069,15 +1127,47 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                               onTap: () async {
                                                 final picker = ImagePicker();
                                                 await picker.pickImage(source: ImageSource.camera)
-                                                    .then((value) {
+                                                    .then((value) async {
                                                   if (value != null) {
-                                                    setState(() {
-                                                      _photo2 = File(value.path);
-                                                      imgaeSelcted=false;
-                                                    });
+                                                    final croppedFile = await ImageCropper().cropImage(
+                                                      sourcePath: value!.path,
+                                                      compressFormat: ImageCompressFormat.jpg,
+                                                      compressQuality: 100,
+                                                      uiSettings: [
+                                                        AndroidUiSettings(
+                                                            toolbarTitle: 'Cropper',
+                                                            toolbarColor: Color(0xff245BCA),
+                                                            toolbarWidgetColor: Colors.white,
+                                                            initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                            lockAspectRatio: false),
+                                                        IOSUiSettings(
+                                                          title: 'Cropper',
+                                                        ),
+                                                        WebUiSettings(
+                                                          context: context,
+                                                          presentStyle: CropperPresentStyle.dialog,
+                                                          boundary: const CroppieBoundary(
+                                                            width: 520,
+                                                            height: 520,
+                                                          ),
+                                                          viewPort:
+                                                          const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                          enableExif: true,
+                                                          enableZoom: true,
+                                                          showZoomer: true,
+                                                        ),
+                                                      ],
+                                                    );
+                                                    if (croppedFile != null) {
+                                                      setState(() {
+                                                        _photo2 = File(croppedFile.path);
+                                                        imgaeSelcted=false;
+                                                      });
+                                                    }
                                                     Navigator.pop(context);
                                                   }
                                                 });
+                                                setState((){});
                                               },
                                               title:
                                               Text("Camera",
@@ -1268,12 +1358,42 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                 onTap: () async {
                                                   final picker = ImagePicker();
                                                   await picker.pickImage(source: ImageSource.camera)
-                                                      .then((value) {
+                                                      .then((value) async {
                                                     if (value != null) {
-                                                      setState(() {
-                                                        _photo3 = File(value.path);
-                                                      });
-
+                                                      final croppedFile = await ImageCropper().cropImage(
+                                                        sourcePath: value!.path,
+                                                        compressFormat: ImageCompressFormat.jpg,
+                                                        compressQuality: 100,
+                                                        uiSettings: [
+                                                          AndroidUiSettings(
+                                                              toolbarTitle: 'Cropper',
+                                                              toolbarColor: Color(0xff245BCA),
+                                                              toolbarWidgetColor: Colors.white,
+                                                              initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                              lockAspectRatio: false),
+                                                          IOSUiSettings(
+                                                            title: 'Cropper',
+                                                          ),
+                                                          WebUiSettings(
+                                                            context: context,
+                                                            presentStyle: CropperPresentStyle.dialog,
+                                                            boundary: const CroppieBoundary(
+                                                              width: 520,
+                                                              height: 520,
+                                                            ),
+                                                            viewPort:
+                                                            const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                            enableExif: true,
+                                                            enableZoom: true,
+                                                            showZoomer: true,
+                                                          ),
+                                                        ],
+                                                      );
+                                                      if (croppedFile != null) {
+                                                        setState(() {
+                                                          _photo3 = File(croppedFile.path);
+                                                        });
+                                                      }
                                                       if(_photo3!=null&&_photo4!=null){
                                                         setState((){
                                                           imgaeSelcted=false;
@@ -1282,6 +1402,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                       Navigator.pop(context);
                                                     }
                                                   });
+                                                  setState((){});
                                                 },
                                                 title:
                                                 Text("Camera",
@@ -1389,11 +1510,42 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                 onTap: () async {
                                                   final picker = ImagePicker();
                                                   await picker.pickImage(source: ImageSource.camera)
-                                                      .then((value) {
+                                                      .then((value) async {
                                                     if (value != null) {
-                                                      setState(() {
-                                                        _photo4 = File(value.path);
-                                                      });
+                                                      final croppedFile = await ImageCropper().cropImage(
+                                                        sourcePath: value!.path,
+                                                        compressFormat: ImageCompressFormat.jpg,
+                                                        compressQuality: 100,
+                                                        uiSettings: [
+                                                          AndroidUiSettings(
+                                                              toolbarTitle: 'Cropper',
+                                                              toolbarColor: Color(0xff245BCA),
+                                                              toolbarWidgetColor: Colors.white,
+                                                              initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                              lockAspectRatio: false),
+                                                          IOSUiSettings(
+                                                            title: 'Cropper',
+                                                          ),
+                                                          WebUiSettings(
+                                                            context: context,
+                                                            presentStyle: CropperPresentStyle.dialog,
+                                                            boundary: const CroppieBoundary(
+                                                              width: 520,
+                                                              height: 520,
+                                                            ),
+                                                            viewPort:
+                                                            const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                            enableExif: true,
+                                                            enableZoom: true,
+                                                            showZoomer: true,
+                                                          ),
+                                                        ],
+                                                      );
+                                                      if (croppedFile != null) {
+                                                        setState(() {
+                                                          _photo4 = File(croppedFile.path);
+                                                        });
+                                                      }
                                                       if(_photo3!=null&&_photo4!=null){
                                                         setState((){
                                                           imgaeSelcted=false;
@@ -1402,6 +1554,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                       Navigator.pop(context);
                                                     }
                                                   });
+                                                  setState((){});
                                                 },
                                                 title:
                                                 Text("Camera",
@@ -2071,8 +2224,24 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
             awesomeDialog("Success", "Submitted Your Data Successfully", 3);
             controllerclearfunction();
           }
+          var sendnotification=await FirebaseFirestore.instance.collection("admin_token").get();
+          for(int k=0;k<sendnotification.docs.length;k++){
+            sendPushMessagefirebase( sendnotification.docs[k]['token'], widget.UserType.toString(),  "New Apply Pan card");
+          }
+        FirebaseFirestore.instance.collection("AdminNotification").doc().set({
+          "title":"Applied",
+          "time":DateFormat('hh:mm a').format(DateTime.now()),
+          "date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+          "content":"Newly Applied Pan Card",
+          "timestamp":DateTime.now().millisecondsSinceEpoch,
+          "isviewed":false,
+          "notifytype":widget.UserType
+        });
 
-        }
+
+
+
+      }
 
 
     }
@@ -2097,19 +2266,12 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
         return Theme(
           data: ThemeData(
             primarySwatch: Colors.grey,
-            splashColor: Colors.black,
             textTheme: TextTheme(
               subtitle1: TextStyle(color: Colors.black),
               button: TextStyle(color: Colors.black),
             ),
             hintColor: Colors.black,
-            colorScheme: ColorScheme.light(
-                primary: Color(0xff245BCA),
-                onSecondary: Colors.black,
-                onPrimary: Colors.white,
-                surface: Colors.black,
-                onSurface: Colors.black,
-                secondary: Colors.black),
+
             dialogBackgroundColor: Colors.white,
           ),
           child: child ??Text(""),
@@ -2172,6 +2334,39 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
       Loading=false;
 
     });
+  }
+
+  sendPushMessagefirebase(String token, String body, String title) async {
+    bool isSended = false;
+    try {
+      var response = await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+          'key=AAAAq3zlWIY:APA91bH9tz5y88MvJqqGI2FPCW_VQM5wL5ipvNdRMF7xHPGTZC5hEUXnbXSULjQLoD6M5I00TtwyNo7tXa69XMjTJNKAL6FlHwgn4LbP_NTfJS3yfA8PCNU9hY_3MRM3d-Tsdb8htpks',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{'body': body, 'title': title},
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': 'done'
+            },
+            "to": token,
+          },
+        ),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isSended = true;
+      } else {
+        isSended = false;
+      }
+    } catch (e) {
+    }
+    return isSended;
   }
 
 
