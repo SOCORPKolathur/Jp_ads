@@ -378,69 +378,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                       ),
 
                                       ///pantype
-                                      SizedBox(
-                                        height: height/8.4,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Pan Type",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                                  fontSize:width/22,
-                                                  color: Colors.black),),
-                                            SizedBox(height: height/75.6,),
-                                            Container(
-                                              height: height/15.12,
-                                              width: width/1.2,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius: BorderRadius.circular(8),
-                                                  border: Border.all(
-                                                      color: Color(0xff353535)
-                                                  )
-                                              ),
-                                              child:
-                                              DropdownButtonHideUnderline(
-                                                child: DropdownButtonFormField2<String>(
-                                                  isExpanded: true,
-                                                  hint: Text(
-                                                    'Select Pan Type',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: width/25.714,
-                                                      color: Theme.of(context).hintColor,
-                                                    ),
-                                                  ),
-                                                  items: pantype
-                                                      .map((String item) => DropdownMenuItem<String>(
-                                                    value: item,
-                                                    child: Text(
-                                                      item,
-                                                      style:  GoogleFonts.poppins(
-                                                        fontSize: width/25.714,
-                                                      ),
-                                                    ),
-                                                  ))
-                                                      .toList(),
-                                                  value: selectedValuepantype,
-                                                  onChanged: (String? value) {
-                                                    setState(() {
-                                                      selectedValuepantype = value!;
-                                                    });
-                                                  },
-                                                  buttonStyleData:  ButtonStyleData(
-                                                    padding: EdgeInsets.symmetric(horizontal: width/22.5),
-                                                    height: height/18.9,
-                                                    width: width/2.571,
-                                                  ),
-                                                  menuItemStyleData:  MenuItemStyleData(
-                                                    height: height/18.9,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
+
 
 
                                       ///Father name
@@ -469,7 +407,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                 controller: fathernamecontroller,
                                                 textCapitalization: TextCapitalization.characters,
                                                 inputFormatters: [
-                                                  FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                                                  FilteringTextInputFormatter.allow(RegExp(r"[A-Z]")),
                                                 ],
                                                 decoration: InputDecoration(
                                                     contentPadding: EdgeInsets.only(left: width/18),
@@ -1748,12 +1686,12 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                                   height: height/37.8,
                                                   width: width/1.636,
 
-                                                  child: Text("GST :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                                  child: Text("TAX :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
                                               Container(
                                                   height: height/37.8,
                                                   width: width/4.5,
 
-                                                  child: Text("₹ ${Gst.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                                  child: Text("0",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
 
                                             ],
                                           ),
@@ -1779,14 +1717,11 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                               Container(
                                                   height: height/37.8,
                                                   width: width/1.636,
-
                                                   child: Text("You have wallet : (${widget.UserWalletamount.toString()}) ",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
                                               Container(
                                                   height: height/37.8,
                                                   width: width/4.5,
-
                                                   child: Text("₹ -${Total.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
-
                                             ],
                                           ),
                                           Row(
@@ -1943,7 +1878,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                             if(imgaeSelcted==false){
                               if (_formKey.currentState!.validate() &&
                                   selectedValuegender != "Select Gender" &&
-                                  selectedValuepantype != "Select Pan Type" &&
+                                 // selectedValuepantype != "Select Pan Type" &&
                                   aadhaarontroller.text.length == 14) {
                                 if (steppervalue < 4) {
                                   setState(() {
@@ -2237,23 +2172,9 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
           "isviewed":false,
           "notifytype":widget.UserType
         });
-
-
-
-
       }
-
-
     }
-
-
-
-
-
-
   }
-
-
 
   Datepickerfunction(ctx) async {
   DateTime? pickedDate = await showDatePicker(
@@ -2279,13 +2200,18 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
       }
   );
   if (pickedDate != null) {
-  String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-  dobcontroller.text =formattedDate;
+    DateTime now = DateTime.now();
+    DateTime minDate = DateTime(now.year - 18, now.month, now.day);
+
+    if (pickedDate.isBefore(minDate)) {
+      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      dobcontroller.text = formattedDate;
+    } else {
+      awesomeDialog("Your Are Not Major","Kindly Apply to New Apply Pan card",1);
+    }
   }
 }
-
-
-  paymentfunction(){
+paymentfunction(){
     setState(() {
       FirebaseWalletAmount=0;
       normal_fees=0;
@@ -2294,8 +2220,8 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
     });
     if(double.parse(widget.UserWalletamount.toString())>156){
       setState(() {
-        normal_fees=250;
-        Gst=(18/100)*normal_fees;
+        normal_fees=157;
+        Gst=(0)*normal_fees;
         Total=normal_fees+Gst;
       });
       if(double.parse(widget.UserWalletamount.toString())-Total>0){
@@ -2307,11 +2233,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
         print("FirebaseWalletAmount");
         print(FirebaseWalletAmount);
       }
-
-
     }
-
-
   }
 
   controllerclearfunction(){

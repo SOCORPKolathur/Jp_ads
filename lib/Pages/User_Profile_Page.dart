@@ -318,12 +318,6 @@ class _User_Profile_PageState extends State<User_Profile_Page> {
                     width: width/3.60,
                     fit: BoxFit.fill,),
                 ),
-
-
-
-
-
-
               ],
             ),
           ),

@@ -666,7 +666,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                 ),
 
                                 ///Post Office
-                                SizedBox(
+                               /* SizedBox(
                                   height: height/7.56,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -703,9 +703,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                       )
                                     ],
                                   ),
-                                ),
-
-
+                                ),*/
                                 ///District
                                 SizedBox(
                                   height: height/7.56,
@@ -732,7 +730,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                           textCapitalization: TextCapitalization.characters,
                                           maxLines: 1,
                                           inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                                            FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s\.,#-]+$',)),
                                           ],
                                           controller: printdistrictcontroller,
                                           keyboardType: TextInputType.name,
@@ -777,7 +775,7 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                           textCapitalization: TextCapitalization.characters,
                                           maxLines: 1,
                                           inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                                            FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s\.,#-]+$',)),
                                           ],
                                           controller: printstatecontroller,
                                           decoration: InputDecoration(
@@ -1983,12 +1981,12 @@ class _Reprint_PageState extends State<Reprint_Page> {
                                             height: height/37.8,
                                             width: width/1.636,
 
-                                            child: Text("GST :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                            child: Text("TAX :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
                                         Container(
                                             height: height/37.8,
                                             width: width/4.5,
 
-                                            child: Text("₹ ${Gst.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                            child: Text("0",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
 
                                       ],
                                     ),
@@ -2292,8 +2290,32 @@ class _Reprint_PageState extends State<Reprint_Page> {
         }
     );
     if (pickedDate != null) {
-      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-     printdobcontroller.text =formattedDate;
+      DateTime now = DateTime.now();
+      DateTime minDate = DateTime(now.year - 18, now.month, now.day);
+
+      if (pickedDate.isBefore(minDate)) {
+        String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+        printdobcontroller.text = formattedDate;
+      } else {
+       /* showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Invalid Date'),
+              content: Text('Selected date should be at least 18 years ago.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );*/
+        awesomeDialog("Your Are Not Major","Kindly Apply to New Apply Pan card",1);
+      }
     }
   }
 
@@ -2576,8 +2598,8 @@ class _Reprint_PageState extends State<Reprint_Page> {
     });
     if(double.parse(widget.UserWalletamount.toString())>156){
       setState(() {
-        normal_fees=250;
-        Gst=(18/100)*normal_fees;
+        normal_fees=177;
+        Gst=(0)*normal_fees;
         Total=normal_fees+Gst;
       });
       if(double.parse(widget.UserWalletamount.toString())-Total>0){

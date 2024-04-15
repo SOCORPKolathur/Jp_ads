@@ -409,7 +409,7 @@ List <String> _pictures=[];
                                           ),
 
                                           ///pantype
-                                          SizedBox(
+                                         /* SizedBox(
                                             height: height/8.4,
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -471,7 +471,7 @@ List <String> _pictures=[];
                                                 )
                                               ],
                                             ),
-                                          ),
+                                          ),*/
 
 
                                           ///Father name
@@ -2220,12 +2220,12 @@ List <String> _pictures=[];
                                                       height: height/37.8,
                                                       width: width/1.636,
 
-                                                      child: Text("GST :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                                      child: Text("TAX :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
                                                   Container(
                                                       height: height/37.8,
                                                       width: width/4.5,
 
-                                                      child: Text("₹ ${Gst.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                                      child: Text("0",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
 
                                                 ],
                                               ),
@@ -2428,7 +2428,7 @@ List <String> _pictures=[];
                             if(imgaeSelcted==false){
                               if (_formKey.currentState!.validate() &&
                                   selectedValuegender != "Select Gender" &&
-                                  selectedValuepantype != "Select Pan Type" &&
+                                 //selectedValuepantype != "Select Pan Type" &&
                                   aadhaarontroller.text.length == 14) {
                                 if (steppervalue < 5) {
                                   setState(() {
@@ -2845,8 +2845,8 @@ List <String> _pictures=[];
     });
     if(double.parse(widget.UserWalletamount.toString())>156){
       setState(() {
-        normal_fees=250;
-        Gst=(18/100)*normal_fees;
+        normal_fees=177;
+        Gst=(0)*normal_fees;
         Total=normal_fees+Gst;
       });
       if(double.parse(widget.UserWalletamount.toString())-Total>0){

@@ -272,7 +272,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                      color:Colors.white
                                  ))),
                                ),
-                               Text("4.Document\nUpload", textAlign: TextAlign.center,style: GoogleFonts.poppins(fontWeight:FontWeight.w600,
+                               Text("4.Existing\nPan Card", textAlign: TextAlign.center,style: GoogleFonts.poppins(fontWeight:FontWeight.w600,
                                    color:steppervalue>=3?Colors.green:Colors.black, fontSize: width/36.0),)
                              ],
                            ),
@@ -295,7 +295,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                      color:Colors.white
                                  ))),
                                ),
-                               Text("5.Existing\nPan Card", textAlign: TextAlign.center,style: GoogleFonts.poppins(fontWeight:FontWeight.w600,
+                               Text("5.Document\nUpload", textAlign: TextAlign.center,style: GoogleFonts.poppins(fontWeight:FontWeight.w600,
                                    color:steppervalue>=4?Colors.green:Colors.black, fontSize: width/36.0),)
                              ],
                            ),
@@ -1119,7 +1119,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                        child: TextFormField(
                                          textCapitalization: TextCapitalization.characters,
                                          inputFormatters: [
-                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                                           FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s\.,#-]+$',)),
                                          ],
                                          maxLines: null,
                                          controller: corerctnameandvillagecontroller,
@@ -1162,7 +1162,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                        child: TextFormField(
                                          textCapitalization: TextCapitalization.characters,
                                          inputFormatters: [
-                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                                           FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s\.,#-]+$',)),
                                          ],
                                          maxLines: null,
                                          controller: corerctaddresscontroller,
@@ -1207,7 +1207,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                          textCapitalization: TextCapitalization.characters,
                                          maxLines: 1,
                                          inputFormatters: [
-                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                                           FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s\.,#-]+$',)),
                                          ],
                                          controller: corerctdistrictcontroller,
                                          keyboardType: TextInputType.name,
@@ -1252,7 +1252,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                          textCapitalization: TextCapitalization.characters,
                                          maxLines: 1,
                                          inputFormatters: [
-                                           FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                                           FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9\s\.,#-]+$',)),
                                          ],
                                          controller: corerctstatecontroller,
                                          decoration: InputDecoration(
@@ -1995,7 +1995,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                      child: Column(
                        crossAxisAlignment: CrossAxisAlignment.center,
                        children: [
-
+                         // 5 start
                          SizedBox(height: height/47.25,),
 
                          Text("Upload Documents",
@@ -2008,400 +2008,7 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                            padding:  EdgeInsets.only(left: width/14.4),
                            child: Row(
                              children: [
-                               Text("4.Pan Card Upload",
-                                 textAlign: TextAlign.center,
-                                 style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                     fontSize:width/28,
-                                     color: Colors.black),),
-                             ],
-                           ),
-                         ),
-                         SizedBox(height: height/47.25,),
-
-                         //front page
-                         Padding(
-                           padding:  EdgeInsets.only(left: width/14.4),
-                           child: Row(
-                             children: [
-                               Text("Front Side Of Pan Card" ,style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                   fontSize:width/28,
-                                   color: Colors.black),),
-                             ],
-                           ),
-                         ),
-                         SizedBox(height: height/107.25,),
-                         GestureDetector(
-                           onTap: (){
-                             showDialog(context: context, builder: (context) {
-                               return
-                                 Padding(
-                                   padding: EdgeInsets.only(top: 220, bottom: 220),
-                                   child: AlertDialog(
-                                     title: Row(
-                                       mainAxisAlignment: MainAxisAlignment.center,
-                                       children: [
-                                         Text("Please Select the Options", style: TextStyle(
-                                             fontWeight: FontWeight.w700, fontSize: 15),),
-                                       ],
-                                     ),
-                                     content: Column(
-                                       children: [
-                                         Container(
-                                           decoration: BoxDecoration(
-                                               color: Colors.grey.shade300,
-                                               borderRadius: BorderRadius.circular(8)
-                                           ),
-                                           child: ListTile(leading: Icon(Icons.camera),
-                                             onTap: () async {
-                                               final picker = ImagePicker();
-                                               await picker.pickImage(source: ImageSource.camera)
-                                                   .then((value) async {
-                                                 if (value != null) {
-                                                   final croppedFile = await ImageCropper().cropImage(
-                                                     sourcePath: value!.path,
-                                                     compressFormat: ImageCompressFormat.jpg,
-                                                     compressQuality: 100,
-                                                     uiSettings: [
-                                                       AndroidUiSettings(
-                                                           toolbarTitle: 'Cropper',
-                                                           toolbarColor: Color(0xff245BCA),
-                                                           toolbarWidgetColor: Colors.white,
-                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
-                                                           lockAspectRatio: false),
-                                                       IOSUiSettings(
-                                                         title: 'Cropper',
-                                                       ),
-                                                       WebUiSettings(
-                                                         context: context,
-                                                         presentStyle: CropperPresentStyle.dialog,
-                                                         boundary: const CroppieBoundary(
-                                                           width: 520,
-                                                           height: 520,
-                                                         ),
-                                                         viewPort:
-                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
-                                                         enableExif: true,
-                                                         enableZoom: true,
-                                                         showZoomer: true,
-                                                       ),
-                                                     ],
-                                                   );
-                                                   if (croppedFile != null) {
-                                                     setState(() {
-                                                       _photo3 = File(croppedFile.path);
-                                                     });
-                                                   }
-                                                   if(_photo3!=null&&_photo4!=null){
-                                                     setState((){
-                                                       imgaeSelcted=false;
-                                                     });
-                                                   }
-                                                   Navigator.pop(context);
-                                                 }
-                                               });
-                                               setState((){});
-                                             },
-                                             title:
-                                             Text("Camera",
-                                               style: TextStyle(fontWeight: FontWeight.w700),),),
-                                         ),
-                                         SizedBox(height: 10),
-
-                                         Container(
-                                           decoration: BoxDecoration(
-                                               color: Colors.grey.shade300,
-                                               borderRadius: BorderRadius.circular(8)
-                                           ),
-                                           child: ListTile(
-                                             onTap: () async {
-                                               final picker = ImagePicker();
-                                               await picker.pickImage(source: ImageSource.gallery)
-                                                   .then((value) {
-                                                 if (value != null) {
-                                                   setState(() {
-                                                     _photo3 = File(value.path);
-                                                   });
-                                                   if(_photo3!=null&&_photo4!=null){
-                                                     setState((){
-                                                       imgaeSelcted=false;
-                                                     });
-                                                   }
-                                                   Navigator.pop(context);
-                                                 }
-                                               });
-                                             },
-                                             leading: Icon(Icons.browse_gallery),
-                                             title: Text("Gallery",
-                                               style: TextStyle(fontWeight: FontWeight.w700),),),
-                                         ),
-
-                                       ],
-                                     ),
-                                   ),
-                                 );
-
-                             },);
-                           },
-                           child: Container(
-                             height: height/7.56,
-                             width: width/1.125,
-                             decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(8),
-                                 color: Color(0xffFFFFFF)
-                             ),
-
-                             child: Column(
-                                 mainAxisAlignment: MainAxisAlignment.center,
-                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                 children: [
-
-                                   _photo3==null? Image.asset(Uploaddocimg):Image.file(_photo3!,height: height/9.45,width: width/4.5,fit: BoxFit.cover,),
-
-                                   _photo3==null?
-                                   Text("Upload File",
-                                     textAlign: TextAlign.center,
-                                     style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                         fontSize:width/26,
-                                         color: Colors.black),):Text(""),
-
-
-                                 ]),
-                           ),
-                         ),
-                         SizedBox(height: height/47.25,),
-
-                         ///back page
-                         Padding(
-                           padding:  EdgeInsets.only(left: width/14.4),
-                           child: Row(
-                             children: [
-                               Text("Back Side Of Pan Card", style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                   fontSize:width/28,
-                                   color: Colors.black),),
-                             ],
-                           ),
-                         ),
-                         SizedBox(height: height/107.25,),
-                         GestureDetector(
-                           onTap: (){
-                             showDialog(context: context, builder: (context) {
-                               return
-                                 Padding(
-                                   padding: EdgeInsets.only(top: 220, bottom: 220),
-                                   child: AlertDialog(
-                                     title: Row(
-                                       mainAxisAlignment: MainAxisAlignment.center,
-                                       children: [
-                                         Text("Please Select the Options", style: TextStyle(
-                                             fontWeight: FontWeight.w700, fontSize: 15),),
-                                       ],
-                                     ),
-                                     content: Column(
-                                       children: [
-                                         Container(
-                                           decoration: BoxDecoration(
-                                               color: Colors.grey.shade300,
-                                               borderRadius: BorderRadius.circular(8)
-                                           ),
-                                           child: ListTile(leading: Icon(Icons.camera),
-                                             onTap: () async {
-                                               final picker = ImagePicker();
-                                               await picker.pickImage(source: ImageSource.camera)
-                                                   .then((value) async {
-                                                 if (value != null) {
-                                                   final croppedFile = await ImageCropper().cropImage(
-                                                     sourcePath: value!.path,
-                                                     compressFormat: ImageCompressFormat.jpg,
-                                                     compressQuality: 100,
-                                                     uiSettings: [
-                                                       AndroidUiSettings(
-                                                           toolbarTitle: 'Cropper',
-                                                           toolbarColor: Color(0xff245BCA),
-                                                           toolbarWidgetColor: Colors.white,
-                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
-                                                           lockAspectRatio: false),
-                                                       IOSUiSettings(
-                                                         title: 'Cropper',
-                                                       ),
-                                                       WebUiSettings(
-                                                         context: context,
-                                                         presentStyle: CropperPresentStyle.dialog,
-                                                         boundary: const CroppieBoundary(
-                                                           width: 520,
-                                                           height: 520,
-                                                         ),
-                                                         viewPort:
-                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
-                                                         enableExif: true,
-                                                         enableZoom: true,
-                                                         showZoomer: true,
-                                                       ),
-                                                     ],
-                                                   );
-                                                   if (croppedFile != null) {
-                                                     setState(() {
-                                                       _photo4 = File(croppedFile.path);
-                                                     });
-                                                   }
-                                                   if(_photo3!=null&&_photo4!=null){
-                                                     setState((){
-                                                       imgaeSelcted=false;
-                                                     });
-                                                   }
-                                                   Navigator.pop(context);
-                                                 }
-                                               });
-                                               setState((){});
-                                             },
-                                             title:
-                                             Text("Camera",
-                                               style: TextStyle(fontWeight: FontWeight.w700),),),
-                                         ),
-                                         SizedBox(height: 10),
-
-                                         Container(
-                                           decoration: BoxDecoration(
-                                               color: Colors.grey.shade300,
-                                               borderRadius: BorderRadius.circular(8)
-                                           ),
-                                           child: ListTile(
-                                             onTap: () async {
-                                               final picker = ImagePicker();
-                                               await picker.pickImage(source: ImageSource.gallery)
-                                                   .then((value) {
-                                                 if (value != null) {
-                                                   setState(() {
-                                                     _photo4 = File(value.path);
-                                                   });
-                                                   if(_photo3!=null&&_photo4!=null){
-                                                     setState((){
-                                                       imgaeSelcted=false;
-                                                     });
-                                                   }
-                                                   Navigator.pop(context);
-
-                                                 }
-                                               });
-                                               setState((){});
-                                             },
-                                             leading: Icon(Icons.browse_gallery),
-                                             title: Text("Gallery",
-                                               style: TextStyle(fontWeight: FontWeight.w700),),),
-                                         ),
-
-                                       ],
-                                     ),
-                                   ),
-                                 );
-
-                             },);
-                           },
-                           child: Container(
-                             height: height/7.56,
-                             width: width/1.125,
-                             decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(8),
-                                 color: Color(0xffFFFFFF)
-                             ),
-
-                             child: Column(
-                                 mainAxisAlignment: MainAxisAlignment.center,
-                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                 children: [
-
-                                   _photo4==null? Image.asset(Uploaddocimg):Image.file(_photo4!,height: height/9.45,width: width/4.5,fit: BoxFit.cover,),
-
-                                   _photo4==null?
-                                   Text("Upload File",
-                                     textAlign: TextAlign.center,
-                                     style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                         fontSize:width/26,
-                                         color: Colors.black),):Text(""),
-
-
-                                 ]),
-                           ),
-                         ),
-                         SizedBox(height: height/47.25,),
-                         Container(
-                           height: height/4.2,
-                           width: width/1.125,
-                           padding: EdgeInsets.symmetric(horizontal: width/36.0,vertical: height/75.6),
-                           decoration: BoxDecoration(
-                               borderRadius: BorderRadius.circular(8),
-                               color: Color(0xffFFFFFF)
-                           ),
-
-                           child: Column(
-                               crossAxisAlignment: CrossAxisAlignment.start,
-                               mainAxisAlignment: MainAxisAlignment.start,
-                               children: [
-                                 Text("! Note:",
-                                   textAlign: TextAlign.center,
-                                   style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                       fontSize:width/26,
-                                       color: Colors.black),),
-                                 Divider(),
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                   children: [
-                                     Icon(Icons.circle,size: width/24,),
-                                     SizedBox(width: width/72,),
-                                     SizedBox(
-                                       width: width/1.290,
-                                       child: Text("Images Should be clear and visible ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                           fontSize:width/28,
-                                           color: Colors.black)),
-                                     )
-                                   ],
-                                 ),
-                                 SizedBox(height: height/151.2,),
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                   children: [
-                                     Icon(Icons.circle,size: width/24,),
-                                     SizedBox(width: width/72,),
-                                     SizedBox(
-                                       width: width/1.290,
-                                       child: Text("Please Correct the Edge to Upload Image",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                                           fontSize:width/28,
-                                           color: Colors.black)),
-                                     )
-                                   ],
-                                 ),
-
-                               ]),
-                         ),
-
-                         SizedBox(height: height/47.25,),
-
-
-
-                       ],
-                     ),
-                   ):
-                   steppervalue==4?
-                   SingleChildScrollView(
-                     physics: const BouncingScrollPhysics(),
-                     child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       children: [
-
-                         SizedBox(height: height/47.25,),
-
-                         Text("Upload Documents",
-                           textAlign: TextAlign.center,
-                           style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
-                               fontSize:width/22,
-                               color: Colors.black),),
-                         SizedBox(height: height/47.25,),
-                         Padding(
-                           padding:  EdgeInsets.only(left: width/14.4),
-                           child: Row(
-                             children: [
-                               Text("4.Existing Pan Card Upload",
+                               Text("4. Existing Pan Card Upload",
                                  textAlign: TextAlign.center,
                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                      fontSize:width/28,
@@ -2763,14 +2370,396 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                      )
                                    ],
                                  ),
-
                                ]),
                          ),
+                         SizedBox(height: height/47.25,),
+                       ],
+                     ),
+                   ):
+                   steppervalue==4?
+                   SingleChildScrollView(
+                     physics: const BouncingScrollPhysics(),
+                     child: Column(
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                       children: [
 
                          SizedBox(height: height/47.25,),
 
+                         Text("Upload Documents",
+                           textAlign: TextAlign.center,
+                           style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                               fontSize:width/22,
+                               color: Colors.black),),
+                         SizedBox(height: height/47.25,),
+                         Padding(
+                           padding:  EdgeInsets.only(left: width/14.4),
+                           child: Row(
+                             children: [
+                               Text("5.Aadhaar Card Upload",
+                                 textAlign: TextAlign.center,
+                                 style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                     fontSize:width/28,
+                                     color: Colors.black),),
+                             ],
+                           ),
+                         ),
+                         SizedBox(height: height/47.25,),
+
+                         //front page
+                         Padding(
+                           padding:  EdgeInsets.only(left: width/14.4),
+                           child: Row(
+                             children: [
+                               Text("Front Side Of Aadhaar Card" ,style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                   fontSize:width/28,
+                                   color: Colors.black),),
+                             ],
+                           ),
+                         ),
+                         SizedBox(height: height/107.25,),
+                         GestureDetector(
+                           onTap: (){
+                             showDialog(context: context, builder: (context) {
+                               return
+                                 Padding(
+                                   padding: EdgeInsets.only(top: 220, bottom: 220),
+                                   child: AlertDialog(
+                                     title: Row(
+                                       mainAxisAlignment: MainAxisAlignment.center,
+                                       children: [
+                                         Text("Please Select the Options", style: TextStyle(
+                                             fontWeight: FontWeight.w700, fontSize: 15),),
+                                       ],
+                                     ),
+                                     content: Column(
+                                       children: [
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(leading: Icon(Icons.camera),
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.camera)
+                                                   .then((value) async {
+                                                 if (value != null) {
+                                                   final croppedFile = await ImageCropper().cropImage(
+                                                     sourcePath: value!.path,
+                                                     compressFormat: ImageCompressFormat.jpg,
+                                                     compressQuality: 100,
+                                                     uiSettings: [
+                                                       AndroidUiSettings(
+                                                           toolbarTitle: 'Cropper',
+                                                           toolbarColor: Color(0xff245BCA),
+                                                           toolbarWidgetColor: Colors.white,
+                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                           lockAspectRatio: false),
+                                                       IOSUiSettings(
+                                                         title: 'Cropper',
+                                                       ),
+                                                       WebUiSettings(
+                                                         context: context,
+                                                         presentStyle: CropperPresentStyle.dialog,
+                                                         boundary: const CroppieBoundary(
+                                                           width: 520,
+                                                           height: 520,
+                                                         ),
+                                                         viewPort:
+                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                         enableExif: true,
+                                                         enableZoom: true,
+                                                         showZoomer: true,
+                                                       ),
+                                                     ],
+                                                   );
+                                                   if (croppedFile != null) {
+                                                     setState(() {
+                                                       _photo3 = File(croppedFile.path);
+                                                     });
+                                                   }
+                                                   if(_photo3!=null&&_photo4!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                               setState((){});
+                                             },
+                                             title:
+                                             Text("Camera",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+                                         SizedBox(height: 10),
+
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.gallery)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo3 = File(value.path);
+                                                   });
+                                                   if(_photo3!=null&&_photo4!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                             },
+                                             leading: Icon(Icons.browse_gallery),
+                                             title: Text("Gallery",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+
+                                       ],
+                                     ),
+                                   ),
+                                 );
+
+                             },);
+                           },
+                           child: Container(
+                             height: height/7.56,
+                             width: width/1.125,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(8),
+                                 color: Color(0xffFFFFFF)
+                             ),
+
+                             child: Column(
+                                 mainAxisAlignment: MainAxisAlignment.center,
+                                 crossAxisAlignment: CrossAxisAlignment.center,
+                                 children: [
+
+                                   _photo3==null? Image.asset(Uploaddocimg):Image.file(_photo3!,height: height/9.45,width: width/4.5,fit: BoxFit.cover,),
+
+                                   _photo3==null?
+                                   Text("Upload File",
+                                     textAlign: TextAlign.center,
+                                     style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                         fontSize:width/26,
+                                         color: Colors.black),):Text(""),
 
 
+                                 ]),
+                           ),
+                         ),
+                         SizedBox(height: height/47.25,),
+
+                         ///back page
+                         Padding(
+                           padding:  EdgeInsets.only(left: width/14.4),
+                           child: Row(
+                             children: [
+                               Text("Back Side Of Pan Card", style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                   fontSize:width/28,
+                                   color: Colors.black),),
+                             ],
+                           ),
+                         ),
+                         SizedBox(height: height/107.25,),
+                         GestureDetector(
+                           onTap: (){
+                             showDialog(context: context, builder: (context) {
+                               return
+                                 Padding(
+                                   padding: EdgeInsets.only(top: 220, bottom: 220),
+                                   child: AlertDialog(
+                                     title: Row(
+                                       mainAxisAlignment: MainAxisAlignment.center,
+                                       children: [
+                                         Text("Please Select the Options", style: TextStyle(
+                                             fontWeight: FontWeight.w700, fontSize: 15),),
+                                       ],
+                                     ),
+                                     content: Column(
+                                       children: [
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(leading: Icon(Icons.camera),
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.camera)
+                                                   .then((value) async {
+                                                 if (value != null) {
+                                                   final croppedFile = await ImageCropper().cropImage(
+                                                     sourcePath: value!.path,
+                                                     compressFormat: ImageCompressFormat.jpg,
+                                                     compressQuality: 100,
+                                                     uiSettings: [
+                                                       AndroidUiSettings(
+                                                           toolbarTitle: 'Cropper',
+                                                           toolbarColor: Color(0xff245BCA),
+                                                           toolbarWidgetColor: Colors.white,
+                                                           initAspectRatio: CropAspectRatioPreset.ratio16x9,
+                                                           lockAspectRatio: false),
+                                                       IOSUiSettings(
+                                                         title: 'Cropper',
+                                                       ),
+                                                       WebUiSettings(
+                                                         context: context,
+                                                         presentStyle: CropperPresentStyle.dialog,
+                                                         boundary: const CroppieBoundary(
+                                                           width: 520,
+                                                           height: 520,
+                                                         ),
+                                                         viewPort:
+                                                         const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                                         enableExif: true,
+                                                         enableZoom: true,
+                                                         showZoomer: true,
+                                                       ),
+                                                     ],
+                                                   );
+                                                   if (croppedFile != null) {
+                                                     setState(() {
+                                                       _photo4 = File(croppedFile.path);
+                                                     });
+                                                   }
+                                                   if(_photo3!=null&&_photo4!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
+                                                   Navigator.pop(context);
+                                                 }
+                                               });
+                                               setState((){});
+                                             },
+                                             title:
+                                             Text("Camera",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+                                         SizedBox(height: 10),
+
+                                         Container(
+                                           decoration: BoxDecoration(
+                                               color: Colors.grey.shade300,
+                                               borderRadius: BorderRadius.circular(8)
+                                           ),
+                                           child: ListTile(
+                                             onTap: () async {
+                                               final picker = ImagePicker();
+                                               await picker.pickImage(source: ImageSource.gallery)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   setState(() {
+                                                     _photo4 = File(value.path);
+                                                   });
+                                                   if(_photo3!=null&&_photo4!=null){
+                                                     setState((){
+                                                       imgaeSelcted=false;
+                                                     });
+                                                   }
+                                                   Navigator.pop(context);
+
+                                                 }
+                                               });
+                                               setState((){});
+                                             },
+                                             leading: Icon(Icons.browse_gallery),
+                                             title: Text("Gallery",
+                                               style: TextStyle(fontWeight: FontWeight.w700),),),
+                                         ),
+
+                                       ],
+                                     ),
+                                   ),
+                                 );
+
+                             },);
+                           },
+                           child: Container(
+                             height: height/7.56,
+                             width: width/1.125,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(8),
+                                 color: Color(0xffFFFFFF)
+                             ),
+
+                             child: Column(
+                                 mainAxisAlignment: MainAxisAlignment.center,
+                                 crossAxisAlignment: CrossAxisAlignment.center,
+                                 children: [
+
+                                   _photo4==null? Image.asset(Uploaddocimg):Image.file(_photo4!,height: height/9.45,width: width/4.5,fit: BoxFit.cover,),
+
+                                   _photo4==null?
+                                   Text("Upload File",
+                                     textAlign: TextAlign.center,
+                                     style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                         fontSize:width/26,
+                                         color: Colors.black),):Text(""),
+                                 ]),
+                           ),
+                         ),
+                         SizedBox(height: height/47.25,),
+                         Container(
+                           height: height/4.2,
+                           width: width/1.125,
+                           padding: EdgeInsets.symmetric(horizontal: width/36.0,vertical: height/75.6),
+                           decoration: BoxDecoration(
+                               borderRadius: BorderRadius.circular(8),
+                               color: Color(0xffFFFFFF)
+                           ),
+
+                           child: Column(
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               mainAxisAlignment: MainAxisAlignment.start,
+                               children: [
+                                 Text("! Note:",
+                                   textAlign: TextAlign.center,
+                                   style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                       fontSize:width/26,
+                                       color: Colors.black),),
+                                 Divider(),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
+                                     Icon(Icons.circle,size: width/24,),
+                                     SizedBox(width: width/72,),
+                                     SizedBox(
+                                       width: width/1.290,
+                                       child: Text("Images Should be clear and visible ",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                           fontSize:width/28,
+                                           color: Colors.black)),
+                                     )
+                                   ],
+                                 ),
+                                 SizedBox(height: height/151.2,),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
+                                     Icon(Icons.circle,size: width/24,),
+                                     SizedBox(width: width/72,),
+                                     SizedBox(
+                                       width: width/1.290,
+                                       child: Text("Please Correct the Edge to Upload Image",style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
+                                           fontSize:width/28,
+                                           color: Colors.black)),
+                                     )
+                                   ],
+                                 ),
+
+                               ]),
+                         ),
+                         SizedBox(height: height/47.25,),
                        ],
                      ),
                    ):
@@ -2838,12 +2827,12 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                                                height: height/37.8,
                                                width: width/1.636,
 
-                                               child: Text("GST :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                               child: Text("TAX :",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
                                            Container(
                                                height: height/37.8,
                                                width: width/4.5,
 
-                                               child: Text("₹ ${Gst.toString()}",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
+                                               child: Text("0",style: GoogleFonts.poppins(fontWeight:FontWeight.w600,fontSize: width/27.69,),)),
 
                                          ],
                                        ),
@@ -2919,20 +2908,12 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
                              ),
                            ),
                            SizedBox(height: height/25.2,),
-
-
                          ],
                        )
                    ):
                    const SizedBox(),
                  ),
-
-
-
                  SizedBox(height: height/151.2),
-
-
-
                  Row(
                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                    children: [
@@ -3134,9 +3115,6 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
            ),
          )
              :const SizedBox()
-
-
-
        ],
      )
     );
@@ -3446,14 +3424,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
           "isviewed":false,
           "notifytype":widget.UserType
         });
-
-
-        }
+      }
     }
-
-
-
-
   }
 
   sendPushMessagefirebase(String token, String body, String title) async {
@@ -3508,13 +3480,37 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
               hintColor: Colors.black,
               dialogBackgroundColor: Colors.white,
             ),
-            child: child ??Text(""),
+            child: child ?? Text(""),
           );
         }
     );
     if (pickedDate != null) {
-      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-      corerctdobcontroller.text =formattedDate;
+      DateTime now = DateTime.now();
+      DateTime minDate = DateTime(now.year - 18, now.month, now.day);
+
+      if (pickedDate.isBefore(minDate)) {
+        String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+        corerctdobcontroller.text = formattedDate;
+      } else {
+      /*  showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Invalid Date'),
+              content: Text('Selected date should be at least 18 years ago.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );*/
+        awesomeDialog("Your Are Not Major","Kindly Apply to New Apply Pan card",1);
+      }
     }
   }
 
@@ -3527,8 +3523,8 @@ TextEditingController corerctphonenumbercontroller=TextEditingController();
     });
     if(double.parse(widget.UserWalletamount.toString())>156){
       setState(() {
-        normal_fees=250;
-        Gst=(18/100)*normal_fees;
+        normal_fees=177;
+        Gst=(0)*normal_fees;
         Total=normal_fees+Gst;
       });
       if(double.parse(widget.UserWalletamount.toString())-Total>0){

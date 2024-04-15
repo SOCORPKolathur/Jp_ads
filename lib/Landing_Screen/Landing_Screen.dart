@@ -382,61 +382,59 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                               ],
                                             ),
                                           ),
+
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Pancard_Link_Page(
-                                                            Userdocid:
-                                                            userdata.id,
-                                                            UserType: userdata[
-                                                            'usertype'],
-                                                            UserWalletamount:
-                                                            Walletamount.toString(),
-                                                            Usagecount:usgaeCount),
+                                                      builder: (context)
+                                                      =>
+                                                          Minor_Page(Userdocid:
+                                                          userdata.id,
+                                                              UserType: userdata[
+                                                              'usertype'],
+                                                              UserWalletamount:
+                                                              Walletamount.toString(),
+                                                              Usagecount:usgaeCount)
                                                   ));
                                             },
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: width / 30),
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    height: height / 15.12,
-                                                    width: width / 7.2,
-                                                    decoration: BoxDecoration(
-                                                        color: const Color(
-                                                            0xffD3D8E2),
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            width /
-                                                                3.60)),
-                                                    child: Center(
-                                                        child: Image.asset(
-                                                          newpancardicon,
-                                                          fit: BoxFit.cover,
-                                                        )),
-                                                  ),
-                                                  SizedBox(
-                                                    height: height / 75.6,
-                                                  ),
-                                                  Text(
-                                                    " PAN-Card\n Link",
-                                                    textAlign:
-                                                    TextAlign.center,
-                                                    style: GoogleFonts.poppins(
-                                                        fontWeight:
-                                                        FontWeight.w500,
-                                                        fontSize:
-                                                        width / 30,
-                                                        color: const Color(
-                                                            0xff00194A)),
-                                                  )
-                                                ],
-                                              ),
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  height: height / 15.12,
+                                                  width: width / 7.2,
+                                                  // margin: EdgeInsets.only(right:width/36.0),
+                                                  decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xffD3D8E2),
+                                                      borderRadius:
+                                                      BorderRadius
+                                                          .circular(
+                                                          width /
+                                                              3.60)),
+                                                  child: Center(
+                                                      child: Image.asset(
+                                                        pancardapplyicon,
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                ),
+                                                SizedBox(
+                                                  height: height / 75.6,
+                                                ),
+                                                Text(
+                                                  "Minor \nPan Card\nApply",
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      fontSize: width / 30,
+                                                      color: const Color(
+                                                          0xff00194A)),
+                                                )
+
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -507,6 +505,234 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                               ],
                                             ),
                                           ),
+
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context)
+                                                      =>
+                                                          Find_Pancard(Userdocid:
+                                                          userdata.id,
+                                                              UserType: userdata[
+                                                              'usertype'],
+                                                              UserWalletamount:
+                                                              Walletamount.toString(),
+                                                              Usagecount:usgaeCount)
+                                                  ));
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  height: height / 15.12,
+                                                  width: width / 7.2,
+                                                  // margin: EdgeInsets.only(right:width/36.0),
+                                                  decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xffD3D8E2),
+                                                      borderRadius:
+                                                      BorderRadius
+                                                          .circular(
+                                                          width /
+                                                              3.60)),
+                                                  child: Center(
+                                                      child: Image.asset(
+                                                        findpancardimg,
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                ),
+                                                SizedBox(
+                                                  height: height / 75.6,
+                                                ),
+                                                Text(
+                                                  "Find \nPan Card",
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      fontSize: width / 30,
+                                                      color: const Color(
+                                                          0xff00194A)),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context)=>
+                                                          Form_Page()
+                                                  ));
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  height: height / 15.12,
+                                                  width: width / 7.2,
+                                                  decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xffD3D8E2),
+                                                      borderRadius:
+                                                      BorderRadius
+                                                          .circular(
+                                                          width /
+                                                              3.60)),
+                                                  child: Center(
+                                                      child: Image.asset(
+                                                        Form_Icon,
+                                                        height:height/25.2,
+                                                        width:width/12,
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                ),
+                                                SizedBox(
+                                                  height: height / 75.6,
+                                                ),
+                                                Text(
+                                                  "Forms",
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      fontSize: width / 30,
+                                                      color: const Color(
+                                                          0xff00194A)),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: 0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
+
+                                        children: [
+
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {});
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context)
+                                                      =>
+                                                          Referance_Video_Page()
+                                                  ));
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  height: height / 15.12,
+                                                  width: width / 7.2,
+                                                  //   margin: EdgeInsets.only(left:width/96.0),
+                                                  decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xffD3D8E2),
+                                                      borderRadius:
+                                                      BorderRadius
+                                                          .circular(
+                                                          width /
+                                                              3.60)),
+                                                  child: Center(
+                                                      child: Image.asset(
+                                                        Referencevc_icon,
+                                                        height:height/25.2,
+                                                        width:width/12,
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                ),
+                                                SizedBox(
+                                                  height: height / 75.6,
+                                                ),
+                                                Text(
+                                                  "Reference\nVideos",
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      fontSize: width / 30,
+                                                      color: const Color(
+                                                          0xff00194A)),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+
+
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Pancard_Link_Page(
+                                                            Userdocid:
+                                                            userdata.id,
+                                                            UserType: userdata[
+                                                            'usertype'],
+                                                            UserWalletamount:
+                                                            Walletamount.toString(),
+                                                            Usagecount:usgaeCount),
+                                                  ));
+                                            },
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: width / 30),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    height: height / 15.12,
+                                                    width: width / 7.2,
+                                                    decoration: BoxDecoration(
+                                                        color: const Color(
+                                                            0xffD3D8E2),
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            width /
+                                                                3.60)),
+                                                    child: Center(
+                                                        child: Image.asset(
+                                                          newpancardicon,
+                                                          fit: BoxFit.cover,
+                                                        )),
+                                                  ),
+                                                  SizedBox(
+                                                    height: height / 75.6,
+                                                  ),
+                                                  Text(
+                                                    " PAN-Card\n Link",
+                                                    textAlign:
+                                                    TextAlign.center,
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        fontSize:
+                                                        width / 30,
+                                                        color: const Color(
+                                                            0xff00194A)),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+
+
                                           GestureDetector(
                                             onTap: () {
                                               setState(() {});
@@ -556,6 +782,17 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                               ],
                                             ),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: height / 50.4),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
                                           GestureDetector(
                                             onTap: () {
                                               setState(() {
@@ -587,242 +824,6 @@ class _Landing_ScreenState extends State<Landing_Screen>
                                                 ),
                                                 Text(
                                                   "User Profile",
-                                                  textAlign:
-                                                  TextAlign.center,
-                                                  style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                      fontSize: width / 30,
-                                                      color: const Color(
-                                                          0xff00194A)),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: 0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .start,
-
-                                        children: [
-
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                  builder: (context)
-                                              =>
-                                                  Minor_Page(Userdocid:
-                                                  userdata.id,
-                                                      UserType: userdata[
-                                                      'usertype'],
-                                                      UserWalletamount:
-                                                      Walletamount.toString(),
-                                                      Usagecount:usgaeCount)
-                                              ));
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  height: height / 15.12,
-                                                  width: width / 7.2,
-                                                  // margin: EdgeInsets.only(right:width/36.0),
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xffD3D8E2),
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(
-                                                          width /
-                                                              3.60)),
-                                                  child: Center(
-                                                      child: Image.asset(
-                                                        pancardapplyicon,
-                                                        fit: BoxFit.cover,
-                                                      )),
-                                                ),
-                                                SizedBox(
-                                                  height: height / 75.6,
-                                                ),
-                                                Text(
-                                                  "Minor \nPan Card\nApply",
-                                                  textAlign:
-                                                  TextAlign.center,
-                                                  style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                      fontSize: width / 30,
-                                                      color: const Color(
-                                                          0xff00194A)),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {});
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                  builder: (context)
-                                              =>
-                                                  Referance_Video_Page()
-                                              ));
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  height: height / 15.12,
-                                                  width: width / 7.2,
-                                                  //   margin: EdgeInsets.only(left:width/96.0),
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xffD3D8E2),
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(
-                                                          width /
-                                                              3.60)),
-                                                  child: Center(
-                                                      child: Image.asset(
-                                                        Referencevc_icon,
-                                                        height:height/25.2,
-                                                        width:width/12,
-                                                        fit: BoxFit.cover,
-                                                      )),
-                                                ),
-                                                SizedBox(
-                                                  height: height / 75.6,
-                                                ),
-                                                Text(
-                                                  "Reference\nVideos",
-                                                  textAlign:
-                                                  TextAlign.center,
-                                                  style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                      fontSize: width / 30,
-                                                      color: const Color(
-                                                          0xff00194A)),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                  builder: (context)=>
-                                                  Form_Page()
-                                              ));
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  height: height / 15.12,
-                                                  width: width / 7.2,
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xffD3D8E2),
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(
-                                                          width /
-                                                              3.60)),
-                                                  child: Center(
-                                                      child: Image.asset(
-                                                        Form_Icon,
-                                                        height:height/25.2,
-                                                        width:width/12,
-                                                        fit: BoxFit.cover,
-                                                      )),
-                                                ),
-                                                SizedBox(
-                                                  height: height / 75.6,
-                                                ),
-                                                Text(
-                                                  "Forms",
-                                                  textAlign:
-                                                  TextAlign.center,
-                                                  style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                      fontSize: width / 30,
-                                                      color: const Color(
-                                                          0xff00194A)),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: height / 50.4),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .start,
-
-                                        children: [
-
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context)
-                                                      =>
-                                                          Find_Pancard(Userdocid:
-                                                          userdata.id,
-                                                              UserType: userdata[
-                                                              'usertype'],
-                                                              UserWalletamount:
-                                                              Walletamount.toString(),
-                                                              Usagecount:usgaeCount)
-                                                  ));
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  height: height / 15.12,
-                                                  width: width / 7.2,
-                                                  // margin: EdgeInsets.only(right:width/36.0),
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xffD3D8E2),
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(
-                                                          width /
-                                                              3.60)),
-                                                  child: Center(
-                                                      child: Image.asset(
-                                                        findpancardimg,
-                                                        fit: BoxFit.cover,
-                                                      )),
-                                                ),
-                                                SizedBox(
-                                                  height: height / 75.6,
-                                                ),
-                                                Text(
-                                                  "Find \nPan Card",
                                                   textAlign:
                                                   TextAlign.center,
                                                   style: GoogleFonts.poppins(

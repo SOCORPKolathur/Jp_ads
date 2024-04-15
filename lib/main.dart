@@ -6,8 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jp_ads/Authendication/LogIn_Page.dart';
 import 'package:jp_ads/Landing_Screen/Landing_Screen.dart';
+import 'package:jp_ads/Pages/Pancard_correction_Page.dart';
+import 'package:jp_ads/Splash_screen/Splah_Screen.dart';
 import 'package:jp_ads/demo.dart';
 import 'package:jp_ads/firebase_options.dart';
+import '../Authendication/LogIn_Page.dart';
+import 'Pages/Minor_Page.dart';
+import 'Pages/Pandcard_apply_Page.dart';
+import 'Pages/Reprint_Page.dart';
+
+
 
 
 Future<void>_firebasemesssaghandler(RemoteMessage message)async{
@@ -37,7 +45,7 @@ class MyApp extends StatelessWidget {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Jp Ads",
-      home: FirebaseAuth.instance.currentUser==null? LogIn_Page() : Landing_Screen()
+      home: FirebaseAuth.instance.currentUser!=null?  Splash_screen(): Landing_Screen()
     );
   }
 }

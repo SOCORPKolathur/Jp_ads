@@ -81,7 +81,6 @@ class _Notification_PageState extends State<Notification_Page> {
                    Updatethestatusfunc(Notification.id);
                  },
                  title:SizedBox(
-
                    height:height/37.8,
                    width: width / .6,
                    child:
@@ -106,7 +105,6 @@ class _Notification_PageState extends State<Notification_Page> {
                    children: [
                      Row(
                        children: [
-
                          SizedBox(
                            width: width / 1.5,
                            child: Text(
@@ -120,22 +118,18 @@ class _Notification_PageState extends State<Notification_Page> {
                                  fontWeight:
                                  FontWeight
                                      .w600),
-
                            ),
                          ),
-
                        ],
                      ),
                      Padding(
                        padding:  EdgeInsets.only(left:width/160),
                        child: Row(
                          children: [
-
                            SizedBox(
                              height:height/50.4,
                              width: width /
                                  5.8,
-
                              child: Text(
                                "${Notification["date"]}",
                                style: GoogleFonts
@@ -145,17 +139,12 @@ class _Notification_PageState extends State<Notification_Page> {
                                    fontSize:
                                    width/36.0,
                                    fontWeight:
-                                   FontWeight
-                                       .w600),
-
+                                   FontWeight.w600),
                              ),
                            ),
-
                            SizedBox(
                              height:height/50.4,
-                             width: width /
-                                 4.6,
-
+                             width: width / 4.6,
                              child: Text(
                                "- ${Notification["time"]}",
                                style: GoogleFonts
@@ -203,11 +192,8 @@ class _Notification_PageState extends State<Notification_Page> {
                        ),
                      ],
                    ),
-                 ):SizedBox(),
-
-
-
-
+                 ):
+                 SizedBox(),
                ),
              );
          },);
