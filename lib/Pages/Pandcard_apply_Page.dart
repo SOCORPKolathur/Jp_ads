@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:jp_ads/const_file.dart';
 import 'package:http/http.dart'as http;
+import 'package:url_launcher/url_launcher.dart';
 import '../Landing_Screen/Landing_Screen.dart';
 import 'Add walletAmount Page.dart';
 
@@ -1843,6 +1844,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                       steppervalue==4?
                       GestureDetector(
                         onTap: () async {
+                          initiateTransaction();
                             firebasestroragefunctionphoto();
                         },
                         child: Center(
@@ -1862,7 +1864,7 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
                                 )
                             ),
                             child: Center(
-                              child:  Text("Submit",
+                              child:  Text("SubmitC",
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.poppins(fontWeight: FontWeight.w500,
                                     fontSize:width/28,
@@ -1967,7 +1969,12 @@ class _Pandcard_apply_PageState extends State<Pandcard_apply_Page> {
       )
     );
   }
-
+  initiateTransaction() async {
+    String upi_url = 'upi://pay?pa=gjohndavid5g@okicici&pn=JP Ads&am=10.27&cu=INR';
+    await launch(upi_url).then((value) {
+      print(value);
+    }).catchError((err) => print(err));
+  }
   awesomeDialog(title,description,errortype){
     return AwesomeDialog(
       dismissOnBackKeyPress: errortype==3?true:false,

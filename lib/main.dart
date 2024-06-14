@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Jp Ads",
-      home: FirebaseAuth.instance.currentUser!=null?  Splash_screen(): Landing_Screen()
+      home: FirebaseAuth.instance.currentUser==null?  Splash_screen(): Landing_Screen()
     );
   }
 }

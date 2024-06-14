@@ -18,7 +18,7 @@ class _Splash_screenState extends State<Splash_screen> {
   @override
   void initState() {
 
-    if(FirebaseAuth.instance.currentUser!=null){
+    if(FirebaseAuth.instance.currentUser==null){
       Future.delayed(Duration(seconds: 3),(){
         Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  LogIn_Page(),));
       });
